@@ -2,11 +2,11 @@ const Layer    = require('./Layer');
 const Artboard = require('./Artboard');
 
 class Page extends Layer {
-	constructor(sketch, data) {
+    constructor(sketch, data) {
         super(sketch, data);
-	}
+    }
 
-	get artboards() {
+    get artboards() {
         return this.getChildren(Artboard.type);
     }
 }
