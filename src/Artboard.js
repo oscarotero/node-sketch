@@ -1,25 +1,11 @@
-class Artboard {
-	constructor(data) {
-		this.data = data;
+const Layer = require('./Layer');
+
+class Artboard extends Layer {
+	constructor(sketch, data) {
+		super(sketch, data);
 	}
-
-	getName() {
-		return this.data.name;
-	}
-
-	getArtboards() {
-        if (!this.artboards) {
-            this.artboards = this.data.layers
-                .filter((layer) => {
-                    return layer._class === 'artboard';
-                })
-                .map((layer) => {
-                    return new Artboard(layer);
-                });
-        }
-
-        return this.artboards;
-    }
 }
+
+Artboard.type = 'artboard';
 
 module.exports = Artboard;

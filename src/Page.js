@@ -1,29 +1,17 @@
-const Artboard = require('./artboard');
+const Layer    = require('./Layer');
+const Artboard = require('./Artboard');
 
-class Page {
-	constructor(file) {
-		this.file = file;
-		this.data = JSON.parse(file.contents);
+class Page extends Layer {
+	constructor(sketch, data) {
+        super(sketch, data);
 		this.artboards = null;
 	}
 
-	getName() {
-		return this.data.name;
-	}
-
 	getArtboards() {
-        if (!this.artboards) {
-            this.artboards = this.data.layers
-                .filter((layer) => {
-                    return layer._class === 'artboard';
-                })
-                .map((layer) => {
-                    return new Artboard(layer);
-                });
-        }
-
-        return this.artboards;
+        return this.getChildren(Artboard.type);
     }
 }
+
+Page.type = 'page';
 
 module.exports = Page;
