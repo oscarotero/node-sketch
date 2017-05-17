@@ -16,6 +16,38 @@ class Layer {
         return this.data._class;
     }
 
+    get width() {
+        return this.data.frame.width;
+    }
+
+    set width(val) {
+        this.data.frame.width = val;
+    }
+
+    get height() {
+        return this.data.frame.height;
+    }
+
+    set height(val) {
+        this.data.frame.height = val;
+    }
+
+    get x() {
+        return this.data.frame.x;
+    }
+
+    set x(val) {
+        this.data.frame.x = val;
+    }
+
+    get y() {
+        return this.data.frame.y;
+    }
+
+    set y(val) {
+        this.data.frame.y = val;
+    }
+
     getChild(condition) {
         return searchLayer(this.sketch, this.data.layers, condition, false);
     }

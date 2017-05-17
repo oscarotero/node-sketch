@@ -1,25 +1,29 @@
-const Sketch = require('./src');
+const Sketch = require('./src').Sketch;
 const fs = require('fs');
-
 
 
 async function run () {
 
-	const file = await Sketch('demo.sketch');
-	const pages = await file.getPages();
-	const page = pages[0];
+	const file = await Sketch.read('demo.sketch');
 
-	file.removePage(page);
-
-	console.log(page.name);
-	const artboard = page.getArtboards()[0];
-
-	artboard.getAll('shapeGroup').forEach((layer) => {
-		//console.log(layer.data.style);
+	//Iterate with the pages
+	file.pages.forEach((page) => {
+		console.log(page.name);
 	});
 
-	fs.writeFileSync(__dirname + '/demo-page.json', page.toString());
-	
+	//Iterate with the artboards
+	file.pages[0].artboards.forEach((artboard) => {
+		console.log(artboard.name);
+	});
+
+	//Search for a specific layer class
+	const artboard = file.pages[0].getChild('artboard');
+
+	artboard.width = 500;
+	artboard.height = 500;
+	artboard.x = 50;
+	artboard.y = 50;
+
 	file.save(__dirname + '/demo-copy.sketch');
 }
 
