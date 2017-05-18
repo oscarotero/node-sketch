@@ -1,9 +1,6 @@
 const fs = require('fs');
-const path = require('path');
 const JSZip = require('jszip');
 const Layer = require('./Layer');
-const Artboard = require('./Artboard');
-const Page = require('./Page');
 
 class Sketch {
 
@@ -48,21 +45,11 @@ class Sketch {
     }
 
     constructor(repo, document, meta, user, pages) {
-        this.layerCache = {};
-
         this.repo = repo;
         this.document = document;
         this.meta = meta;
         this.user = user;
-        this.pages = pages.map((page) => this.getLayerInstance(page));
-    }
-
-    getLayerInstance (data) {
-        if (!(data.do_objectID in this.layerCache)) {
-            this.layerCache[data.do_objectID] = createInstance(this, data);
-        }
-
-        return this.layerCache[data.do_objectID];
+        this.pages = pages.map((page) => Layer.create(page));
     }
 
     //Save document as sketch file
@@ -100,16 +87,3 @@ class Sketch {
 }
 
 module.exports = Sketch;
-
-function createInstance(sketch, data) {
-    switch (data._class) {
-        case Page.type:
-            return new Page(sketch, data);
-
-        case Artboard.type:
-            return new Artboard(sketch, data);
-
-        default:
-            return new Layer(sketch, data);
-    }
-}

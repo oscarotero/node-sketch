@@ -5,6 +5,7 @@ const fs = require('fs');
 async function run () {
 
     const file = await Sketch.read('demo.sketch');
+    return;
 
     //Iterate with the pages
     file.pages.forEach((page) => {

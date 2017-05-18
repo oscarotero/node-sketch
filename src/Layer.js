@@ -1,7 +1,27 @@
-class Layer {
-    constructor(sketch, data) {
-        this.sketch = sketch;
+const Artboard = require('./Artboard');
+const Page    = require('./Page');
+
+class Layer extends Array {
+    static create(parent, data) {
+        switch (data._class) {
+            case Artboard.type:
+                return new Artboard(sketch, data);
+
+            case Page.type:
+                return new Page(sketch, data);
+
+            default:
+                return new Layer(sketch, data);
+        }
+    }
+
+    constructor(parent, data) {
+        this.parent = parent;
         this.data = data;
+
+        if (Array.isArray(data.layers)) {
+            data.layers.forEach((layerData) => this.push(Layer.create(this, layerData)));
+        }
     }
 
     get id() {
