@@ -1,4 +1,4 @@
-# sketch (WIP)
+# node-sketch (WIP)
 Javascript library to manipulate sketch files
 
 ## Example:
