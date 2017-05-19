@@ -11,13 +11,13 @@
   "devDependencies": {},
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/oscarotero/sketch.git"
+    "url": "git+https://github.com/oscarotero/node-sketch.git"
   },
   "keywords": [
     "sketch"
   ],
   "bugs": {
-    "url": "https://github.com/oscarotero/sketch/issues"
+    "url": "https://github.com/oscarotero/node-sketch/issues"
   },
-  "homepage": "https://github.com/oscarotero/sketch#readme"
+  "homepage": "https://github.com/oscarotero/node-sketch#readme"
 }
