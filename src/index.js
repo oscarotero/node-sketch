@@ -2,10 +2,12 @@ const fs = require('fs');
 const JSZip = require('jszip');
 
 (function (lib) {
-    lib.Sketch   = require('./Sketch');
-    lib.Layer    = require('./Layer');
-    lib.Artboard = require('./Artboard');
-    lib.Page     = require('./Page');
+    lib.Sketch         = require('./Sketch');
+    lib.Layer          = require('./Layer');
+    lib.Artboard       = require('./Artboard');
+    lib.Page           = require('./Page');
+    lib.SymbolMaster   = require('./SymbolMaster');
+    lib.SymbolInstance = require('./SymbolInstance');
 
     // Read a .sketch file and return an instance of Sketch
     lib.read = function (file) {
@@ -57,6 +59,12 @@ const JSZip = require('jszip');
 
             case lib.Page.type:
                 return new lib.Page(parent, data);
+
+            case lib.SymbolMaster.type:
+                return new lib.SymbolMaster(parent, data);
+
+            case lib.SymbolInstance.type:
+                return new lib.SymbolInstance(parent, data);
 
             default:
                 return new lib.Layer(parent, data);

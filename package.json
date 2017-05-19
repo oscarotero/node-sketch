@@ -19,5 +19,8 @@
   "bugs": {
     "url": "https://github.com/oscarotero/node-sketch/issues"
   },
+  "scripts": {
+    "unzip": "rm -rf demo && cp demo.sketch demo.zip && unzip demo.zip -d demo && rm demo.zip"
+  },
   "homepage": "https://github.com/oscarotero/node-sketch#readme"
 }

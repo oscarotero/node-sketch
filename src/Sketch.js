@@ -10,6 +10,28 @@ class Sketch {
         this.pages = pages.map((page) => lib.create(this, page));
     }
 
+    search(condition) {
+        for (let i = 0, t = this.pages.length; i < t; i++) {
+            let layer = this.pages[i].search(condition);
+
+            if (layer) {
+                return layer;
+            }
+        }
+    }
+
+    searchAll(condition, result) {
+        result = result || [];
+
+        for (let i = 0, t = this.pages.length; i < t; i++) {
+            this.pages[i]
+                .searchAll(condition)
+                .forEach((layer) => result.push(layer));
+        }
+
+        return result;
+    }
+
     //Save document as sketch file
     save(file) {
         const pagesFolder = this.repo.folder('pages');

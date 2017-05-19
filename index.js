@@ -13,14 +13,17 @@ async function run () {
         console.log(artboard.name);
     });
 
-    //Search for a specific layer class
-    const artboard = file.pages[0].search((layer) => layer.type === 'artboard');
+    //Search for a specific symbol
+    const btnSymbol = file.search((layout) => {
+        layout.type === 'symbolMaster' && layout.name === 'button'
+    });
 
-    artboard.width = 500;
-    artboard.height = 500;
-    artboard.x = 50;
-    artboard.y = 50;
+    //Search for all instances of this symbol
+    const instances = file.searchAll((layout) => {
+        return layout.type === 'symbolInstance' && layout.symbolId === btnSymbol.symbolId;
+    });
 
+    //Save the result
     file.save(__dirname + '/demo-copy.sketch');
 }
 
