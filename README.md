@@ -50,6 +50,7 @@ const ns = require('node-sketch');
 ns.read('design.sketch').then((sketch) => {
     console.log(sketch instanceof ns.Sketch); //true
 });
+```
 
 The sketch instance contains the following properties:
 
