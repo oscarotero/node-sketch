@@ -1,5 +1,6 @@
 const fs = require('fs');
 const lib = require('./index');
+const utils = require('./utils');
 
 class Sketch {
     constructor(repo, document, meta, user, pages) {
@@ -11,8 +12,8 @@ class Sketch {
     }
 
     search(condition) {
-        for (let i = 0, t = this.pages.length; i < t; i++) {
-            let layer = this.pages[i].search(condition);
+        for (let page of this.pages) {
+            let layer = page.search(condition);
 
             if (layer) {
                 return layer;
@@ -23,11 +24,17 @@ class Sketch {
     searchAll(condition, result) {
         result = result || [];
 
-        for (let i = 0, t = this.pages.length; i < t; i++) {
-            this.pages[i]
-                .searchAll(condition)
-                .forEach((layer) => result.push(layer));
+        for (let page of this.pages) {
+            page.searchAll(condition).forEach((layer) => result.push(layer));
         }
+
+        return result;
+    }
+
+    getSymbols() {
+        const result = new Map();
+
+        this.pages.forEach((page) => utils.mapSymbols(page.getSymbols(), result));
 
         return result;
     }

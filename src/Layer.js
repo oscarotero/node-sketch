@@ -25,8 +25,16 @@ class Layer extends Array {
         return this.data.name;
     }
 
+    set name(name) {
+        this.data.name = name;
+    }
+
     get type() {
         return this.data._class;
+    }
+
+    get parent() {
+        return this[_parent];
     }
 
     get width() {
@@ -106,8 +114,8 @@ class Layer extends Array {
             return layer;
         }
 
-        for (let i = 0, t = this.length; i < t; i++) {
-            layer = this[i].search(condition);
+        for (let child of this) {
+            layer = child.search(condition);
 
             if (layer) {
                 return layer;
@@ -122,8 +130,8 @@ class Layer extends Array {
             .filter(condition)
             .forEach((layer) => result.push(layer));
 
-        for (let i = 0, t = this.length; i < t; i++) {
-            this[i].searchAll(condition, result);
+        for (let child of this) {
+            child.searchAll(condition, result);
         }
 
         return result;

@@ -6,7 +6,9 @@ async function run () {
     //Iterate with the pages
     file.pages.forEach((page) => {
         console.log(page.name);
+        console.log(page.getSymbols());
     });
+    return;
 
     //Iterate with the artboards
     file.pages[0].forEach((artboard) => {
@@ -15,13 +17,15 @@ async function run () {
 
     //Search for a specific symbol
     const btnSymbol = file.search((layout) => {
-        layout.type === 'symbolMaster' && layout.name === 'button'
+        return layout.type === 'symbolMaster' && layout.name === 'circle';
     });
 
     //Search for all instances of this symbol
     const instances = file.searchAll((layout) => {
         return layout.type === 'symbolInstance' && layout.symbolId === btnSymbol.symbolId;
     });
+
+    console.log(instances);
 
     //Save the result
     file.save(__dirname + '/demo-copy.sketch');
