@@ -1,11 +1,7 @@
-const Sketch = require('./src').Sketch;
-const fs = require('fs');
-
+const sketch = require('./src');
 
 async function run () {
-
-    const file = await Sketch.read('demo.sketch');
-    return;
+    const file = await sketch.read('demo.sketch');
 
     //Iterate with the pages
     file.pages.forEach((page) => {
@@ -13,12 +9,12 @@ async function run () {
     });
 
     //Iterate with the artboards
-    file.pages[0].artboards.forEach((artboard) => {
+    file.pages[0].forEach((artboard) => {
         console.log(artboard.name);
     });
 
     //Search for a specific layer class
-    const artboard = file.pages[0].getChild('artboard');
+    const artboard = file.pages[0].search((layer) => layer.type === 'artboard');
 
     artboard.width = 500;
     artboard.height = 500;
@@ -28,4 +24,6 @@ async function run () {
     file.save(__dirname + '/demo-copy.sketch');
 }
 
-run();
+run().catch((err) => {
+    console.error(err);
+});

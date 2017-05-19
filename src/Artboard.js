@@ -1,8 +1,8 @@
 const Layer = require('./Layer');
 
 class Artboard extends Layer {
-    constructor(sketch, data) {
-        super(sketch, data);
+    constructor(parent, data) {
+        super(parent, data);
     }
 }
 

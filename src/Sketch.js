@@ -1,55 +1,13 @@
 const fs = require('fs');
-const JSZip = require('jszip');
-const Layer = require('./Layer');
+const lib = require('./index');
 
 class Sketch {
-
-    // Read a .sketch file and return an instance of Sketch
-    static read(file) {
-        return JSZip.loadAsync(fs.readFileSync(file))
-            .then(async (zip) => {
-                const document = await zip.file('document.json').async('string');
-                const meta = await zip.file('meta.json').async('string');
-                const user = await zip.file('user.json').async('string');
-
-                return {
-                    repo: zip,
-                    document: JSON.parse(document),
-                    meta: JSON.parse(meta),
-                    user: JSON.parse(user)
-                };
-            })
-            .then(async (data) => {
-                data.pages = [];
-
-                return Promise.all(
-                    data.document.pages.map(async (page) => {
-                        const contents = await data.repo.file(`${page._ref}.json`).async('string');
-                        return JSON.parse(contents);
-                    })
-                )
-                .then((pages) => {
-                    data.pages = pages;
-                    return data;
-                });
-            })
-            .then((data) => {
-                return new Sketch(
-                    data.repo,
-                    data.document,
-                    data.meta,
-                    data.user,
-                    data.pages
-                );
-            });
-    }
-
     constructor(repo, document, meta, user, pages) {
         this.repo = repo;
         this.document = document;
         this.meta = meta;
         this.user = user;
-        this.pages = pages.map((page) => Layer.create(page));
+        this.pages = pages.map((page) => lib.create(this, page));
     }
 
     //Save document as sketch file
