@@ -43,9 +43,9 @@ run().catch((err) => {
 });
 ```
 
-## API
+# API
 
-### Sketch
+## Sketch
 
 The instances of `Sketch` contain all sketch data (pages, artboards, symbols, etc). It's the object returned by `sketch.read`. (Note that the reading is async):
 
@@ -87,7 +87,7 @@ const groups = sketch.searchAll((layer) => layer.type === 'group');
 
 #### getSymbols()
 
-Returns a Map instance with all master symbols of all pages the document. The key of the values is the symbol ID. Example:
+Returns a Map instance with all master symbols of all pages the document. The symbol ID is used as key. Example:
 
 ```js
 const symbols = sketch.getSymbols();
@@ -109,7 +109,7 @@ Saves the sketch file
 sketch.save('awesome-design.sketch');
 ```
 
-### Layout
+## Layout
 
 All elements in a sketch file are "layouts". They can be pages, artboards, groups, symbols, etc. The `Layout` class (and all subclasses) extends `Array`, so all methods like `filter`, `forEach`, `map`, etc, can be used to iterate with the layout children. For example:
 
@@ -120,6 +120,11 @@ const page = sketch.pages[0];
 //Iterate with the page children (usually artboards and symbols)
 page.forEach((child) => {
     console.log(child.name);
+
+    //Iterate also with the children of the child
+    child.forEach((subchild) => {
+        console.log(subchild.name + ' is inside ' + child.name);
+    });
 });
 ```
 
@@ -130,13 +135,13 @@ Name | Type | Editable | Description
 `id` | `string` | No | The element unique id
 `name` | `string` | Yes | The name
 `type` | `string` | No | The element type (for exampe: page, artboard, symbolInstance, symbolMaster, etc)
-`parent` | `Layout|undefined` | No | The parent of the element
+`parent` | `Layout` | No | The parent of the element
 `width` | `int` | Yes | The width of the element
 `height` | `int` | Yes | The height of the element
 `x` | `int` | Yes | The x position of the element
 `y` | `int` | Yes | The y position of the element
 
-It contains also the following method are added:
+It contains also the following methods:
 
 ####  detach()
 
@@ -179,7 +184,7 @@ Returns the json data with all info.
 const json = firstArboard.toJson();
 ```
 
-### Page
+## Page
 
 `Page` is a subclass of `Layout`, so it inherit all its properties and methods, but including also the following additions:
 
@@ -201,7 +206,7 @@ const page = sketch.pages[0];
 const buttonSymbol = page.searchSymbol((symbol) => symbol.name === 'button');
 ```
 
-### SymbolMaster
+## SymbolMaster
 
 `SymbolMaster` is a subclass of `Layout`. In addition to all properties and methods, includes also the following properties:
 
@@ -209,7 +214,7 @@ Name | Type | Editable | Description
 -----|------|----------|------------
 `symbolId` | `string` | No | The unique id to identify the symbol
 
-### SymbolInstance
+## SymbolInstance
 
 `SymbolInstance` is a subclass of `Layout`. In addition to all properties and methods, includes also the following properties:
 
