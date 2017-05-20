@@ -1,5 +1,5 @@
 const _parent = Symbol.for('Parent');
-const lib = require('./index');
+const lib = require('../index');
 
 class Layer extends Array {
     constructor(parent, data) {
@@ -135,6 +135,16 @@ class Layer extends Array {
         }
 
         return result;
+    }
+
+    searchParent(condition) {
+        let parent = this[_parent];
+
+        while (parent && !condition(parent)) {
+            parent = parent.parent;
+        }
+
+        return parent;
     }
 
     toString() {

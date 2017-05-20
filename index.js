@@ -1,36 +1,74 @@
-const sketch = require('./src');
+const fs = require('fs');
+const JSZip = require('jszip');
 
-async function run () {
-    const file = await sketch.read('demo.sketch');
+(function (lib) {
+    lib.Sketch         = require('./src/Sketch');
+    lib.Layer          = require('./src/Layer');
+    lib.Artboard       = require('./src/Artboard');
+    lib.Page           = require('./src/Page');
+    lib.SymbolMaster   = require('./src/SymbolMaster');
+    lib.SymbolInstance = require('./src/SymbolInstance');
 
-    //Iterate with the pages
-    file.pages.forEach((page) => {
-        console.log(page.name);
-        console.log(page.getSymbols());
-    });
-    return;
+    // Read a .sketch file and return an instance of Sketch
+    lib.read = function (file) {
+        return JSZip.loadAsync(fs.readFileSync(file))
+            .then(async (zip) => {
+                const document = await zip.file('document.json').async('string');
+                const meta = await zip.file('meta.json').async('string');
+                const user = await zip.file('user.json').async('string');
 
-    //Iterate with the artboards
-    file.pages[0].forEach((artboard) => {
-        console.log(artboard.name);
-    });
+                return {
+                    repo: zip,
+                    document: JSON.parse(document),
+                    meta: JSON.parse(meta),
+                    user: JSON.parse(user)
+                };
+            })
+            .then(async (data) => {
+                data.pages = [];
 
-    //Search for a specific symbol
-    const btnSymbol = file.search((layout) => {
-        return layout.type === 'symbolMaster' && layout.name === 'circle';
-    });
+                return Promise.all(
+                    data.document.pages.map(async (page) => {
+                        const contents = await data.repo.file(`${page._ref}.json`).async('string');
+                        return JSON.parse(contents);
+                    })
+                )
+                .then((pages) => {
+                    data.pages = pages;
+                    return data;
+                });
+            })
+            .then((data) => {
+                return new lib.Sketch(
+                    data.repo,
+                    data.document,
+                    data.meta,
+                    data.user,
+                    data.pages
+                );
+            })
+            .catch((err) => {
+                console.error(err);
+            });
+    };
 
-    //Search for all instances of this symbol
-    const instances = file.searchAll((layout) => {
-        return layout.type === 'symbolInstance' && layout.symbolId === btnSymbol.symbolId;
-    });
+    lib.create = function (parent, data) {
+        switch (data._class) {
+            case lib.Artboard.type:
+                return new lib.Artboard(parent, data);
 
-    console.log(instances);
+            case lib.Page.type:
+                return new lib.Page(parent, data);
 
-    //Save the result
-    file.save(__dirname + '/demo-copy.sketch');
-}
+            case lib.SymbolMaster.type:
+                return new lib.SymbolMaster(parent, data);
 
-run().catch((err) => {
-    console.error(err);
-});
+            case lib.SymbolInstance.type:
+                return new lib.SymbolInstance(parent, data);
+
+            default:
+                return new lib.Layer(parent, data);
+        }
+    };
+
+})(require('./index'));

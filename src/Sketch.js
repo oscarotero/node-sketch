@@ -1,5 +1,5 @@
 const fs = require('fs');
-const lib = require('./index');
+const lib = require('../index');
 const utils = require('./utils');
 
 class Sketch {
@@ -37,6 +37,10 @@ class Sketch {
         this.pages.forEach((page) => utils.mapSymbols(page.getSymbols(), result));
 
         return result;
+    }
+
+    getSymbolsPage() {
+        return this.pages.find((page) => page.name === 'Symbols');
     }
 
     //Save document as sketch file

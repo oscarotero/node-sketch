@@ -3,7 +3,11 @@ const utils = require('./utils');
 
 class Page extends Layer {
     getSymbols() {
-        return utils.mapSymbols(this.searchAll((layer) => layer.type === 'symbolMaster'));
+        return utils.mapSymbols(this.filter((layer) => layer.type === 'symbolMaster'));
+    }
+
+    searchSymbol(condition) {
+        return this.find((layer) => layer.type === 'symbolMaster' && condition(layer));
     }
 }
 
