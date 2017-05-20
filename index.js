@@ -8,6 +8,7 @@ const JSZip = require('jszip');
     lib.Page           = require('./src/Page');
     lib.SymbolMaster   = require('./src/SymbolMaster');
     lib.SymbolInstance = require('./src/SymbolInstance');
+    lib.ShapeGroup     = require('./src/ShapeGroup');
 
     // Read a .sketch file and return an instance of Sketch
     lib.read = function (file) {
@@ -53,22 +54,13 @@ const JSZip = require('jszip');
     };
 
     lib.create = function (parent, data) {
-        switch (data._class) {
-            case lib.Artboard.type:
-                return new lib.Artboard(parent, data);
+        const className = data._class.charAt(0).toUpperCase() + data._class.slice(1);
 
-            case lib.Page.type:
-                return new lib.Page(parent, data);
-
-            case lib.SymbolMaster.type:
-                return new lib.SymbolMaster(parent, data);
-
-            case lib.SymbolInstance.type:
-                return new lib.SymbolInstance(parent, data);
-
-            default:
-                return new lib.Layer(parent, data);
+        if (typeof lib[className] === 'function') {
+            return new lib[className](parent, data);
         }
+
+        return new lib.Layer(parent, data);
     };
 
 })(require('./index'));

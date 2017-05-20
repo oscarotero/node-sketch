@@ -39,6 +39,4 @@ class SymbolInstance extends Layer {
     }
 }
 
-SymbolInstance.type = 'symbolInstance';
-
 module.exports = SymbolInstance;

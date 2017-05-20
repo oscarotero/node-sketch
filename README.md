@@ -6,9 +6,8 @@ Javascript library to manipulate sketch files
 ```js
 const ns = require('node-sketch');
 
-async function run() {
-    const sketch = await ns.read('design.sketch');
-    
+ns.read('design.sketch').then((sketch) => {
+
     //Iterate with the pages
     sketch.pages.forEach((page) => {
         console.log(page.name);
@@ -27,8 +26,8 @@ async function run() {
 
     //Search all instances of a symbol called 'old-button' and replace it with 'button'
     sketch
-        .searchAll((layout) => {
-            return layout.type === 'symbolInstance' && layout.symbol.name === 'old-button';
+        .searchAll((layer) => {
+            return layer.type === 'symbolInstance' && layer.symbol.name === 'old-button';
         })
         .forEach((symbolInstance) {
             symbolInstance.symbol = buttonSymbol;
@@ -36,10 +35,6 @@ async function run() {
 
     //Save the result
     sketch.save('modified-design.sketch');
-}
-
-run().catch((err) => {
-    console.error(err);
 });
 ```
 
@@ -109,9 +104,9 @@ Saves the sketch file
 sketch.save('awesome-design.sketch');
 ```
 
-## Layout
+## Layer
 
-All elements in a sketch file are "layouts". They can be pages, artboards, groups, symbols, etc. The `Layout` class (and all subclasses) extends `Array`, so all methods like `filter`, `forEach`, `map`, etc, can be used to iterate with the layout children. For example:
+All elements in a sketch file are "layers". They can be pages, artboards, groups, symbols, etc. The `Layer` class (and all subclasses) extends `Array`, so all methods like `filter`, `forEach`, `map`, etc, can be used to iterate with the layer children. For example:
 
 ```js
 //Get the first page
@@ -128,14 +123,14 @@ page.forEach((child) => {
 });
 ```
 
-All `Layout` instances have the following properties:
+All `Layer` instances have the following properties:
 
 Name | Type | Editable | Description
 -----|------|----------|------------
 `id` | `string` | No | The element unique id
 `name` | `string` | Yes | The name
 `type` | `string` | No | The element type (for exampe: page, artboard, symbolInstance, symbolMaster, etc)
-`parent` | `Layout` | No | The parent of the element
+`parent` | `Layer` | No | The parent of the element
 `width` | `int` | Yes | The width of the element
 `height` | `int` | Yes | The height of the element
 `x` | `int` | Yes | The x position of the element
@@ -184,9 +179,11 @@ Returns the json data with all info.
 const json = firstArboard.toJson();
 ```
 
-## Page
+## Layer extensions
 
-`Page` is a subclass of `Layout`, so it inherit all its properties and methods, but including also the following additions:
+### Page
+
+`Page` is a subclass of `Layer`, so it inherit all its properties and methods, but including also the following additions:
 
 #### getSymbols()
 
@@ -206,17 +203,27 @@ const page = sketch.pages[0];
 const buttonSymbol = page.searchSymbol((symbol) => symbol.name === 'button');
 ```
 
-## SymbolMaster
+---
 
-`SymbolMaster` is a subclass of `Layout`. In addition to all properties and methods, includes also the following properties:
+### ShapeGroup
+
+`ShapeGroup` is a subclass of `Layer`.
+
+---
+
+### SymbolMaster
+
+`SymbolMaster` is a subclass of `Layer`. In addition to all properties and methods, includes also the following properties:
 
 Name | Type | Editable | Description
 -----|------|----------|------------
 `symbolId` | `string` | No | The unique id to identify the symbol
 
-## SymbolInstance
+---
 
-`SymbolInstance` is a subclass of `Layout`. In addition to all properties and methods, includes also the following properties:
+### SymbolInstance
+
+`SymbolInstance` is a subclass of `Layer`. In addition to all properties and methods, includes also the following properties:
 
 Name | Type | Editable | Description
 -----|------|----------|------------

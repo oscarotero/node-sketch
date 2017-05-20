@@ -6,7 +6,7 @@ async function run () {
     //Get the symbol 'circle:black'
     const circleBlack = file.getSymbolsPage()
         .searchSymbol((symbol) => symbol.name === 'circle:black');
-
+console.log(circleBlack);
     //Search all instances of symbol 'circle' and replace by 'circle:black'
     file
         .searchAll((layer) => {

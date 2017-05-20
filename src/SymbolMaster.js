@@ -6,6 +6,4 @@ class SymbolMaster extends Layer {
     }
 }
 
-SymbolMaster.type = 'symbolMaster';
-
 module.exports = SymbolMaster;
