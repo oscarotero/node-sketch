@@ -2,6 +2,23 @@ const fs = require('fs');
 const JSZip = require('jszip');
 
 (function (lib) {
+    lib.Color          = require('./src/Color');
+    lib.Rect           = require('./src/Rect');
+    lib.ExportOptions  = require('./src/ExportOptions');
+    lib.RulerData      = require('./src/RulerData');
+    lib.Border         = require('./src/Border');
+    lib.BorderOptions  = require('./src/BorderOptions');
+    lib.CurvePoint     = require('./src/CurvePoint');
+    lib.Path           = require('./src/Path');
+    lib.GradientStop   = require('./src/GradientStop');
+    lib.Gradient       = require('./src/Gradient');
+    lib.Oval           = require('./src/Oval');
+    lib.Rectangle      = require('./src/Rectangle');
+    lib.Star           = require('./src/Star');
+    lib.Polygon        = require('./src/Polygon');
+    lib.Triangle       = require('./src/Triangle');
+
+
     lib.Sketch         = require('./src/Sketch');
     lib.Layer          = require('./src/Layer');
     lib.Artboard       = require('./src/Artboard');

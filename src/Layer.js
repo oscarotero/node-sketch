@@ -1,3 +1,4 @@
+const _class = Symbol.for('Class');
 const _parent = Symbol.for('Parent');
 const lib = require('../index');
 
@@ -6,6 +7,7 @@ class Layer extends Array {
         super();
 
         this[_parent] = parent;
+        this[_class] = data._class;
         this.data = data;
 
         if (Array.isArray(data.layers)) {
@@ -30,7 +32,7 @@ class Layer extends Array {
     }
 
     get type() {
-        return this.data._class;
+        return this[_class];
     }
 
     get parent() {
