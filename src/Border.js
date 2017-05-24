@@ -1,6 +1,4 @@
 const Color = require('./Color');
-const BorderPositions = [0, 1, 2, 3];
-const FillTypes = [0, 1, 4, 5];
 
 module.exports = class Border {
     constructor(data) {

@@ -224,3 +224,73 @@ describe('TextStyle', function () {
         assert.equal('{"_class":"textStyle","encodedAttributes":{"NSColor":{"_archive":""}}}', JSON.stringify(instance));
     });
 });
+
+describe('GraphicContextSettings', function () {
+    it('Create empty instances', function () {
+        const instance = new sketch.GraphicContextSettings();
+
+        assert.equal('{"_class":"graphicContextSettings","blendMode":0,"opacity":1}', JSON.stringify(instance));
+    });
+
+    it('Create instances', function () {
+        const instance = new sketch.GraphicContextSettings({opacity: 0.5});
+
+        assert.equal('{"_class":"graphicContextSettings","blendMode":0,"opacity":0.5}', JSON.stringify(instance));
+    });
+});
+
+describe('Shadow', function () {
+    it('Create empty instances', function () {
+        const instance = new sketch.Shadow();
+
+        assert.equal('{"_class":"shadow","isEnabled":true,"blurRadius":4,"offsetX":0,"offsetY":2,"spread":0,"color":{"_class":"color","red":0,"green":0,"blue":0,"alpha":1},"contextSettings":{"_class":"graphicContextSettings","blendMode":0,"opacity":1}}', JSON.stringify(instance));
+    });
+
+    it('Create instances', function () {
+        const instance = new sketch.Shadow({color: {alpha: 0.5}});
+
+        assert.equal('{"_class":"shadow","isEnabled":true,"blurRadius":4,"offsetX":0,"offsetY":2,"spread":0,"color":{"_class":"color","red":0,"green":0,"blue":0,"alpha":0.5},"contextSettings":{"_class":"graphicContextSettings","blendMode":0,"opacity":1}}', JSON.stringify(instance));
+    });
+});
+
+describe('MSJSONFileReference', function () {
+    it('Create empty instances', function () {
+        const instance = new sketch.MSJSONFileReference();
+
+        assert.equal('{"_class":"MSJSONFileReference","_ref_class":"MSImageData","_ref":null}', JSON.stringify(instance));
+    });
+
+    it('Create instances', function () {
+        const instance = new sketch.MSJSONFileReference({_ref: 'images/1234'});
+
+        assert.equal('{"_class":"MSJSONFileReference","_ref_class":"MSImageData","_ref":"images/1234"}', JSON.stringify(instance));
+    });
+});
+
+describe('Fill', function () {
+    it('Create empty instances', function () {
+        const instance = new sketch.Fill();
+
+        assert.equal('{"_class":"fill","isEnabled":true,"fillType":0,"noiseIndex":0,"noiseIntensity":0,"patternFillType":1,"patternTileScale":1}', JSON.stringify(instance));
+    });
+
+    it('Create instances', function () {
+        const instance = new sketch.Fill({color: {alpha: 0.5}});
+
+        assert.equal('{"_class":"fill","isEnabled":true,"fillType":0,"noiseIndex":0,"noiseIntensity":0,"patternFillType":1,"patternTileScale":1,"color":{"_class":"color","red":0,"green":0,"blue":0,"alpha":0.5}}', JSON.stringify(instance));
+    });
+});
+
+describe('Style', function () {
+    it('Create empty instances', function () {
+        const instance = new sketch.Style();
+
+        assert.equal('{"_class":"style","miterLimit":10,"startDecorationType":0,"endDecorationType":0}', JSON.stringify(instance));
+    });
+
+    it('Create instances', function () {
+        const instance = new sketch.Style({fills: [{color: {alpha: 0.5}}]});
+
+        assert.equal('{"_class":"style","miterLimit":10,"startDecorationType":0,"endDecorationType":0,"fills":[{"_class":"fill","isEnabled":true,"fillType":0,"noiseIndex":0,"noiseIntensity":0,"patternFillType":1,"patternTileScale":1,"color":{"_class":"color","red":0,"green":0,"blue":0,"alpha":0.5}}]}', JSON.stringify(instance));
+    });
+});

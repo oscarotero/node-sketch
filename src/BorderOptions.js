@@ -1,6 +1,3 @@
-const BorderLineCapStyles = [0, 1, 2];
-const BorderLineJoinStyles = [0, 1, 2];
-
 module.exports = class BorderOptions {
     constructor(data) {
         Object.assign(this,

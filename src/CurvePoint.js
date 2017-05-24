@@ -1,5 +1,3 @@
-const CurveMode = [0, 1, 2, 3, 4];
-
 module.exports = class CurvePoint {
     constructor(data) {
         Object.assign(this,
