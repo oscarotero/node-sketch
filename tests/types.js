@@ -210,3 +210,17 @@ describe('Triangle', function () {
         assert.equal('{"_class":"triangle","do_objectID":null,"isFlippedHorizontal":false,"isFlippedVertical":false,"isLocked":false,"isVisible":true,"layerListExpandedType":0,"name":"Path","nameIsFixed":false,"resizingConstraint":63,"resizingType":0,"rotation":0,"shouldBreakMaskChain":false,"booleanOperation":-1,"edited":false,"isEquilateral":false,"frame":{"_class":"rect","constrainProportions":false,"x":0,"y":0,"width":500,"height":500},"exportOptions":{"_class":"exportOptions","exportFormats":[],"includedLayerIds":[],"layerOptions":0,"shouldTrim":false},"path":{"_class":"path","isClosed":true,"pointRadiusBehaviour":1,"points":[]}}', JSON.stringify(instance));
     });
 });
+
+describe('TextStyle', function () {
+    it('Create empty instances', function () {
+        const instance = new sketch.TextStyle();
+
+        assert.equal('{"_class":"textStyle","encodedAttributes":{}}', JSON.stringify(instance));
+    });
+
+    it('Create instances', function () {
+        const instance = new sketch.TextStyle({encodedAttributes: { NSColor: {_archive: ''}}});
+
+        assert.equal('{"_class":"textStyle","encodedAttributes":{"NSColor":{"_archive":""}}}', JSON.stringify(instance));
+    });
+});
