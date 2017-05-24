@@ -1,15 +1,35 @@
-const _class = Symbol.for('Class');
 const _parent = Symbol.for('Parent');
 const lib = require('../index');
 
-class Layer extends Array {
-    constructor(parent, data) {
+module.exports = class Layer extends Array {
+    constructor(parent, data, extraData) {
         super();
 
         this[_parent] = parent;
-        this[_class] = data._class;
-        this.data = data;
 
+        Object.assign(this,
+            {
+                _class: null,
+                do_objectID: null,
+                name: '',
+                nameIsFixed: false,
+                isVisible: true,
+                isLocked: false,
+                layerListExpandedType: null,
+                hasClickThrough: null,
+                isFlippedHorizontal: false,
+                isFlippedVertical: false,
+                rotation: 0,
+                shouldBreakMaskChain: false,
+                resizingType: 0
+            },
+            extraData,
+            data
+        );
+
+        if ('style' in data) {
+            //this.style = new Style(data.style);
+        }
         if (Array.isArray(data.layers)) {
             data.layers.forEach((layerData) => this.push(lib.create(this, layerData)));
         }
@@ -17,58 +37,6 @@ class Layer extends Array {
 
     static get [Symbol.species]() {
         return Array;
-    }
-
-    get id() {
-        return this.data.do_objectID;
-    }
-
-    get name() {
-        return this.data.name;
-    }
-
-    set name(name) {
-        this.data.name = name;
-    }
-
-    get type() {
-        return this[_class];
-    }
-
-    get parent() {
-        return this[_parent];
-    }
-
-    get width() {
-        return this.data.frame.width;
-    }
-
-    set width(val) {
-        this.data.frame.width = val;
-    }
-
-    get height() {
-        return this.data.frame.height;
-    }
-
-    set height(val) {
-        this.data.frame.height = val;
-    }
-
-    get x() {
-        return this.data.frame.x;
-    }
-
-    set x(val) {
-        this.data.frame.x = val;
-    }
-
-    get y() {
-        return this.data.frame.y;
-    }
-
-    set y(val) {
-        this.data.frame.y = val;
     }
 
     detach () {
@@ -161,5 +129,3 @@ class Layer extends Array {
         return this.data;
     }
 }
-
-module.exports = Layer;

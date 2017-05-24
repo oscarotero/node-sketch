@@ -17,15 +17,18 @@ const JSZip = require('jszip');
     lib.Star           = require('./src/Star');
     lib.Polygon        = require('./src/Polygon');
     lib.Triangle       = require('./src/Triangle');
+    lib.TextStyle      = require('./src/TextStyle');
 
 
     lib.Sketch         = require('./src/Sketch');
+    /*
     lib.Layer          = require('./src/Layer');
     lib.Artboard       = require('./src/Artboard');
     lib.Page           = require('./src/Page');
     lib.SymbolMaster   = require('./src/SymbolMaster');
     lib.SymbolInstance = require('./src/SymbolInstance');
     lib.ShapeGroup     = require('./src/ShapeGroup');
+    */
 
     // Read a .sketch file and return an instance of Sketch
     lib.read = function (file) {
