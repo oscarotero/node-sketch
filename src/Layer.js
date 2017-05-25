@@ -1,4 +1,7 @@
 const _parent = Symbol.for('Parent');
+const Style = require('./Style');
+const Rect = require('./Rect');
+const ExportOptions = require('./ExportOptions');
 const lib = require('../index');
 
 module.exports = class Layer extends Array {
@@ -21,18 +24,27 @@ module.exports = class Layer extends Array {
                 isFlippedVertical: false,
                 rotation: 0,
                 shouldBreakMaskChain: false,
-                resizingType: 0
+                resizingType: 0,
+                layers: []
             },
             extraData,
             data
         );
 
-        if ('style' in data) {
-            //this.style = new Style(data.style);
+        if ('style' in this) {
+            this.style = new Style(this.style);
         }
-        if (Array.isArray(data.layers)) {
-            data.layers.forEach((layerData) => this.push(lib.create(this, layerData)));
+
+        if ('frame' in this) {
+            this.frame = new Rect(this.frame);
         }
+
+        if ('exportOptions' in this) {
+            this.exportOptions = new ExportOptions(this.exportOptions);
+        }
+
+        this.layers.forEach((layerData) => this.push(lib.create(this, layerData)));
+        delete this.layers;
     }
 
     static get [Symbol.species]() {
@@ -122,10 +134,9 @@ module.exports = class Layer extends Array {
     }
 
     toJson() {
-        if (Array.isArray(this.data.layers)) {
-            this.data.layers = this.map((layer) => layer.toJson());
-        }
+        const json = Object.assign({}, this);
+        json.layers = this.map((layer) => layer.toJson());
 
-        return this.data;
+        return json;
     }
 }

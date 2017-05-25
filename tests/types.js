@@ -294,3 +294,45 @@ describe('Style', function () {
         assert.equal('{"_class":"style","miterLimit":10,"startDecorationType":0,"endDecorationType":0,"fills":[{"_class":"fill","isEnabled":true,"fillType":0,"noiseIndex":0,"noiseIntensity":0,"patternFillType":1,"patternTileScale":1,"color":{"_class":"color","red":0,"green":0,"blue":0,"alpha":0.5}}]}', JSON.stringify(instance));
     });
 });
+
+describe('MSAttributedString', function () {
+    it('Create empty instances', function () {
+        const instance = new sketch.MSAttributedString();
+
+        assert.equal('{"_class":"MSAttributedString","archivedAttributedString":null}', JSON.stringify(instance));
+    });
+
+    it('Create instances', function () {
+        const instance = new sketch.MSAttributedString({archivedAttributedString: 'foo'});
+
+        assert.equal('{"_class":"MSAttributedString","archivedAttributedString":"foo"}', JSON.stringify(instance));
+    });
+});
+
+describe('Text', function () {
+    it('Create empty instances', function () {
+        const instance = new sketch.Text();
+
+        assert.equal('{"_class":"text","do_objectID":null,"isFlippedHorizontal":false,"isFlippedVertical":false,"isLocked":false,"isVisible":true,"layerListExpandedType":0,"name":"Text","nameIsFixed":false,"resizingConstraint":47,"resizingType":0,"rotation":0,"shouldBreakMaskChain":false,"automaticallyDrawOnUnderlyingPath":false,"dontSynchroniseWithSymbol":false,"glyphBounds":"{}","heightIsClipped":false,"lineSpacingBehaviour":2,"textBehaviour":0,"exportOptions":{"_class":"exportOptions","exportFormats":[],"includedLayerIds":[],"layerOptions":0,"shouldTrim":false},"frame":{"_class":"rect","constrainProportions":false,"x":0,"y":0,"width":0,"height":0},"style":{"_class":"style","miterLimit":10,"startDecorationType":0,"endDecorationType":0},"attributedString":{"_class":"MSAttributedString","archivedAttributedString":null}}', JSON.stringify(instance));
+    });
+
+    it('Create instances', function () {
+        const instance = new sketch.Text({isVisible: false});
+
+        assert.equal('{"_class":"text","do_objectID":null,"isFlippedHorizontal":false,"isFlippedVertical":false,"isLocked":false,"isVisible":false,"layerListExpandedType":0,"name":"Text","nameIsFixed":false,"resizingConstraint":47,"resizingType":0,"rotation":0,"shouldBreakMaskChain":false,"automaticallyDrawOnUnderlyingPath":false,"dontSynchroniseWithSymbol":false,"glyphBounds":"{}","heightIsClipped":false,"lineSpacingBehaviour":2,"textBehaviour":0,"exportOptions":{"_class":"exportOptions","exportFormats":[],"includedLayerIds":[],"layerOptions":0,"shouldTrim":false},"frame":{"_class":"rect","constrainProportions":false,"x":0,"y":0,"width":0,"height":0},"style":{"_class":"style","miterLimit":10,"startDecorationType":0,"endDecorationType":0},"attributedString":{"_class":"MSAttributedString","archivedAttributedString":null}}', JSON.stringify(instance));
+    });
+});
+
+describe('Group', function () {
+    it('Create empty instances', function () {
+        const instance = new sketch.Group();
+
+        assert.equal('{"_class":"group","do_objectID":null,"name":"","nameIsFixed":false,"isVisible":true,"isLocked":false,"layerListExpandedType":null,"hasClickThrough":null,"isFlippedHorizontal":false,"isFlippedVertical":false,"rotation":0,"shouldBreakMaskChain":false,"resizingType":0,"layers":[]}', instance.toString());
+    });
+
+    it('Create instances', function () {
+        const instance = new sketch.Group(null, {isVisible: false});
+
+        assert.equal('{"_class":"group","do_objectID":null,"name":"","nameIsFixed":false,"isVisible":false,"isLocked":false,"layerListExpandedType":null,"hasClickThrough":null,"isFlippedHorizontal":false,"isFlippedVertical":false,"rotation":0,"shouldBreakMaskChain":false,"resizingType":0,"layers":[]}', instance.toString());
+    });
+});

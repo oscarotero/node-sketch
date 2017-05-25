@@ -23,6 +23,9 @@ const JSZip = require('jszip');
     lib.MSJSONFileReference    = require('./src/MSJSONFileReference');
     lib.Fill                   = require('./src/Fill');
     lib.Style                  = require('./src/Style');
+    lib.MSAttributedString     = require('./src/MSAttributedString');
+    lib.Text                   = require('./src/Text');
+    lib.Group                  = require('./src/Group');
 
 
     lib.Sketch         = require('./src/Sketch');
