@@ -336,3 +336,73 @@ describe('Group', function () {
         assert.equal('{"_class":"group","do_objectID":null,"name":"","nameIsFixed":false,"isVisible":false,"isLocked":false,"layerListExpandedType":null,"hasClickThrough":null,"isFlippedHorizontal":false,"isFlippedVertical":false,"rotation":0,"shouldBreakMaskChain":false,"resizingType":0,"layers":[]}', instance.toString());
     });
 });
+
+describe('ShapeGroup', function () {
+    it('Create empty instances', function () {
+        const instance = new sketch.ShapeGroup();
+
+        assert.equal('{"_class":"shapeGroup","do_objectID":null,"name":"","nameIsFixed":false,"isVisible":true,"isLocked":false,"layerListExpandedType":null,"hasClickThrough":false,"isFlippedHorizontal":false,"isFlippedVertical":false,"rotation":0,"shouldBreakMaskChain":false,"resizingType":0,"resizingConstraint":63,"clippingMaskMode":0,"hasClippingMask":false,"windingRule":1,"layers":[]}', instance.toString());
+    });
+
+    it('Create instances', function () {
+        const instance = new sketch.ShapeGroup(null, {rotation: 50});
+
+        assert.equal('{"_class":"shapeGroup","do_objectID":null,"name":"","nameIsFixed":false,"isVisible":true,"isLocked":false,"layerListExpandedType":null,"hasClickThrough":false,"isFlippedHorizontal":false,"isFlippedVertical":false,"rotation":50,"shouldBreakMaskChain":false,"resizingType":0,"resizingConstraint":63,"clippingMaskMode":0,"hasClippingMask":false,"windingRule":1,"layers":[]}', instance.toString());
+    });
+});
+
+describe('Artboard', function () {
+    it('Create empty instances', function () {
+        const instance = new sketch.Artboard();
+
+        assert.equal('{"_class":"artboard","do_objectID":null,"name":"","nameIsFixed":false,"isVisible":true,"isLocked":false,"layerListExpandedType":2,"hasClickThrough":true,"isFlippedHorizontal":false,"isFlippedVertical":false,"rotation":0,"shouldBreakMaskChain":false,"resizingType":0,"resizingConstraint":63,"clippingMaskMode":0,"hasClippingMask":false,"windingRule":1,"hasBackgroundColor":false,"includeBackgroundColorInExport":true,"includeInCloudUpload":true,"resizesContent":false,"horizontalRulerData":{"_class":"rulerData","base":0,"guides":[]},"verticalRulerData":{"_class":"rulerData","base":0,"guides":[]},"layers":[]}', instance.toString());
+    });
+
+    it('Create instances', function () {
+        const instance = new sketch.Artboard(null, {backgroundColor: {red: 0.5}});
+
+        assert.equal('{"_class":"artboard","do_objectID":null,"name":"","nameIsFixed":false,"isVisible":true,"isLocked":false,"layerListExpandedType":2,"hasClickThrough":true,"isFlippedHorizontal":false,"isFlippedVertical":false,"rotation":0,"shouldBreakMaskChain":false,"resizingType":0,"resizingConstraint":63,"clippingMaskMode":0,"hasClippingMask":false,"windingRule":1,"hasBackgroundColor":false,"includeBackgroundColorInExport":true,"includeInCloudUpload":true,"resizesContent":false,"backgroundColor":{"_class":"color","red":0.5,"green":0,"blue":0,"alpha":1},"horizontalRulerData":{"_class":"rulerData","base":0,"guides":[]},"verticalRulerData":{"_class":"rulerData","base":0,"guides":[]},"layers":[]}', instance.toString());
+    });
+});
+
+describe('Page', function () {
+    it('Create empty instances', function () {
+        const instance = new sketch.Page();
+
+        assert.equal('{"_class":"page","do_objectID":null,"name":"","nameIsFixed":false,"isVisible":true,"isLocked":false,"layerListExpandedType":0,"hasClickThrough":true,"isFlippedHorizontal":false,"isFlippedVertical":false,"rotation":0,"shouldBreakMaskChain":false,"resizingType":0,"resizingConstraint":0,"includeInCloudUpdate":true,"horizontalRulerData":{"_class":"rulerData","base":0,"guides":[]},"verticalRulerData":{"_class":"rulerData","base":0,"guides":[]},"layers":[]}', instance.toString());
+    });
+
+    it('Create instances', function () {
+        const instance = new sketch.Page(null, {isVisible: false});
+
+        assert.equal('{"_class":"page","do_objectID":null,"name":"","nameIsFixed":false,"isVisible":false,"isLocked":false,"layerListExpandedType":0,"hasClickThrough":true,"isFlippedHorizontal":false,"isFlippedVertical":false,"rotation":0,"shouldBreakMaskChain":false,"resizingType":0,"resizingConstraint":0,"includeInCloudUpdate":true,"horizontalRulerData":{"_class":"rulerData","base":0,"guides":[]},"verticalRulerData":{"_class":"rulerData","base":0,"guides":[]},"layers":[]}', instance.toString());
+    });
+});
+
+describe('SymbolInstance', function () {
+    it('Create empty instances', function () {
+        const instance = new sketch.SymbolInstance();
+
+        assert.equal('{"_class":"symbolInstance","do_objectID":null,"name":"","nameIsFixed":false,"isVisible":true,"isLocked":false,"layerListExpandedType":null,"hasClickThrough":null,"isFlippedHorizontal":false,"isFlippedVertical":false,"rotation":0,"shouldBreakMaskChain":false,"resizingType":0,"resizingConstraint":63,"horizontalSpacing":0,"verticalSpacing":0,"masterInfluenceEdgeMinXPadding":5,"masterInfluenceEdgeMaxXPadding":5,"masterInfluenceEdgeMinYPadding":5,"masterInfluenceEdgeMaxYPadding":5,"symbolID":null,"layers":[]}', instance.toString());
+    });
+
+    it('Create instances', function () {
+        const instance = new sketch.SymbolInstance(null, {isVisible: false});
+
+        assert.equal('{"_class":"symbolInstance","do_objectID":null,"name":"","nameIsFixed":false,"isVisible":false,"isLocked":false,"layerListExpandedType":null,"hasClickThrough":null,"isFlippedHorizontal":false,"isFlippedVertical":false,"rotation":0,"shouldBreakMaskChain":false,"resizingType":0,"resizingConstraint":63,"horizontalSpacing":0,"verticalSpacing":0,"masterInfluenceEdgeMinXPadding":5,"masterInfluenceEdgeMaxXPadding":5,"masterInfluenceEdgeMinYPadding":5,"masterInfluenceEdgeMaxYPadding":5,"symbolID":null,"layers":[]}', instance.toString());
+    });
+});
+
+describe('SymbolMaster', function () {
+    it('Create empty instances', function () {
+        const instance = new sketch.SymbolMaster();
+
+        assert.equal('{"_class":"symbolMaster","do_objectID":null,"name":"","nameIsFixed":false,"isVisible":true,"isLocked":false,"layerListExpandedType":null,"hasClickThrough":null,"isFlippedHorizontal":false,"isFlippedVertical":false,"rotation":0,"shouldBreakMaskChain":false,"resizingType":0,"resizingConstraint":63,"includeInCloudUpload":true,"hasBackgroundColor":false,"includeBackgroundColorInstance":true,"resizesContent":false,"symbolID":null,"changeIdentifier":null,"horizontalRulerData":{"_class":"rulerData","base":0,"guides":[]},"verticalRulerData":{"_class":"rulerData","base":0,"guides":[]},"layers":[]}', instance.toString());
+    });
+
+    it('Create instances', function () {
+        const instance = new sketch.SymbolMaster(null, {isVisible: false});
+
+        assert.equal('{"_class":"symbolMaster","do_objectID":null,"name":"","nameIsFixed":false,"isVisible":false,"isLocked":false,"layerListExpandedType":null,"hasClickThrough":null,"isFlippedHorizontal":false,"isFlippedVertical":false,"rotation":0,"shouldBreakMaskChain":false,"resizingType":0,"resizingConstraint":63,"includeInCloudUpload":true,"hasBackgroundColor":false,"includeBackgroundColorInstance":true,"resizesContent":false,"symbolID":null,"changeIdentifier":null,"horizontalRulerData":{"_class":"rulerData","base":0,"guides":[]},"verticalRulerData":{"_class":"rulerData","base":0,"guides":[]},"layers":[]}', instance.toString());
+    });
+});

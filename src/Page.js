@@ -1,14 +1,18 @@
 const Layer = require('./Layer');
-const utils = require('./utils');
+const RulerData = require('./RulerData');
 
-class Page extends Layer {
-    getSymbols() {
-        return utils.mapSymbols(this.filter((layer) => layer.type === 'symbolMaster'));
-    }
+module.exports = class Page extends Layer {
+    constructor(parent, data) {
+        super(parent, data, {
+            _class: 'page',
+            resizingConstraint: 0,
+            rotation: 0,
+            layerListExpandedType: 0,
+            hasClickThrough: true,
+            includeInCloudUpdate: true
+        });
 
-    searchSymbol(condition) {
-        return this.find((layer) => layer.type === 'symbolMaster' && condition(layer));
+        this.horizontalRulerData = new RulerData(this.horizontalRulerData);
+        this.verticalRulerData = new RulerData(this.verticalRulerData);
     }
 }
-
-module.exports = Page;

@@ -26,17 +26,13 @@ const JSZip = require('jszip');
     lib.MSAttributedString     = require('./src/MSAttributedString');
     lib.Text                   = require('./src/Text');
     lib.Group                  = require('./src/Group');
+    lib.ShapeGroup             = require('./src/ShapeGroup');
+    lib.Artboard               = require('./src/Artboard');
+    lib.Page                   = require('./src/Page');
+    lib.SymbolInstance         = require('./src/SymbolInstance');
+    lib.SymbolMaster           = require('./src/SymbolMaster');
 
-
-    lib.Sketch         = require('./src/Sketch');
-    /*
-    lib.Layer          = require('./src/Layer');
-    lib.Artboard       = require('./src/Artboard');
-    lib.Page           = require('./src/Page');
-    lib.SymbolMaster   = require('./src/SymbolMaster');
-    lib.SymbolInstance = require('./src/SymbolInstance');
-    lib.ShapeGroup     = require('./src/ShapeGroup');
-    */
+    lib.Sketch                 = require('./src/Sketch');
 
     // Read a .sketch file and return an instance of Sketch
     lib.read = function (file) {
@@ -88,7 +84,7 @@ const JSZip = require('jszip');
             return new lib[className](parent, data);
         }
 
-        return new lib.Layer(parent, data);
+        throw new Error(`Unknow class ${className}`);
     };
 
 })(require('./index'));
