@@ -1,5 +1,6 @@
 const Layer = require('./Layer');
 const RulerData = require('./RulerData');
+const lib = require('../');
 
 module.exports = class SymbolMaster extends Layer {
     constructor(parent, data) {
@@ -17,6 +18,7 @@ module.exports = class SymbolMaster extends Layer {
 
         this.horizontalRulerData = new RulerData(this.horizontalRulerData);
         this.verticalRulerData = new RulerData(this.verticalRulerData);
+        this.layers = this.layers.map((layer) => createChild(layer));
 
         if ('overrides' in this) {
             this.overrides = this.overrides.map((override) => {
@@ -25,4 +27,14 @@ module.exports = class SymbolMaster extends Layer {
             });
         }
     }
+}
+
+function createChild(layer) {
+    const child = lib.create(this, layer);
+
+    if (!child instanceof Layer) {
+        throw new Error('Invalid data: ' + layer);
+    }
+
+    return child;
 }

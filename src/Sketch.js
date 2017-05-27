@@ -1,5 +1,5 @@
 const fs = require('fs');
-const lib = require('../index');
+const Page = require('./Page');
 const utils = require('./utils');
 
 class Sketch {
@@ -8,7 +8,7 @@ class Sketch {
         this.document = document;
         this.meta = meta;
         this.user = user;
-        this.pages = pages.map((page) => lib.create(this, page));
+        this.pages = pages.map((page) => new Page(this, page));
     }
 
     search(condition) {
@@ -48,12 +48,12 @@ class Sketch {
         const pagesFolder = this.repo.folder('pages');
 
         this.document.pages = this.pages.map((page) => {
-            this.repo.file(`pages/${page.id}.json`, page.toString());
+            this.repo.file(`pages/${page.do_objectID}.json`, JSON.stringify(page));
 
             return {
                 _class: 'MSJSONFileReference',
                 _ref_class: 'MSImmutablePage',
-                _ref: `pages/${page.id}`
+                _ref: `pages/${page.do_objectID}`
             };
         });
 

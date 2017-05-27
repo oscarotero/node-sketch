@@ -1,6 +1,7 @@
 const Layer = require('./Layer');
 const Color = require('./Color');
 const RulerData = require('./RulerData');
+const lib = require('../');
 
 module.exports = class Artboard extends Layer {
     constructor(parent, data) {
@@ -10,9 +11,6 @@ module.exports = class Artboard extends Layer {
             rotation: 0,
             layerListExpandedType: 2,
             hasClickThrough: true,
-            clippingMaskMode: 0,
-            hasClippingMask: false,
-            windingRule: 1,
             hasBackgroundColor: false,
             includeBackgroundColorInExport: true,
             includeInCloudUpload: true,
@@ -25,5 +23,16 @@ module.exports = class Artboard extends Layer {
 
         this.horizontalRulerData = new RulerData(this.horizontalRulerData);
         this.verticalRulerData = new RulerData(this.verticalRulerData);
+        this.layers = this.layers.map((layer) => createChild(layer));
     }
+}
+
+function createChild(layer) {
+    const child = lib.create(this, layer);
+
+    if (!child instanceof Layer) {
+        throw new Error('Invalid data: ' + layer);
+    }
+
+    return child;
 }

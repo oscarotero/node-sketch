@@ -1,8 +1,8 @@
 const Shape = require('./Shape');
 
 module.exports = class Oval extends Shape {
-    constructor(data) {
-        super(data, {
+    constructor(parent, data) {
+        super(parent, data, {
             _class: 'oval'
         });
     }

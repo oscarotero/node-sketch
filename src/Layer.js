@@ -4,10 +4,8 @@ const Rect = require('./Rect');
 const ExportOptions = require('./ExportOptions');
 const lib = require('../index');
 
-module.exports = class Layer extends Array {
+module.exports = class Layer {
     constructor(parent, data, extraData) {
-        super();
-
         this[_parent] = parent;
 
         Object.assign(this,
@@ -42,9 +40,6 @@ module.exports = class Layer extends Array {
         if ('exportOptions' in this) {
             this.exportOptions = new ExportOptions(this.exportOptions);
         }
-
-        this.layers.forEach((layerData) => this.push(lib.create(this, layerData)));
-        delete this.layers;
     }
 
     static get [Symbol.species]() {
@@ -53,10 +48,10 @@ module.exports = class Layer extends Array {
 
     detach () {
         if (this[_parent]) {
-            const index = this[_parent].indexOf(this);
+            const index = this[_parent].layers.indexOf(this);
 
             if (index !== -1) {
-                this[_parent].splice(index, 1);
+                this[_parent].layers.splice(index, 1);
                 this[_parent] = null;
             }
         }
@@ -68,39 +63,41 @@ module.exports = class Layer extends Array {
         layer = layer.detach();
         layer[_parent] = this;
 
-        return super.push(layer);
+        return this.layers.push(layer);
     }
 
     unshift (layer) {
         layer = layer.detach();
         layer[_parent] = this;
 
-        return super.unshift(layer);
+        return this.layers.unshift(layer);
     }
 
     splice (start, deleteCount, layer) {
         if (!layer) {
-            return super.splice(start, deleteCount);
+            return this.layers.splice(start, deleteCount);
         }
 
         layer = layer.detach();
         layer[_parent] = this;
 
-        return super.splice(start, deleteCount, layer);
+        return this.layers.splice(start, deleteCount, layer);
     }
 
     search(condition) {
-        let layer = this.find(condition);
+        let layer = this.layers.find(condition);
 
         if (layer) {
             return layer;
         }
 
         for (let child of this) {
-            layer = child.search(condition);
+            if ('layers' in child) {
+                layer = child.layers.search(condition);
 
-            if (layer) {
-                return layer;
+                if (layer) {
+                    return layer;
+                }
             }
         }
     }
@@ -108,13 +105,11 @@ module.exports = class Layer extends Array {
     searchAll(condition, result) {
         result = result || [];
 
-        this
+        this.layers
             .filter(condition)
             .forEach((layer) => result.push(layer));
 
-        for (let child of this) {
-            child.searchAll(condition, result);
-        }
+        this.layers.forEach((child) => child.searchAll(condition, result));
 
         return result;
     }
@@ -127,16 +122,5 @@ module.exports = class Layer extends Array {
         }
 
         return parent;
-    }
-
-    toString() {
-        return JSON.stringify(this.toJson());
-    }
-
-    toJson() {
-        const json = Object.assign({}, this);
-        json.layers = this.map((layer) => layer.toJson());
-
-        return json;
     }
 }

@@ -5,5 +5,17 @@ module.exports = class Group extends Layer {
         super(parent, data, {
             _class: 'group'
         });
+
+        this.layers = this.layers.map((layer) => createChild(layer));
     }
+}
+
+function createChild(layer) {
+    const child = lib.create(this, layer);
+
+    if (!child instanceof Layer) {
+        throw new Error('Invalid data: ' + layer);
+    }
+
+    return child;
 }

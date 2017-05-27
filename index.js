@@ -84,7 +84,7 @@ const JSZip = require('jszip');
             return new lib[className](parent, data);
         }
 
-        throw new Error(`Unknow class ${className}`);
+        throw new Error(`Invalid class ${className}`);
     };
 
 })(require('./index'));
