@@ -1,4 +1,4 @@
-# node-sketch
+# 💎 node-sketch
 Javascript library to manipulate sketch files
 
 ## Install
