@@ -1,22 +1,10 @@
+const Node         = require('./Node');
 const GradientStop = require('./GradientStop');
 
-module.exports = class Gradient {
+module.exports = class Gradient extends Node {
     constructor(data) {
-        Object.assign(this,
-            {
-                _class: 'gradient',
-                elipseLength: 0,
-                from: "{0, 0}",
-                to: "{1, 1}",
-                gradientType: 1,
-                shouldSmoothenOpacity: false,
-                stops: []
-            },
-            data
-        );
+        super(data);
 
-        this.stops = this.stops.map((stop) => {
-            return new GradientStop(stop);
-        });
+        this.stops = this.stops.map((stop) => new GradientStop(stop));
     }
 }

@@ -1,29 +1,15 @@
-const Layer = require('./Layer');
-const RulerData = require('./RulerData');
-const lib = require('../');
+const LayerContainer = require('./LayerContainer');
+const RulerData      = require('./RulerData');
 
-module.exports = class Page extends Layer {
+module.exports = class Page extends LayerContainer {
     constructor(parent, data) {
-        super(parent, data, {
-            _class: 'page',
-            resizingConstraint: 0,
-            rotation: 0,
-            layerListExpandedType: 0,
-            hasClickThrough: true
-        });
+        super(parent, data);
 
         this.horizontalRulerData = new RulerData(this.horizontalRulerData);
         this.verticalRulerData = new RulerData(this.verticalRulerData);
-        this.layers = this.layers.map((layer) => createChild(layer));
-    }
-}
-
-function createChild(layer) {
-    const child = lib.create(this, layer);
-
-    if (!child instanceof Layer) {
-        throw new Error('Invalid data: ' + layer);
     }
 
-    return child;
+    getSymbols() {
+        return this.layers.filter((layer) => layer.type === 'symbolMaster');
+    }
 }

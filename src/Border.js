@@ -1,18 +1,9 @@
+const Node  = require('./Node');
 const Color = require('./Color');
 
-module.exports = class Border {
+module.exports = class Border extends Node {
     constructor(data) {
-        Object.assign(this,
-            {
-                _class: 'border',
-                isEnabled: true,
-                fillType: 0,
-                position: 1,
-                thickness: 1,
-            },
-            data
-        );
-
+        super(data);
         this.color = new Color(this.color);
     }
 }

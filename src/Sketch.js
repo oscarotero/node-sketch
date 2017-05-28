@@ -11,7 +11,7 @@ class Sketch {
         this.pages = pages.map((page) => new Page(this, page));
     }
 
-    search(condition) {
+    searchLayer(condition) {
         for (let page of this.pages) {
             let layer = page.search(condition);
 
@@ -21,20 +21,12 @@ class Sketch {
         }
     }
 
-    searchAll(condition, result) {
+    searchLayers(condition, result) {
         result = result || [];
 
         for (let page of this.pages) {
-            page.searchAll(condition).forEach((layer) => result.push(layer));
+            page.searchLayers(condition).forEach((layer) => result.push(layer));
         }
-
-        return result;
-    }
-
-    getSymbols() {
-        const result = new Map();
-
-        this.pages.forEach((page) => utils.mapSymbols(page.getSymbols(), result));
 
         return result;
     }

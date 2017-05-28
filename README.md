@@ -8,25 +8,15 @@ const ns = require('node-sketch');
 
 ns.read('design.sketch').then((sketch) => {
 
-    //Iterate with the pages
-    sketch.pages.forEach((page) => {
-        console.log(page.name);
-
-        //Iterate with the artboards
-        page.forEach((artboard) => {
-            console.log(artboard.name);
-        });
-    });
-
     //Get the 'Symbols' page
     const symbolsPage = sketch.getSymbolsPage();
 
-    //Search for the symbol 'button'
-    const buttonSymbol = symbolsPage.searchSymbol((symbol) => symbol.name === 'button');
+    //Search the symbol named 'button'
+    const buttonSymbol = symbolsPage.getSymbols().find((symbol) => symbol.name === 'button');
 
-    //Search all instances of a symbol called 'old-button' and replace it with 'button'
+    //Search all instances of a symbol named 'old-button' and replace it with 'button'
     sketch
-        .searchAll((layer) => {
+        .searchLayers((layer) => {
             return layer.type === 'symbolInstance' && layer.symbol.name === 'old-button';
         })
         .forEach((symbolInstance) {
@@ -64,28 +54,20 @@ Name | Type | Description
 
 It contains also some useful methods:
 
-#### search(condition)
+#### searchLayer(condition)
 
-Returns the first element matching with the condition. Example:
+Returns the first layer (artboard, group, shape, etc) matching with the condition. Example:
 
 ```js
 const group = sketch.search((layer) => layer.type === 'group');
 ```
 
-#### searchAll(condition)
+#### searchLayers(condition)
 
 Returns an array with all elements matching with the condition. Example:
 
 ```js
-const groups = sketch.searchAll((layer) => layer.type === 'group');
-```
-
-#### getSymbols()
-
-Returns a Map instance with all master symbols of all pages the document. The symbol ID is used as key. Example:
-
-```js
-const symbols = sketch.getSymbols();
+const groups = sketch.searchLayers((layer) => layer.type === 'group');
 ```
 
 #### getSymbolsPage()
@@ -104,37 +86,62 @@ Saves the sketch file
 sketch.save('awesome-design.sketch');
 ```
 
-## Layer
+## Scheme
 
-All elements in a sketch file are "layers". They can be pages, artboards, groups, symbols, etc. The `Layer` class (and all subclasses) extends `Array`, so all methods like `filter`, `forEach`, `map`, etc, can be used to iterate with the layer children. For example:
+This library converts the sketch json data to a javascript tree of classes.
 
-```js
-//Get the first page
-const page = sketch.pages[0];
+```
+                            has layers   has parent
+Node (base class)
+  - Border                      -            -
+  - BorderOptions               -            -
+  - Color                       -            -
+  - CurvePoint                  -            -
+  - ExportOptions               -            -
+  - Fill                        -            -
+  - Gradient                    -            -
+  - GradientStop                -            -
+  - GraphicContextSettings      -            -
+  - MSAttributedString          -            -
+  - MSJSONFileReference         -            -
+  - Path                        -            -
+  - Rect                        -            -
+  - RulerData                   -            -
+  - Shadow                      -            -
+  - Style                       -            -
+  - TextStyle                   -            -
 
-//Iterate with the page children (usually artboards and symbols)
-page.forEach((child) => {
-    console.log(child.name);
+    Layer
+      - SymbolInstance          -           YES
+      - Text                    -           YES
 
-    //Iterate also with the children of the child
-    child.forEach((subchild) => {
-        console.log(subchild.name + ' is inside ' + child.name);
-    });
-});
+        Shape
+          - Oval                -           YES
+          - Polygon             -           YES
+          - Rectangle           -           YES
+          - Star                -           YES
+          - Triangle            -           YES
+
+        LayerContainer
+          - Artboard           YES          YES
+          - Group              YES          YES
+          - Page               YES          YES
+          - ShapeGroup         YES          YES
+          - SymbolMaster       YES          YES
 ```
 
-All `Layer` instances have the following properties:
+
+## Layer
+
+Many elements in a sketch file are "layers". They can be pages, texts, groups, symbols, etc, and have other parent layers (with the exception of pages that have the sketch instance as parent).
+
+All `Layer` instances have at least the following properties:
 
 Name | Type | Editable | Description
 -----|------|----------|------------
-`id` | `string` | No | The element unique id
-`name` | `string` | Yes | The name
+`id` | `string` | No | An unique id
 `type` | `string` | No | The element type (for exampe: page, artboard, symbolInstance, symbolMaster, etc)
 `parent` | `Layer` | No | The parent of the element
-`width` | `int` | Yes | The width of the element
-`height` | `int` | Yes | The height of the element
-`x` | `int` | Yes | The x position of the element
-`y` | `int` | Yes | The y position of the element
 
 It contains also the following methods:
 
@@ -147,79 +154,63 @@ const firstPage = sketch.pages[0];
 const firstArtboard = firstPage[0].detach();
 ```
 
-#### search(condition)
-
-Returns the first inner element matching with the condition. Example:
-
-```js
-const group = firstArboard.search((layer) => layer.type === 'group');
-```
-
-#### searchAll(condition)
-
-Returns an array with all inner elements matching with the condition. Example:
-
-```js
-const groups = firstArboard.searchAll((layer) => layer.type === 'group');
-```
-
 #### searchParent(condition)
 
-Returns the first parent element matching with the condition. Example:
+Returns the first parent layer matching with the condition. Example:
 
 ```js
 const page = layer.searchParent((parent) => parent.type === 'page');
 ```
 
-#### toJson()
+## LayerContainer
 
-Returns the json data with all info.
+Some layers can contains other layers inside, like in a tree. For example the layers of type artboard, contains groups, shapes, texts, etc.
 
 ```js
-const json = firstArboard.toJson();
+//Get the first page
+const page = sketch.pages[0];
+
+//Iterate with the page layers (usually artboards and symbols)
+page.layers.forEach((child) => {
+    console.log(child.name);
+
+    //Iterate also with the sublayers
+    child.layers.forEach((subchild) => {
+        console.log(subchild.name + ' is inside ' + child.name);
+    });
+});
 ```
 
-## Layer extensions
+`LayerContainers` inherit the methods and properties of `Layer` but adding the following methods:
 
-### Page
+#### searchLayer(condition)
 
-`Page` is a subclass of `Layer`, so it inherit all its properties and methods, but including also the following additions:
+Returns the first inner layer matching with the condition. Example:
+
+```js
+const group = firstArboard.searchLayer((layer) => layer.type === 'group');
+```
+
+#### searchLayers(condition)
+
+Returns an array with all inner layers matching with the condition. Example:
+
+```js
+const groups = firstArboard.searchLayers((layer) => layer.type === 'group');
+```
+
+## Page
+
+`Page` is a subclass of `LayerContainer`, so it inherit all its properties and methods, but including also the following additions:
 
 #### getSymbols()
 
-Returns a Map instance with all master symbols defined in the page. The key of the values is the symbol ID. Example:
+Returns an array with all master symbols defined in the page. Example:
 
 ```js
 const page = sketch.pages[0];
 const symbols = page.getSymbols();
 ```
-
-#### searchSymbol(condition)
-
-Search for a specific symbol defined in the page. Example:
-
-```js
-const page = sketch.pages[0];
-const buttonSymbol = page.searchSymbol((symbol) => symbol.name === 'button');
-```
-
----
-
-### ShapeGroup
-
-`ShapeGroup` is a subclass of `Layer`.
-
----
-
-### SymbolMaster
-
-`SymbolMaster` is a subclass of `Layer`. In addition to all properties and methods, includes also the following properties:
-
-Name | Type | Editable | Description
------|------|----------|------------
-`symbolId` | `string` | No | The unique id to identify the symbol
-
----
 
 ### SymbolInstance
 
@@ -227,5 +218,4 @@ Name | Type | Editable | Description
 
 Name | Type | Editable | Description
 -----|------|----------|------------
-`symbolId` | `string` | Yes | The unique id to identify the symbol master
 `symbol` | `SymbolMaster` | Yes | The reference to the symbol master

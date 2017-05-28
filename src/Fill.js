@@ -1,21 +1,11 @@
-const Color = require('./Color');
-const Gradient = require('./Gradient');
+const Node                = require('./Node');
+const Color               = require('./Color');
+const Gradient            = require('./Gradient');
 const MSJSONFileReference = require('./MSJSONFileReference');
 
-module.exports = class Fill {
+module.exports = class Color extends Node {
     constructor(data) {
-        Object.assign(this,
-            {
-                _class: 'fill',
-                isEnabled: true,
-                fillType: 0,
-                noiseIndex: 0,
-                noiseIntensity: 0,
-                patternFillType: 1,
-                patternTileScale: 1
-            },
-            data
-        );
+        super(data);
 
         if ('color' in this) {
             this.color = new Color(this.color);

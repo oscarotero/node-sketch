@@ -1,11 +1,4 @@
-module.exports = class MSAttributedString {
-    constructor(data) {
-        Object.assign(this,
-            {
-                _class: 'MSAttributedString',
-                archivedAttributedString: null
-            },
-            data
-        );
-    }
+const Node = require('./Node');
+
+module.exports = class MSAttributedString extends Node {
 }

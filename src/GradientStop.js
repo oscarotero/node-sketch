@@ -1,15 +1,9 @@
+const Node  = require('./Node');
 const Color = require('./Color');
 
-module.exports = class GradientStop {
+module.exports = class GradientStop extends Node {
     constructor(data) {
-        Object.assign(this,
-            {
-                _class: 'gradientStop',
-                position: 0
-            },
-            data
-        );
-
+        super(data);
         this.color = new Color(this.color);
     }
 }

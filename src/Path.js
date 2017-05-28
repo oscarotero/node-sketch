@@ -1,19 +1,10 @@
+const Node       = require('./Node');
 const CurvePoint = require('./CurvePoint');
 
-module.exports = class Path {
+module.exports = class Path extends Node {
     constructor(data) {
-        Object.assign(this,
-            {
-                _class: 'path',
-                isClosed: true,
-                pointRadiusBehaviour: 1,
-                points: []
-            },
-            data
-        );
+        super(data);
 
-        this.points = this.points.map((point) => {
-            return new CurvePoint(point);
-        });
+        this.points = this.points.map((point) => new CurvePoint(point));
     }
 }

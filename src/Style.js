@@ -1,20 +1,13 @@
+const Node          = require('./Node');
 const BorderOptions = require('./BorderOptions');
-const Shadow = require('./Shadow');
-const Border = require('./Border');
-const Fill = require('./Fill');
-const TextStyle = require('./TextStyle');
+const Shadow        = require('./Shadow');
+const Border        = require('./Border');
+const Fill          = require('./Fill');
+const TextStyle     = require('./TextStyle');
 
-module.exports = class BorderOptions {
+module.exports = class Style extends Node {
     constructor(data) {
-        Object.assign(this,
-            {
-                _class: 'style',
-                miterLimit: 10,
-                startDecorationType: 0,
-                endDecorationType: 0,
-            },
-            data
-        );
+        super(data);
 
         if ('borderOptions' in this) {
             this.borderOptions = new BorderOptions(this.borderOptions);
