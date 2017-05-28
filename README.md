@@ -12,16 +12,12 @@ ns.read('design.sketch').then((sketch) => {
     const symbolsPage = sketch.getSymbolsPage();
 
     //Search the symbol named 'button'
-    const buttonSymbol = symbolsPage.getAllSymbols().find((symbol) => symbol.name === 'button');
+    const buttonSymbol = symbolsPage.findSymbol(symbol => symbol.name === 'button');
 
     //Search all instances of a symbol named 'old-button' and replace it with 'button'
     sketch
-        .searchLayers((layer) => {
-            return layer.type === 'symbolInstance' && layer.symbol.name === 'old-button';
-        })
-        .forEach((symbolInstance) {
-            symbolInstance.symbol = buttonSymbol;
-        });
+        .findAllLayers('symbolInstance', layer => layer.symbol.name === 'old-button')
+        .forEach(symbolInstance => symbolInstance.symbol = buttonSymbol);
 
     //Save the result
     sketch.save('modified-design.sketch');
@@ -30,9 +26,53 @@ ns.read('design.sketch').then((sketch) => {
 
 # API
 
+## The Class inheritance
+
+This is a list of all classes and subclasses provided
+
+- [`Sketch`](#sketch)
+- [`Node`](#node)
+    - `Blur`
+    - `Border`
+    - `BorderOptions`
+    - `Color`
+    - `CurvePoint`
+    - `ExportFormat`
+    - `ExportOptions`
+    - `Fill`
+    - `Gradient`
+    - `GradientStop`
+    - `GraphicsContextSettings`
+    - `InnerShadow`
+    - `MSAttributedString`
+    - `MSJSONFileReference`
+    - `Path`
+    - `Rect`
+    - `RulerData`
+    - `Shadow`
+    - `Style`
+    - `TextStyle`
+    - [`Layer`](#layer)
+        - `Bitmap`
+        - `Oval`
+        - `Polygon`
+        - `Rectangle`
+        - `ShapePath`
+        - `Slice`
+        - `Star`
+        - [`SymbolInstance`](#symbolinstance)
+        - `Text`
+        - `Triangle`
+        - [`LayerContainer`](#layercontainer)
+            - `Artboard`
+            - `Group`
+            - [`Page`](#page)
+            - `ShapeGroup`
+            - `SymbolMaster`
+
 ## Sketch
 
-The instances of `Sketch` contain all sketch data (pages, artboards, symbols, etc). It's the object returned by `sketch.read`. (Note that the reading is async):
+The `Sketch` instance contain all sketch data (pages, artboards, symbols, etc). It's the object returned by `sketch.read`. (Note that the reading is async):
 
 ```js
 const ns = require('node-sketch');
@@ -42,32 +82,40 @@ ns.read('design.sketch').then((sketch) => {
 });
 ```
 
-The sketch instance contains the following properties:
+It contains the following properties:
 
 Name | Type | Description
 -----|------|-------------
-`repo` | `JSZip` | A instance of JSZip with the sketch file
+`repo` | `JSZip` | A instance of [JSZip](https://stuk.github.io/jszip/) with the sketch file
 `document` | `Object` | The document data
 `meta` | `Object` | The meta data
 `user` | `Object` | The user data
 `pages` | `Array` | The pages in the document
 
-It contains also some useful methods:
+An also some useful methods:
 
-#### searchLayer(condition)
+#### findLayer(type, [condition])
 
-Returns the first layer (artboard, group, shape, etc) matching with the condition. Example:
+Returns the first layer (artboard, group, shape, etc) matching with the type and the condition found in any of the pages of the sketch. Example:
 
 ```js
-const group = sketch.search((layer) => layer.type === 'group');
+//Get the first 'group' found
+const group = sketch.findLayer('group');
+
+//Get the first 'group' found named 'items'
+const group = sketch.findLayer('group', group => group.name === 'items');
 ```
 
-#### searchLayers(condition)
+#### findAllLayers(type, [condition])
 
-Returns an array with all elements matching with the condition. Example:
+Returns an array with all elements matching with the type and condition found in any of the pages of the sketch. Example:
 
 ```js
-const groups = sketch.searchLayers((layer) => layer.type === 'group');
+//Get all symbol instances
+const instances = sketch.findAllLayers('symbolInstance');
+
+//Get all symbol instances named 'my-symbol'
+const instances = sketch.findAllLayers('symbolInstance', symbol => symbol.name === 'my-symbol');
 ```
 
 #### getSymbolsPage()
@@ -83,139 +131,134 @@ const symbolsPage = sketch.getSymbolsPage();
 Saves the sketch file
 
 ```js
-sketch.save('awesome-design.sketch');
+sketch.save('awesome-design.sketch').then(() => {
+    console.log('file saved successfuly');
+});
 ```
 
-## Scheme
+## Node
 
-This library converts the sketch json data to a javascript tree of classes.
-
-```
-                            has layers   has parent
-Node (base class)
-  - Border                      -            -
-  - BorderOptions               -            -
-  - Color                       -            -
-  - CurvePoint                  -            -
-  - ExportOptions               -            -
-  - Fill                        -            -
-  - Gradient                    -            -
-  - GradientStop                -            -
-  - GraphicContextSettings      -            -
-  - MSAttributedString          -            -
-  - MSJSONFileReference         -            -
-  - Path                        -            -
-  - Rect                        -            -
-  - RulerData                   -            -
-  - Shadow                      -            -
-  - Style                       -            -
-  - TextStyle                   -            -
-
-    Layer
-      - SymbolInstance          -           YES
-      - Text                    -           YES
-
-        Shape
-          - Oval                -           YES
-          - Polygon             -           YES
-          - Rectangle           -           YES
-          - Star                -           YES
-          - Triangle            -           YES
-
-        LayerContainer
-          - Artboard           YES          YES
-          - Group              YES          YES
-          - Page               YES          YES
-          - ShapeGroup         YES          YES
-          - SymbolMaster       YES          YES
-```
-
-
-## Layer
-
-Many elements in a sketch file are "layers". They can be pages, texts, groups, symbols, etc, and have other parent layers (with the exception of pages that have the sketch instance as parent).
-
-All `Layer` instances have at least the following properties:
+The `Node` class is the base class extended by all subclasses. Provides the following properties and methods:
 
 Name | Type | Editable | Description
 -----|------|----------|------------
-`id` | `string` | No | An unique id
-`type` | `string` | No | The element type (for exampe: page, artboard, symbolInstance, symbolMaster, etc)
-`parent` | `Layer` | No | The parent of the element
+parent | `Node/Sketch` | No | The parent element. If the element is in the top of the tree (it's a `Page`), returns the `Sketch` instance.
 
-It contains also the following methods:
+#### findParent(type, [condition])
 
-####  detach()
-
-Detach the element from its parent.
+Find an ancestor node matching with the type and condition. Example:
 
 ```js
-const firstPage = sketch.pages[0];
-const firstArtboard = firstPage[0].detach();
+//Get the page in which the element is placed
+const page = rectangle.findParent('page');
+
+//Get the sketch of the page
+const sketch = page.parent;
 ```
 
-#### searchParent(condition)
+## Layer
 
-Returns the first parent layer matching with the condition. Example:
+The `Layer` class extends `Node`, so inherit the same methods and properties, but with the following additions:
+
+Name | Type | Editable | Description
+-----|------|----------|------------
+id | `string` | No | Returns an unique id of the node. It's simply a shortcut of `do_objectID`.
+
+#### detach()
+
+Removes the layer from its parent. It's used if you want to move or remove a layer.
 
 ```js
-const page = layer.searchParent((parent) => parent.type === 'page');
+//Removes a rectangle
+const rectangle = page.findLayer('rectangle').detach();
 ```
 
 ## LayerContainer
 
-Some layers can contains other layers inside, like in a tree. For example the layers of type artboard, contains groups, shapes, texts, etc.
+Some layers can contain other layers (to build the layer tree). The `LayerContainer` class extends `Layer` to inherit the same methods and properties but adding the following methods:
+
+#### findLayer(type, [condition])
+
+Returns the first layer matching with the type and the condition. Example:
 
 ```js
-//Get the first page
-const page = sketch.pages[0];
+//Get the first 'group' found in a page
+const rectangle = page.findLayer('group');
 
-//Iterate with the page layers (usually artboards and symbols)
-page.layers.forEach((child) => {
-    console.log(child.name);
-
-    //Iterate also with the sublayers
-    child.layers.forEach((subchild) => {
-        console.log(subchild.name + ' is inside ' + child.name);
-    });
-});
+//Get the first 'group' found named 'items'
+const group = page.findLayer('group', group => group.name === 'items');
 ```
 
-`LayerContainers` inherit the methods and properties of `Layer` but adding the following methods:
+#### findAllLayers(type, [condition])
 
-#### searchLayer(condition)
-
-Returns the first inner layer matching with the condition. Example:
+Returns an array with all elements matching with the type and condition. Example:
 
 ```js
-const group = firstArboard.searchLayer((layer) => layer.type === 'group');
+//Get all symbol instances
+const instances = page.findAllLayers('symbolInstance');
+
+//Get all symbol instances named 'my-symbol'
+const instances = page.findAllLayers('symbolInstance', symbol => symbol.name === 'my-symbol');
 ```
 
-#### searchLayers(condition)
+#### addLayer(layer, [position])
 
-Returns an array with all inner layers matching with the condition. Example:
+Add a layer as a child of other layer. If `position` is `undefined`, insert the layer in the last position.
 
 ```js
-const groups = firstArboard.searchLayers((layer) => layer.type === 'group');
+//Removes a rectangle
+const rectangle = page.findLayer('rectangle').detach();
+
+//Select the shapeGroup named 'my-shape'
+const group = page.findLayer('shapeGroup', node => node.name === 'my-shape');
+
+//Add the rectangle to the group
+group.addLayer(rectangle);
 ```
 
 ## Page
 
 `Page` is a subclass of `LayerContainer`, so it inherit all its properties and methods, but including also the following additions:
 
-#### getSymbols()
+#### findSymbol([condition])
 
-Returns an array with all master symbols defined in the page. Example:
+Returns the first SymbolMaster matching with the condition. Example:
 
 ```js
-const page = sketch.pages[0];
-const symbols = page.getSymbols();
+const page = sketch.getSymbolsPage();
+
+//Get the symbol named 'button'
+const button = page.findSymbol(symbol => symbol.name === 'button');
 ```
 
-### SymbolInstance
+#### findAllSymbols([condition])
+
+Returns an array with all SymbolMaster matching with the condition. Example:
+
+```js
+const page = sketch.getSymbolsPage();
+
+//Get the symbol starting with 'icon/'
+const icons = page.findSymbol(symbol => symbol.name.startsWith('icon/'));
+```
+
+## SymbolInstance
 
 `SymbolInstance` is a subclass of `Layer`. In addition to all properties and methods, includes also the following properties:
 
 Name | Type | Editable | Description
 -----|------|----------|------------
 `symbol` | `SymbolMaster` | Yes | The reference to the symbol master
+
+```js
+//Get the first page
+cons page = sketch.pages[0];
+
+//Search all instances of symbols
+const symbolInstances = page.findAllLayers('symbolInstances');
+
+symbolInstances.forEach((instance) => {
+    console.log('The symbol ' + instance.name);
+    console.log('is an instance of the symbol ' + instance.symbol.name);
+});
+```

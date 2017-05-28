@@ -30,8 +30,16 @@ class Node {
     return this[_parent];
   }
 
-  set parent(parent) {
-    this[_parent] = parent;
+  findParent(type, condition) {
+    let parent = this[_parent];
+
+    while (parent) {
+      if (parent._class === type && (!condition || condition(parent))) {
+        return parent;
+      }
+
+      parent = parent[_parent];
+    }
   }
 }
 

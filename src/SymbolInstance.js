@@ -8,19 +8,15 @@ class SymbolInstance extends Layer {
     }
 
     //Search in the current page
-    let page = this.searchParent(layer => layer._class === 'page');
-    let master = page
-      .getAllSymbols()
-      .find(symbol => symbol.symbolID === this.symbolID);
+    let page = this.findParent('page');
+    let master = page.findSymbol(symbol => symbol.symbolID === this.symbolID);
 
     //Search in the Symbols page
     if (!master) {
       page = page.parent.getSymbolsPage();
 
       if (page) {
-        master = page
-          .getAllSymbols()
-          .find(symbol => symbol.symbolId === this.symbolId);
+        master = page.findSymbol(symbol => symbol.symbolId === this.symbolId);
       }
     }
 

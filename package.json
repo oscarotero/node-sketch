@@ -1,6 +1,6 @@
 {
   "name": "node-sketch",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Javascript library to manipulate sketch files",
   "main": "index.js",
   "author": "Oscar Otero",
@@ -24,7 +24,7 @@
     "url": "https://github.com/oscarotero/node-sketch/issues"
   },
   "scripts": {
-    "prettier": "prettier --single-quote '{src,tests}/*.js' --write",
+    "pretty": "prettier --single-quote '{src,tests}/*.js' --write",
     "test": "npm run-script test:clean && npm run-script test:run && npm run-script test:diff1 && npm run-script test:diff2",
     "test:clean": "rm -rf tests/original && rm -rf tests/result",
     "test:run": "node tests/test.js && unzip tests/original.sketch -d tests/original && unzip tests/result.sketch -d tests/result",

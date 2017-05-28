@@ -10,9 +10,9 @@ class Sketch {
     this.pages = pages.map(page => new Page(this, page));
   }
 
-  searchLayer(condition) {
+  findLayer(type, condition) {
     for (let page of this.pages) {
-      let layer = page.search(condition);
+      let layer = page.findLayer(type, condition);
 
       if (layer) {
         return layer;
@@ -20,11 +20,11 @@ class Sketch {
     }
   }
 
-  searchLayers(condition, result) {
+  findAllLayers(type, condition, result) {
     result = result || [];
 
     for (let page of this.pages) {
-      page.searchLayers(condition).forEach(layer => result.push(layer));
+      page.findAllLayers(type, condition).forEach(layer => result.push(layer));
     }
 
     return result;

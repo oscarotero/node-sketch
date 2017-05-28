@@ -1,9 +1,10 @@
+const _parent = Symbol.for('Parent');
 const Layer = require('./Layer');
 
 class LayerContainer extends Layer {
   addLayer(layer, position) {
     layer = layer.detach();
-    layer.parent = this;
+    layer[_parent] = this;
 
     if (position === undefined) {
       this.layers.push(layer);
@@ -12,8 +13,10 @@ class LayerContainer extends Layer {
     }
   }
 
-  searchLayer(condition) {
-    let layer = this.layers.find(condition);
+  findLayer(type, condition) {
+    let layer = this.layers.find(
+      layer => layer._class === type && (!condition || condition(layer))
+    );
 
     if (layer) {
       return layer;
@@ -21,7 +24,7 @@ class LayerContainer extends Layer {
 
     for (let child of this) {
       if ('layers' in child) {
-        layer = child.layers.searchLayer(condition);
+        layer = child.layers.findLayer(type, condition);
 
         if (layer) {
           return layer;
@@ -30,14 +33,18 @@ class LayerContainer extends Layer {
     }
   }
 
-  searchLayers(condition, result) {
+  findAllLayers(type, condition, result) {
     result = result || [];
 
-    this.layers.filter(condition).forEach(layer => result.push(layer));
+    this.layers
+      .filter(
+        layer => layer._class === type && (!condition || condition(layer))
+      )
+      .forEach(layer => result.push(layer));
 
     this.layers
       .filter(layer => layer instanceof LayerContainer)
-      .forEach(child => child.searchLayers(condition, result));
+      .forEach(layer => layer.findAllLayers(type, condition, result));
 
     return result;
   }

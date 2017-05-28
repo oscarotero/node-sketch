@@ -1,3 +1,4 @@
+const _parent = Symbol.for('Parent');
 const Node = require('./Node');
 
 class Layer extends Node {
@@ -6,27 +7,17 @@ class Layer extends Node {
   }
 
   detach() {
-    if (this.parent) {
+    if (this[_parent]) {
       const index = this.parent.layers.indexOf(this);
 
       if (index !== -1) {
-        this.parent.layers.splice(index, 1);
+        this[_parent].layers.splice(index, 1);
       }
     }
 
-    this.parent = null;
+    this[_parent] = null;
 
     return this;
-  }
-
-  searchParent(condition) {
-    let parent = this.parent;
-
-    while (parent && !condition(parent)) {
-      parent = parent.parent;
-    }
-
-    return parent;
   }
 }
 
