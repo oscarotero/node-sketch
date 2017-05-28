@@ -1,13 +1,18 @@
 const fs = require('fs');
 const Page = require('./Page');
+const SharedStyleContainer = require('./SharedStyleContainer');
 
 class Sketch {
   constructor(repo, document, meta, user, pages) {
+    this._class = 'sketch';
     this.repo = repo;
     this.document = document;
     this.meta = meta;
     this.user = user;
     this.pages = pages.map(page => new Page(this, page));
+
+    //To-do: create Document class
+    this.document.layerStyles = new SharedStyleContainer(this, this.document.layerStyles);
   }
 
   findLayer(type, condition) {
@@ -28,6 +33,14 @@ class Sketch {
     }
 
     return result;
+  }
+
+  findSharedStyle(condition) {
+    return this.document.layerStyles.objects.find(style => !condition || condition(style));
+  }
+
+  findAllSharedStyles(condition) {
+    return this.document.layerStyles.objects.filter(style => !condition || condition(style));
   }
 
   getSymbolsPage() {

@@ -56,7 +56,9 @@ This is a list of all classes and subclasses provided
     - `Rect`
     - `RulerData`
     - `Shadow`
-    - `Style`
+    - [`SharedStyle`](#sharedstyle)
+    - `SharedStyleContainer`
+    - [`Style`](#style)
     - `TextStyle`
     - [`Layer`](#layer)
         - `Bitmap`
@@ -169,6 +171,7 @@ The `Layer` class extends `Node`, so inherit the same methods and properties, bu
 Name | Type | Editable | Description
 -----|------|----------|------------
 id | `string` | No | Returns an unique id of the node. It's simply a shortcut of `do_objectID`.
+sharedStyle | `SharedStyle` | Yes | Points to the shared style used by the layer if any. It's a shortcut of `style.sharedStyle`.
 
 #### detach()
 
@@ -267,4 +270,40 @@ symbolInstances.forEach((instance) => {
     console.log('The symbol ' + instance.name);
     console.log('is an instance of the symbol ' + instance.symbol.name);
 });
+```
+
+## SharedStyle
+
+`SharedStyle` is a subclass of `Node` with the following additions:
+
+#### detach()
+
+Removes the style. It's used if you want to remove a shared style.
+
+```js
+//Removes and returns a style
+const myStyle = sketch.findSharedStyle(style => style.name === 'red').detach();
+```
+
+## Style
+
+The `Style` class extends `Node`, so inherit the same methods and properties, but with the following additions:
+
+Name | Type | Editable | Description
+-----|------|----------|------------
+sharedStyle | `SharedStyle` | Yes | Returns the shared style used by the style.
+
+```js
+//get a shape element
+const myShape = sketch.pages[0].findLayer('shapeGroup', shape => shape.name === 'my-shape');
+
+//get the style used
+const style = myShape.style;
+
+//get the shared style used by the style
+const sharedStyle = style.sharedStyle;
+
+//replace the shared style
+const blackStyle = sketch.findSharedStyle('black');
+style.sharedStyle = blackStyle;
 ```
