@@ -1,6 +1,5 @@
-const Node          = require('./Node');
+const Node = require('./Node');
 
-class Style extends Node {
-}
+class Style extends Node {}
 
 module.exports = Style;

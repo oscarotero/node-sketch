@@ -1,6 +1,5 @@
 const Node = require('./Node');
 
-class ExportFormat extends Node {
-}
+class ExportFormat extends Node {}
 
 module.exports = ExportFormat;

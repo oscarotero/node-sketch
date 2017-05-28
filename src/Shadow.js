@@ -1,6 +1,5 @@
-const Node                   = require('./Node');
+const Node = require('./Node');
 
-class Shadow extends Node {
-}
+class Shadow extends Node {}
 
 module.exports = Shadow;

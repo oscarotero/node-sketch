@@ -1,6 +1,5 @@
-const Node                   = require('./Node');
+const Node = require('./Node');
 
-class InnerShadow extends Node {
-}
+class InnerShadow extends Node {}
 
 module.exports = InnerShadow;

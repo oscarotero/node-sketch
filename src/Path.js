@@ -1,6 +1,5 @@
-const Node       = require('./Node');
+const Node = require('./Node');
 
-class Path extends Node {
-}
+class Path extends Node {}
 
 module.exports = Path;

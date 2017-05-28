@@ -1,6 +1,5 @@
-const Layer              = require('./Layer');
+const Layer = require('./Layer');
 
-class Text extends Layer {
-}
+class Text extends Layer {}
 
 module.exports = Text;

@@ -1,6 +1,5 @@
 const Node = require('./Node');
 
-class GraphicsContextSettings extends Node {
-}
+class GraphicsContextSettings extends Node {}
 
-module.exports = GraphicsContextSettings
+module.exports = GraphicsContextSettings;
