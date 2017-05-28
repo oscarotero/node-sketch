@@ -1,4 +1,6 @@
 const Node = require('./Node');
 
-module.exports = class RulerData extends Node {
+class RulerData extends Node {
 }
+
+module.exports = RulerData;

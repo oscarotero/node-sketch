@@ -1,4 +1,6 @@
-const Shape = require('./Shape');
+const Layer = require('./Layer');
 
-module.exports = class Star extends Shape {
+class Star extends Layer {
 }
+
+module.exports = Star;

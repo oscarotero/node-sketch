@@ -1,14 +1,6 @@
-const Layer   = require('./Layer');
-const Style   = require('./Style');
-const lib     = require('../');
+const Layer = require('./Layer');
 
-module.exports = class LayerContainer extends Layer {
-    constructor(parent, data) {
-        super(parent, data);
-        Object.assign(this, data);
-        this.style = new Style(this.style);
-        this.layers = this.layers.map((layer) => lib.create(this, layer));
-    }
+class LayerContainer extends Layer {
 
     addLayer (layer, position) {
         layer = layer.detach();
@@ -53,3 +45,5 @@ module.exports = class LayerContainer extends Layer {
         return result;
     }
 }
+
+module.exports = LayerContainer;

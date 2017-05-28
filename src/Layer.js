@@ -1,45 +1,27 @@
-const _parent       = Symbol.for('Parent');
-const Node          = require('./Node');
-const ExportOptions = require('./ExportOptions');
-const Rect          = require('./Rect');
+const Node    = require('./Node');
 
-module.exports = class Layer extends Node {
-    constructor(parent, data) {
-        super(data);
-
-        this[_parent] = parent;
-        this.exportOptions = new ExportOptions(this.exportOptions);
-        this.frame = new Rect(this.frame);
-    }
+class Layer extends Node {
 
     get id () {
         return this.do_objectID;
     }
 
-    get parent () {
-        return this[_parent];
-    }
-
-    set parent (parent) {
-        this[_parent] = parent;
-    }
-
     detach () {
-        if (this[_parent]) {
-            const index = this[_parent].layers.indexOf(this);
+        if (this.parent) {
+            const index = this.parent.layers.indexOf(this);
 
             if (index !== -1) {
-                this[_parent].layers.splice(index, 1);
+                this.parent.layers.splice(index, 1);
             }
         }
 
-        this[_parent] = null;
+        this.parent = null;
 
         return this;
     }
 
     searchParent(condition) {
-        let parent = this[_parent];
+        let parent = this.parent;
 
         while (parent && !condition(parent)) {
             parent = parent.parent;
@@ -48,3 +30,5 @@ module.exports = class Layer extends Node {
         return parent;
     }
 }
+
+module.exports = Layer;

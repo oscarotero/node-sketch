@@ -1,4 +1,6 @@
 const Node = require('./Node');
 
-module.exports = class Rect extends Node {
+class Rect extends Node {
 }
+
+module.exports = Rect;

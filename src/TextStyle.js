@@ -1,4 +1,6 @@
 const Node = require('./Node');
 
-module.exports = class TextStyle extends Node {
+class TextStyle extends Node {
 }
+
+module.exports = TextStyle;

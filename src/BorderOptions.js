@@ -1,4 +1,6 @@
 const Node = require('./Node');
 
-module.exports = class BorderOptions extends Node {
+class BorderOptions extends Node {
 }
+
+module.exports = BorderOptions;

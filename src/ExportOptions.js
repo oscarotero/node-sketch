@@ -1,4 +1,6 @@
 const Node = require('./Node');
 
-module.exports = class ExportOptions extends Node {
+class ExportOptions extends Node {
 }
+
+module.exports = ExportOptions;

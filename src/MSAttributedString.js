@@ -1,4 +1,6 @@
 const Node = require('./Node');
 
-module.exports = class MSAttributedString extends Node {
+class MSAttributedString extends Node {
 }
+
+module.exports = MSAttributedString;

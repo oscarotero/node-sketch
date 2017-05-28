@@ -1,4 +1,6 @@
-const Shape = require('./Shape');
+const Layer = require('./Layer');
 
-module.exports = class Oval extends Shape {
+class Oval extends Layer {
 }
+
+module.exports = Oval;

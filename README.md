@@ -12,7 +12,7 @@ ns.read('design.sketch').then((sketch) => {
     const symbolsPage = sketch.getSymbolsPage();
 
     //Search the symbol named 'button'
-    const buttonSymbol = symbolsPage.getSymbols().find((symbol) => symbol.name === 'button');
+    const buttonSymbol = symbolsPage.getAllSymbols().find((symbol) => symbol.name === 'button');
 
     //Search all instances of a symbol named 'old-button' and replace it with 'button'
     sketch

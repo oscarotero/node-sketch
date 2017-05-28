@@ -1,0 +1,41 @@
+                                layers  id
+Node
+    - Border                    -       -
+    - BorderOptions             -       -
+    - Color                     -       -
+    - CurvePoint                -       -
+    - ExportOptions             -       -
+    - Fill                      -       -
+    - Gradient                  -       -
+    - GradientStop              -       -
+    - GraphicsContextSettings   -       -
+    - MSAttributedString        -       -
+    - MSJSONFileReference       -       -
+    - Path                      -       -
+    - Rect                      -       -
+    - RulerData                 -       -
+    - Shadow                    -       -
+    - Style                     -       -
+    - TextStyle                 -       -
+    - ExportFormat              -       -
+    - Blur                      -       -
+    - InnerShadow               -       -
+
+    Layer
+        - SymbolInstance        -       1
+        - Text                  -       1
+        - Slice                 -       1
+        - ShapePath             -       1
+        - Oval                  -       1
+        - Polygon               -       1
+        - Rectangle             -       1
+        - Star                  -       1
+        - Triangle              -       1
+        - Bitmap                -       1
+
+        LayerContainer
+            - Artboard          1       1
+            - Group             1       1
+            - Page              1       1
+            - ShapeGroup        1       1
+            - SymbolMaster      1       1

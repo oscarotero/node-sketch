@@ -1,17 +1,7 @@
 const _symbol = Symbol.for('symbolMaster');
 const Layer   = require('./Layer');
 
-module.exports = class SymbolInstance extends Layer {
-    constructor(parent, data) {
-        super(parent, data);
-
-        if ('overrides' in this) {
-            this.overrides = this.overrides.map((override) => {
-                throw new Error('TODO');
-                return override;
-            });
-        }
-    }
+class SymbolInstance extends Layer {
 
     get symbol() {
         if (this[_symbol]) {
@@ -19,15 +9,15 @@ module.exports = class SymbolInstance extends Layer {
         }
 
         //Search in the current page
-        let page = this.searchParent((layer) => layer.type === 'page');
-        let master = page.getSymbols().find((symbol) => symbol.symbolID === this.symbolID);
+        let page = this.searchParent((layer) => layer._class === 'page');
+        let master = page.getAllSymbols().find((symbol) => symbol.symbolID === this.symbolID);
 
         //Search in the Symbols page
         if (!master) {
             page = page.parent.getSymbolsPage();
 
             if (page) {
-                master = page.getSymbols().find((symbol) => symbol.symbolId === this.symbolId);
+                master = page.getAllSymbols().find((symbol) => symbol.symbolId === this.symbolId);
             }
         }
 
@@ -40,3 +30,5 @@ module.exports = class SymbolInstance extends Layer {
         this[_symbol] = master;
     }
 }
+
+module.exports = SymbolInstance;

@@ -1,4 +1,6 @@
 const Node = require('./Node');
 
-module.exports = class Color extends Node {
+class Color extends Node {
 }
+
+module.exports = Color;

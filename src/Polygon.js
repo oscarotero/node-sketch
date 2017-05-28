@@ -1,4 +1,6 @@
-const Shape = require('./Shape');
+const Layer = require('./Layer');
 
-module.exports = class Polygon extends Shape {
+class Polygon extends Layer {
 }
+
+module.exports = Polygon;

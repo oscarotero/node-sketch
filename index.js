@@ -1,38 +1,43 @@
-const fs = require('fs');
-const JSZip = require('jszip');
+const fs     = require('fs');
+const JSZip  = require('jszip');
+const Sketch = require('./src/Sketch');
 
 (function (lib) {
-    lib.Color                  = require('./src/Color');
-    lib.Rect                   = require('./src/Rect');
-    lib.ExportOptions          = require('./src/ExportOptions');
-    lib.RulerData              = require('./src/RulerData');
-    lib.Border                 = require('./src/Border');
-    lib.BorderOptions          = require('./src/BorderOptions');
-    lib.CurvePoint             = require('./src/CurvePoint');
-    lib.Path                   = require('./src/Path');
-    lib.GradientStop           = require('./src/GradientStop');
-    lib.Gradient               = require('./src/Gradient');
-    lib.Oval                   = require('./src/Oval');
-    lib.Rectangle              = require('./src/Rectangle');
-    lib.Star                   = require('./src/Star');
-    lib.Polygon                = require('./src/Polygon');
-    lib.Triangle               = require('./src/Triangle');
-    lib.TextStyle              = require('./src/TextStyle');
-    lib.GraphicContextSettings = require('./src/GraphicContextSettings');
-    lib.Shadow                 = require('./src/Shadow');
-    lib.MSJSONFileReference    = require('./src/MSJSONFileReference');
-    lib.Fill                   = require('./src/Fill');
-    lib.Style                  = require('./src/Style');
-    lib.MSAttributedString     = require('./src/MSAttributedString');
-    lib.Text                   = require('./src/Text');
-    lib.Group                  = require('./src/Group');
-    lib.ShapeGroup             = require('./src/ShapeGroup');
-    lib.Artboard               = require('./src/Artboard');
-    lib.Page                   = require('./src/Page');
-    lib.SymbolInstance         = require('./src/SymbolInstance');
-    lib.SymbolMaster           = require('./src/SymbolMaster');
-
-    lib.Sketch                 = require('./src/Sketch');
+    lib.Artboard                = require('./src/Artboard');
+    lib.Bitmap                  = require('./src/Bitmap');
+    lib.Blur                    = require('./src/Blur');
+    lib.Border                  = require('./src/Border');
+    lib.BorderOptions           = require('./src/BorderOptions');
+    lib.Color                   = require('./src/Color');
+    lib.CurvePoint              = require('./src/CurvePoint');
+    lib.Gradient                = require('./src/Gradient');
+    lib.GradientStop            = require('./src/GradientStop');
+    lib.Group                   = require('./src/Group');
+    lib.ExportFormat            = require('./src/ExportFormat');
+    lib.ExportOptions           = require('./src/ExportOptions');
+    lib.Fill                    = require('./src/Fill');
+    lib.GraphicsContextSettings = require('./src/GraphicsContextSettings');
+    lib.InnerShadow             = require('./src/InnerShadow');
+    lib.MSAttributedString      = require('./src/MSAttributedString');
+    lib.MSJSONFileReference     = require('./src/MSJSONFileReference');
+    lib.Oval                    = require('./src/Oval');
+    lib.Page                    = require('./src/Page');
+    lib.Path                    = require('./src/Path');
+    lib.Polygon                 = require('./src/Polygon');
+    lib.Rect                    = require('./src/Rect');
+    lib.Rectangle               = require('./src/Rectangle');
+    lib.RulerData               = require('./src/RulerData');
+    lib.Shadow                  = require('./src/Shadow');
+    lib.ShapeGroup              = require('./src/ShapeGroup');
+    lib.ShapePath               = require('./src/ShapePath');
+    lib.Slice                   = require('./src/Slice');
+    lib.Star                    = require('./src/Star');
+    lib.Style                   = require('./src/Style');
+    lib.SymbolInstance          = require('./src/SymbolInstance');
+    lib.SymbolMaster            = require('./src/SymbolMaster');
+    lib.Text                    = require('./src/Text');
+    lib.TextStyle               = require('./src/TextStyle');
+    lib.Triangle                = require('./src/Triangle');
 
     // Read a .sketch file and return an instance of Sketch
     lib.read = function (file) {
@@ -64,7 +69,7 @@ const JSZip = require('jszip');
                 });
             })
             .then((data) => {
-                return new lib.Sketch(
+                return new Sketch(
                     data.repo,
                     data.document,
                     data.meta,

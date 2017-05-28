@@ -1,4 +1,6 @@
 const LayerContainer = require('./LayerContainer');
 
-module.exports = class ShapeGroup extends LayerContainer {
+class ShapeGroup extends LayerContainer {
 }
+
+module.exports = ShapeGroup;

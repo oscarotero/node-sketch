@@ -1,6 +1,5 @@
 const fs = require('fs');
 const Page = require('./Page');
-const utils = require('./utils');
 
 class Sketch {
     constructor(repo, document, meta, user, pages) {

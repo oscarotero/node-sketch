@@ -1,4 +1,6 @@
 const Node = require('./Node');
 
-module.exports = class MSJSONFileReference extends Node {
+class MSJSONFileReference extends Node {
 }
+
+module.exports = MSJSONFileReference;
