@@ -1,5 +1,11 @@
-# node-sketch (WIP)
+# node-sketch
 Javascript library to manipulate sketch files
+
+## Install
+
+```sh
+npm install node-sketch
+```
 
 ## Example:
 

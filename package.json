@@ -31,5 +31,5 @@
     "test:diff1": "jsondiffpatch tests/original/pages/6624F3F7-470D-4370-9BDE-F81657777324.json tests/result/pages/6624F3F7-470D-4370-9BDE-F81657777324.json",
     "test:diff2": "jsondiffpatch tests/original/pages/A660427D-210F-4E17-AA74-DD9E72DA0E3B.json tests/result/pages/A660427D-210F-4E17-AA74-DD9E72DA0E3B.json"
   },
-  "homepage": "https://github.com/oscarotero/node-sketch#readme"
+  "homepage": "https://github.com/oscarotero/node-sketch"
 }
