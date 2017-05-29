@@ -16,7 +16,7 @@ class SymbolInstance extends Layer {
       page = page.parent.getSymbolsPage();
 
       if (page) {
-        master = page.findSymbol(symbol => symbol.symbolId === this.symbolId);
+        master = page.findSymbol(symbol => symbol.symbolID === this.symbolID);
       }
     }
 

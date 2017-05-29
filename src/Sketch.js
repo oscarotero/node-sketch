@@ -69,7 +69,8 @@ class Sketch {
       this.repo
         .generateNodeStream({
           type: 'nodebuffer',
-          streamFiles: true
+          streamFiles: true,
+          compression: 'DEFLATE'
         })
         .pipe(fs.createWriteStream(file))
         .on('finish', () => {

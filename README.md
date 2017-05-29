@@ -50,6 +50,7 @@ This is a list of all classes and subclasses provided
     - `GradientStop`
     - `GraphicsContextSettings`
     - `InnerShadow`
+    - `LayoutGrid`
     - `MSAttributedString`
     - `MSJSONFileReference`
     - `Path`
@@ -59,6 +60,8 @@ This is a list of all classes and subclasses provided
     - [`SharedStyle`](#sharedstyle)
     - `SharedStyleContainer`
     - [`Style`](#style)
+    - `SimpleGrid`
+    - `Style`
     - `TextStyle`
     - [`Layer`](#layer)
         - `Bitmap`
