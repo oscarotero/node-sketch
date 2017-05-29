@@ -2,16 +2,12 @@ const _parent = Symbol.for('Parent');
 const Node = require('./Node');
 
 class Layer extends Node {
-  get id() {
-    return this.do_objectID;
+  getSharedStyle() {
+    return this.style.getSharedStyle();
   }
 
-  get sharedStyle() {
-    return this.style.sharedStyle;
-  }
-
-  set sharedStyle(style) {
-    this.style.sharedStyle = style;
+  setSharedStyle(style) {
+    this.style.setSharedStyle(style);
   }
 
   detach() {

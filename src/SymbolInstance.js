@@ -2,7 +2,7 @@ const _symbol = Symbol.for('symbolMaster');
 const Layer = require('./Layer');
 
 class SymbolInstance extends Layer {
-  get symbol() {
+  getSymbolMaster() {
     if (this[_symbol]) {
       return this[_symbol];
     }
@@ -24,7 +24,7 @@ class SymbolInstance extends Layer {
     return master;
   }
 
-  set symbol(master) {
+  setSymbolMaster(master) {
     this.symbolID = master.symbolID;
     this[_symbol] = master;
   }

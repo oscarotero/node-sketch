@@ -1,22 +1,27 @@
-const _style = Symbol.for('sharedStyle');
+const _sharedstyle = Symbol.for('sharedStyle');
 const Node = require('./Node');
 
 class Style extends Node {
-  get sharedStyle() {
-    if (this[_style]) {
-      return this[_style];
+  getSharedStyle() {
+    if (this[_sharedstyle]) {
+      return this[_sharedstyle];
     }
 
     const sketch = this.findParent('sketch');
-    const sharedStyle = sketch.findSharedStyle(style => style.do_objectID === this.sharedObjectID);
 
-    this[_style] = sharedStyle;
+    let sharedStyle = sketch.findSharedStyle(style => style.do_objectID === this.sharedObjectID);
+
+    if (!sharedStyle) {
+      sharedStyle = sketch.findTextStyle(style => style.do_objectID === this.sharedObjectID);
+    }
+
+    this[_sharedstyle] = sharedStyle;
     return sharedStyle;
   }
 
-  set sharedStyle(sharedStyle) {
+  setSharedStyle(sharedStyle) {
     let clone = new Style(this.parent, JSON.parse(JSON.stringify(sharedStyle.value)));
-    clone[_style] = sharedStyle;
+    clone[_sharedstyle] = sharedStyle;
     clone.sharedObjectID = sharedStyle.do_objectID;
     this.parent.style = clone;
   }

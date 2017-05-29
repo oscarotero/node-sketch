@@ -32,7 +32,7 @@ ns.read('design.sketch').then((sketch) => {
 
 # API
 
-## The Class inheritance
+## The class inheritance
 
 This is a list of all classes and subclasses provided
 
@@ -59,6 +59,7 @@ This is a list of all classes and subclasses provided
     - `Shadow`
     - [`SharedStyle`](#sharedstyle)
     - `SharedStyleContainer`
+    - `SharedTextStyleContainer`
     - [`Style`](#style)
     - `SimpleGrid`
     - `Style`
@@ -105,6 +106,24 @@ Name | Type | Description
 
 An also some useful methods:
 
+#### find(type, [condition])
+
+Returns the first node matching with the type and condition. Example:
+
+```js
+//Get the first gradient object found in the document
+const gradient = sketch.find('gradient');
+```
+
+#### findAll(type, [condition])
+
+Returns an array with all nodes matching with the type and condition. Example:
+
+```js
+//Get all gradients found in the document
+const gradients = sketch.findAll('gradient');
+```
+
 #### findLayer(type, [condition])
 
 Returns the first layer (artboard, group, shape, etc) matching with the type and the condition found in any of the pages of the sketch. Example:
@@ -129,6 +148,42 @@ const instances = sketch.findAllLayers('symbolInstance');
 const instances = sketch.findAllLayers('symbolInstance', symbol => symbol.name === 'my-symbol');
 ```
 
+#### findSharedStyle([condition])
+
+Returns the first shared style matching with the condition. Example:
+
+```js
+//Get the shared style named 'blue-box'
+const style = sketch.findSharedStyle(style => style.name === 'blue-box');
+```
+
+#### findAllSharedStyles([condition])
+
+Returns an array with all shared styles matching with the condition. Example:
+
+```js
+//Get all shared styles starting with 'button/'
+const styles = sketch.findAllSharedStyles(style => style.name.startsWith('button/'));
+```
+
+#### findTextStyle([condition])
+
+Returns the first text style matching with the condition. Example:
+
+```js
+//Get the shared style named 'title'
+const style = sketch.findTextStyle(style => style.name === 'title');
+```
+
+#### findAllTextStyles([condition])
+
+Returns an array with all text styles matching with the condition. Example:
+
+```js
+//Get all text styles starting with 'article/'
+const styles = sketch.findAllTextStyles(style => style.name.startsWith('article/'));
+```
+
 #### getSymbolsPage()
 
 Returns the 'Symbols' page if exists. Example:
@@ -151,9 +206,10 @@ sketch.save('awesome-design.sketch').then(() => {
 
 The `Node` class is the base class extended by all subclasses. Provides the following properties and methods:
 
-Name | Type | Editable | Description
------|------|----------|------------
-parent | `Node/Sketch` | No | The parent element. If the element is in the top of the tree (it's a `Page`), returns the `Sketch` instance.
+Name | Type | Description
+-----|------|------------
+parent | `Node/Sketch` | The parent element. If the element is in the top of the tree (it's a `Page`), returns the `Sketch` instance.
+id | `string` | Returns an unique id of the node. It's simply a shortcut of `do_objectID`.
 
 #### findParent(type, [condition])
 
@@ -167,14 +223,27 @@ const page = rectangle.findParent('page');
 const sketch = page.parent;
 ```
 
+#### find(type, [condition])
+
+Returns the first descendent node matching with the type and condition. Example:
+
+```js
+//Get the first gradient object found in the page
+const gradient = sketch.pages[0].find('gradient');
+```
+
+#### findAll(type, [condition])
+
+Returns an array with all descendent nodes matching with the type and condition. Example:
+
+```js
+//Get all gradients found in the page
+const gradients = sketch.pages[0].findAll('gradient');
+```
+
 ## Layer
 
 The `Layer` class extends `Node`, so inherit the same methods and properties, but with the following additions:
-
-Name | Type | Editable | Description
------|------|----------|------------
-id | `string` | No | Returns an unique id of the node. It's simply a shortcut of `do_objectID`.
-sharedStyle | `SharedStyle` | Yes | Points to the shared style used by the layer if any. It's a shortcut of `style.sharedStyle`.
 
 #### detach()
 
@@ -183,6 +252,29 @@ Removes the layer from its parent. It's used if you want to move or remove a lay
 ```js
 //Removes a rectangle
 const rectangle = page.findLayer('rectangle').detach();
+```
+
+#### getSharedStyle()
+
+Returns the instance of `SharedStyle` used by the layer (if exists). Note: The shared style may be a text style if the layer is a text.
+
+```js
+//Get the shared style of a shape
+const bgButton = page.findLayer('shapeGroup', el => el.name === 'bgButton');
+const style = bgButton.getSharedStyle();
+```
+
+#### setSharedStyle(sharedStyle)
+
+Assign or replace the sharedStyle used by a layer. Note: The shared style should be a text style if the layer is a text.
+
+```js
+//Get the shared style named 'custom-button';
+const style = page.findSharedStyle(style => style.name === 'custom-button');
+
+//Assign the style to a layer
+const bgButton = page.findLayer('shapeGroup', el => el.name === 'bgButton');
+bgButton.setSharedStyle(bgButton);
 ```
 
 ## LayerContainer
@@ -203,7 +295,7 @@ const group = page.findLayer('group', group => group.name === 'items');
 
 #### findAllLayers(type, [condition])
 
-Returns an array with all elements matching with the type and condition. Example:
+Returns an array with all layers matching with the type and condition. Example:
 
 ```js
 //Get all symbol instances
@@ -258,9 +350,13 @@ const icons = page.findSymbol(symbol => symbol.name.startsWith('icon/'));
 
 `SymbolInstance` is a subclass of `Layer`. In addition to all properties and methods, includes also the following properties:
 
-Name | Type | Editable | Description
------|------|----------|------------
-`symbol` | `SymbolMaster` | Yes | The reference to the symbol master
+#### getSymbolMaster()
+
+Returns the `symbolMaster` used by this instance.
+
+#### setSymbolMaster(symbolMaster)
+
+Replace the symbolMaster used.
 
 ```js
 //Get the first page
@@ -271,7 +367,7 @@ const symbolInstances = page.findAllLayers('symbolInstances');
 
 symbolInstances.forEach((instance) => {
     console.log('The symbol ' + instance.name);
-    console.log('is an instance of the symbol ' + instance.symbol.name);
+    console.log('is an instance of the symbol ' + instance.getSymbolMaster().name);
 });
 ```
 
@@ -292,9 +388,14 @@ const myStyle = sketch.findSharedStyle(style => style.name === 'red').detach();
 
 The `Style` class extends `Node`, so inherit the same methods and properties, but with the following additions:
 
-Name | Type | Editable | Description
------|------|----------|------------
-sharedStyle | `SharedStyle` | Yes | Returns the shared style used by the style.
+#### getSharedStyle()
+
+Returns the instance of `SharedStyle` used by this style (if exists). Note: The shared style may be a text style if the layer is a text.
+```
+
+#### setSharedStyle(sharedStyle)
+
+Assign or replace the sharedStyle used by the style. Note: The shared style should be a text style if the layer is a text.
 
 ```js
 //get a shape element
@@ -304,9 +405,9 @@ const myShape = sketch.pages[0].findLayer('shapeGroup', shape => shape.name === 
 const style = myShape.style;
 
 //get the shared style used by the style
-const sharedStyle = style.sharedStyle;
+const sharedStyle = style.getSharedStyle();
 
 //replace the shared style
 const blackStyle = sketch.findSharedStyle('black');
-style.sharedStyle = blackStyle;
+style.setSharedStyle(blackStyle);
 ```
