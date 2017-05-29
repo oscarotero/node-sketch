@@ -48,7 +48,11 @@ class Node {
 
   find(type, condition) {
     for (let [key, value] of Object.entries(this)) {
-      if ((value instanceof Node) && value._class === type && (!condition || condition(value))) {
+      if (
+        value instanceof Node &&
+        value._class === type &&
+        (!condition || condition(value))
+      ) {
         return value;
       }
 
@@ -73,9 +77,12 @@ class Node {
   findAll(type, condition, result) {
     result = result || [];
 
-
     for (let [key, value] of Object.entries(this)) {
-      if ((value instanceof Node) && value._class === type && (!condition || condition(value))) {
+      if (
+        value instanceof Node &&
+        value._class === type &&
+        (!condition || condition(value))
+      ) {
         result.push(value);
       }
 

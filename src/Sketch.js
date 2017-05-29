@@ -13,8 +13,14 @@ class Sketch {
     this.pages = pages.map(page => new Page(this, page));
 
     //To-do: create Document class
-    this.document.layerStyles = new SharedStyleContainer(this, this.document.layerStyles);
-    this.document.layerTextStyles = new SharedTextStyleContainer(this, this.document.layerTextStyles);
+    this.document.layerStyles = new SharedStyleContainer(
+      this,
+      this.document.layerStyles
+    );
+    this.document.layerTextStyles = new SharedTextStyleContainer(
+      this,
+      this.document.layerTextStyles
+    );
   }
 
   find(type, condition) {
@@ -58,19 +64,27 @@ class Sketch {
   }
 
   findSharedStyle(condition) {
-    return this.document.layerStyles.objects.find(style => !condition || condition(style));
+    return this.document.layerStyles.objects.find(
+      style => !condition || condition(style)
+    );
   }
 
   findAllSharedStyles(condition) {
-    return this.document.layerStyles.objects.filter(style => !condition || condition(style));
+    return this.document.layerStyles.objects.filter(
+      style => !condition || condition(style)
+    );
   }
 
   findTextStyle(condition) {
-    return this.document.layerTextStyles.objects.find(style => !condition || condition(style));
+    return this.document.layerTextStyles.objects.find(
+      style => !condition || condition(style)
+    );
   }
 
   findAllTextStyles(condition) {
-    return this.document.layerTextStyles.objects.filter(style => !condition || condition(style));
+    return this.document.layerTextStyles.objects.filter(
+      style => !condition || condition(style)
+    );
   }
 
   getSymbolsPage() {
