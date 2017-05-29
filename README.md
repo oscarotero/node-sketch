@@ -18,12 +18,12 @@ ns.read('design.sketch').then((sketch) => {
     const symbolsPage = sketch.getSymbolsPage();
 
     //Search the symbol named 'button'
-    const buttonSymbol = symbolsPage.findSymbol(symbol => symbol.name === 'button');
+    const buttonSymbol = symbolsPage.findSymbolMaster((symbol) => symbol.name === 'button');
 
     //Search all instances of a symbol named 'old-button' and replace it with 'button'
     sketch
-        .findAllLayers('symbolInstance', layer => layer.symbol.name === 'old-button')
-        .forEach(symbolInstance => symbolInstance.symbol = buttonSymbol);
+        .findAllLayers('symbolInstance', (instance) => instance.getSymbolMaster().name === 'old-button')
+        .forEach((instance) => instance.setSymbolMaster(buttonSymbol));
 
     //Save the result
     sketch.save('modified-design.sketch');
@@ -324,7 +324,7 @@ group.addLayer(rectangle);
 
 `Page` is a subclass of `LayerContainer`, so it inherit all its properties and methods, but including also the following additions:
 
-#### findSymbol([condition])
+#### findSymbolMaster([condition])
 
 Returns the first SymbolMaster matching with the condition. Example:
 
@@ -332,18 +332,18 @@ Returns the first SymbolMaster matching with the condition. Example:
 const page = sketch.getSymbolsPage();
 
 //Get the symbol named 'button'
-const button = page.findSymbol(symbol => symbol.name === 'button');
+const button = page.findSymbolMaster(symbol => symbol.name === 'button');
 ```
 
-#### findAllSymbols([condition])
+#### findAllSymbolMasters([condition])
 
 Returns an array with all SymbolMaster matching with the condition. Example:
 
 ```js
 const page = sketch.getSymbolsPage();
 
-//Get the symbol starting with 'icon/'
-const icons = page.findSymbol(symbol => symbol.name.startsWith('icon/'));
+//Get all symbols starting with 'icon/'
+const icons = page.findAllSymbolMasters(symbol => symbol.name.startsWith('icon/'));
 ```
 
 ## SymbolInstance
