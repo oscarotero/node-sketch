@@ -50,12 +50,14 @@ This is a list of all classes and subclasses provided
     - `GradientStop`
     - `GraphicsContextSettings`
     - `InnerShadow`
+    - `LayoutGrid`
     - `MSAttributedString`
     - `MSJSONFileReference`
     - `Path`
     - `Rect`
     - `RulerData`
     - `Shadow`
+    - `SimpleGrid`
     - `Style`
     - `TextStyle`
     - [`Layer`](#layer)
