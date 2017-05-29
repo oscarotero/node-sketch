@@ -391,7 +391,6 @@ The `Style` class extends `Node`, so inherit the same methods and properties, bu
 #### getSharedStyle()
 
 Returns the instance of `SharedStyle` used by this style (if exists). Note: The shared style may be a text style if the layer is a text.
-```
 
 #### setSharedStyle(sharedStyle)
 
