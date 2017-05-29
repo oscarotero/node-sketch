@@ -1,7 +1,18 @@
 const _parent = Symbol.for('Parent');
 const lib = require('../');
 
+/**
+ * Abstract class that it's used by all other classes, providing basic functionalities.
+ *
+ * @abstract
+ */
 class Node {
+  /**
+   * @constructor
+   *
+   * @param  {Node|Sketch} parent - The parent of the element
+   * @param  {Object} data - The raw data of the sketch file
+   */
   constructor(parent, data) {
     this[_parent] = parent;
 
@@ -26,14 +37,31 @@ class Node {
     });
   }
 
+  /**
+   * The parent of the node
+   * @readonly
+   * @type {Node|Sketch}
+   */
   get parent() {
     return this[_parent];
   }
 
+  /**
+   * The node's id. It's a shortcut of do_objectID.
+   * @readonly
+   * @type {String}
+   */
   get id() {
     return this.do_objectID;
   }
 
+  /**
+   * Find a node ascendent matching with the type and condition
+   *
+   * @param  {String} type - The node type
+   * @param  {Function} [condition] - A callback to be executed on each parent and must return true or false. If it's not provided, only the type argument is be used.
+   * @return {Node|Sketch|undefined}
+   */
   findParent(type, condition) {
     let parent = this[_parent];
 
@@ -46,6 +74,19 @@ class Node {
     }
   }
 
+  /**
+   * Search and returns the first descendant node that match the type and condition.
+   * @example
+   * //Get the first page
+   * const page = sketch.pages[0];
+   *
+   * //Get the first Style found in this page
+   * const artboard = page.find('layoutGrid');
+   *
+   * @param  {string} type - The Node type
+   * @param  {Function} [condition] - A callback to be executed on each node that must return true or false. If it's not provided, only the type argument is be used.
+   * @return {Node|undefined}
+   */
   find(type, condition) {
     for (let [key, value] of Object.entries(this)) {
       if (
@@ -74,6 +115,24 @@ class Node {
     }
   }
 
+  /**
+   * Search and returns all descendant nodes matching with the type and condition.
+   * @example
+   * //Get the first page
+   * const page = sketch.pages[0];
+   *
+   * //Get all colors found in this page
+   * const colors = page.findAll('color');
+   *
+   * //Get all colors with specific values
+   * const blueColors = page.findAll('color', (color) => {
+   *  return color.blue > 0.5 && color.red < 0.33
+   * });
+   *
+   * @param  {string} type - The Node type
+   * @param  {Function} [condition] - A callback to be executed on each node that must return true or false. If it's not provided, only the type argument is be used.
+   * @return {Node[]}
+   */
   findAll(type, condition, result) {
     result = result || [];
 

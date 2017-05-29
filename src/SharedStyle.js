@@ -1,6 +1,13 @@
 const _parent = Symbol.for('Parent');
 const Node = require('./Node');
 
+/**
+ * Represents a shared style
+ *
+ * @extends {Node}
+ * @see {@link SharedStyleContainer}
+ * @see {@link SharedTextStyleContainer}
+ */
 class SharedStyle extends Node {
   detach() {
     if (this[_parent]) {

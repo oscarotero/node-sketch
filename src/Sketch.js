@@ -3,6 +3,14 @@ const Page = require('./Page');
 const SharedStyleContainer = require('./SharedStyleContainer');
 const SharedTextStyleContainer = require('./SharedTextStyleContainer');
 
+/**
+ * This class represents the sketch file and all this content.
+ * @property {JSZip} repo The instance of JSZip containing the raw data
+ * @property {Object} document The document data
+ * @property {Object} meta The meta data
+ * @property {Object} user The user data
+ * @property {Page[]} array with all pages of the document
+ */
 class Sketch {
   constructor(repo, document, meta, user, pages) {
     this._class = 'sketch';
@@ -23,75 +31,80 @@ class Sketch {
     );
   }
 
-  find(type, condition) {
-    for (let page of this.pages) {
-      let node = page.find(type, condition);
-
-      if (node) {
-        return node;
-      }
-    }
-  }
-
-  findAll(type, condition, result) {
-    result = result || [];
-
-    for (let page of this.pages) {
-      page.findAll(type, condition).forEach(node => result.push(node));
-    }
-
-    return result;
-  }
-
-  findLayer(type, condition) {
-    for (let page of this.pages) {
-      let layer = page.findLayer(type, condition);
-
-      if (layer) {
-        return layer;
-      }
-    }
-  }
-
-  findAllLayers(type, condition, result) {
-    result = result || [];
-
-    for (let page of this.pages) {
-      page.findAllLayers(type, condition).forEach(layer => result.push(layer));
-    }
-
-    return result;
-  }
-
+  /**
+   * Search and returns the first shared style matching with the type and condition.
+   * @example
+   * //Get the first shared style named 'fill/blue'
+   * const sharedStyle = sketch.findSharedStyle((style) => style.name === 'fill/blue');
+   *
+   * @param  {Function} [condition] - A callback to be executed on each shared style that must return true or false.
+   * @return {SharedStyle|undefined}
+   */
   findSharedStyle(condition) {
     return this.document.layerStyles.objects.find(
       style => !condition || condition(style)
     );
   }
 
+  /**
+   * Search and returns all shared styles matching with the type and condition.
+   * @example
+   * //Get all shared styles starting with 'fill/'
+   * const sharedStyles = sketch.findAllSharedStyles((style) => style.name.startsWith('fill/'));
+   *
+   * @param  {Function} [condition] - A callback to be executed on each shared style that must return true or false.
+   * @return {SharedStyle[]}
+   */
   findAllSharedStyles(condition) {
     return this.document.layerStyles.objects.filter(
       style => !condition || condition(style)
     );
   }
 
+  /**
+   * Search and returns the first text style matching with the type and condition.
+   * @example
+   * //Get the first text style named 'title/big'
+   * const textStyle = sketch.findTextStyle((style) => style.name === 'title/big');
+   *
+   * @param  {Function} [condition] - A callback to be executed on each text style that must return true or false.
+   * @return {textStyle|undefined}
+   */
   findTextStyle(condition) {
     return this.document.layerTextStyles.objects.find(
       style => !condition || condition(style)
     );
   }
 
+  /**
+   * Search and returns all text styles matching with the type and condition.
+   * @example
+   * //Get all text styles starting with 'title/'
+   * const textStyles = sketch.findAllTextStyles((style) => style.name.startsWith('title/'));
+   *
+   * @param  {Function} [condition] - A callback to be executed on each text style that must return true or false.
+   * @return {SharedStyle[]}
+   */
   findAllTextStyles(condition) {
     return this.document.layerTextStyles.objects.filter(
       style => !condition || condition(style)
     );
   }
 
+  /**
+   * Returns the "Symbols" page if exists
+   *
+   * @return {Page|undefined}
+   */
   getSymbolsPage() {
     return this.pages.find(page => page.name === 'Symbols');
   }
 
-  //Save document as sketch file
+  /**
+   * Save the document as a sketch file
+   *
+   * @param  {string} file - The file path
+   */
   save(file) {
     const pagesFolder = this.repo.folder('pages');
 

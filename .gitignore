@@ -1,4 +1,5 @@
 yarn.lock
-node_modules/
-tests/*/*
-tests/result.sketch
+/node_modules/
+/tests/*/*
+/tests/result.sketch
+/out
