@@ -31,37 +31,37 @@ class Page extends Node {
   /**
    * @inheritdoc
    */
-  find(type, condition) {
+  get(type, condition) {
+    if (typeof condition === 'string') {
+      const name = condition;
+      condition = node => node.name === name;
+    }
+
     if (type === 'symbolMaster' || type === 'artboard') {
       return this.layers.find(
         layer => layer._class === type && (!condition || condition(layer))
       );
     }
 
-    return super.find(type, condition);
+    return super.get(type, condition);
   }
 
   /**
    * @inheritdoc
    */
-  findAll(type, condition, result) {
+  getAll(type, condition, result) {
+    if (typeof condition === 'string') {
+      const name = condition;
+      condition = node => node.name === name;
+    }
+    
     if (type === 'symbolMaster' || type === 'artboard') {
       return this.layers.filter(
         layer => layer._class === type && (!condition || condition(layer))
       );
     }
 
-    return super.findAll(type, condition, result);
-
-    result = result || [];
-
-    const classType = getClassType(type);
-
-    if (classType === 'layer') {
-      return findLayer(this, type, condition, result);
-    }
-
-    return findNode(this, type, condition, result);
+    return super.getAll(type, condition, result);
   }
 }
 

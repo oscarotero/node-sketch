@@ -23,41 +23,35 @@ describe('Read sketch files', function() {
 
       describe('Must read the symbols', () => {
         it('count symbols', () => {
-          assert.equal(file.getSymbolsPage().findAll('symbolMaster').length, 2);
-          assert.equal(file.pages[0].findAll('symbolMaster').length, 0);
+          assert.equal(file.getSymbolsPage().getAll('symbolMaster').length, 2);
+          assert.equal(file.pages[0].getAll('symbolMaster').length, 0);
         });
 
         it('count instances', () => {
-          assert.equal(file.pages[1].findAll('symbolInstance').length, 1);
-          assert.equal(file.pages[0].findAll('symbolInstance').length, 2);
+          assert.equal(file.pages[1].getAll('symbolInstance').length, 1);
+          assert.equal(file.pages[0].getAll('symbolInstance').length, 2);
         });
 
         it('instance.getSymbolMaster()', () => {
-          const instance = file.pages[1].find(
-            'symbolInstance',
-            instance => instance.name === 'circle'
-          );
-          const expected = file.pages[1].find(
-            'symbolMaster',
-            master => master.name === 'circle'
-          );
+          const instance = file.pages[1].get('symbolInstance', 'circle');
+          const expected = file.pages[1].get('symbolMaster', 'circle');
           assert.strictEqual(instance.getSymbolMaster(), expected);
         });
       });
 
       describe('Must read the shared styles', () => {
         it('count layer styles', () =>
-          assert.equal(file.getSharedStyles().length, 2));
+          assert.equal(file.getAllSharedStyles().length, 2));
         it('first layer style name', () =>
-          assert.equal(file.getSharedStyles()[0].name, 'style-1'));
+          assert.equal(file.getAllSharedStyles()[0].name, 'style-1'));
         it('second layer style name', () =>
-          assert.equal(file.getSharedStyles()[1].name, 'style-2'));
+          assert.equal(file.getAllSharedStyles()[1].name, 'style-2'));
         it('count text styles', () =>
-          assert.equal(file.getTextStyles().length, 2));
+          assert.equal(file.getAllTextStyles().length, 2));
         it('first text style name', () =>
-          assert.equal(file.getTextStyles()[0].name, 'style-1'));
+          assert.equal(file.getAllTextStyles()[0].name, 'style-1'));
         it('second text style name', () =>
-          assert.equal(file.getTextStyles()[1].name, 'style-2'));
+          assert.equal(file.getAllTextStyles()[1].name, 'style-2'));
       });
     });
   });

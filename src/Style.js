@@ -27,7 +27,7 @@ class Style extends Node {
       return this[_sharedstyle];
     }
 
-    const sketch = this.findParent('sketch');
+    const sketch = this.getParent('sketch');
 
     let sharedStyle = sketch.findSharedStyle(
       style => style.do_objectID === this.sharedObjectID

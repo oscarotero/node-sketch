@@ -12,7 +12,7 @@ class SymbolInstance extends Layer {
    * Search and returns the SymbolMaster node of the instance
    * @example
    * //Search any symbol instance
-   * const instance = sketch.pages[0].findLayer('symbolInstance');
+   * const instance = sketch.pages[0].get('symbolInstance');
    *
    * //Get the symbol master
    * const master = instance.getSymbolMaster();
@@ -27,8 +27,8 @@ class SymbolInstance extends Layer {
     }
 
     //Search in the current page
-    let page = this.findParent('page');
-    let master = page.find(
+    let page = this.getParent('page');
+    let master = page.get(
       'symbolMaster',
       symbol => symbol.symbolID === this.symbolID
     );
@@ -38,7 +38,7 @@ class SymbolInstance extends Layer {
       page = page.parent.getSymbolsPage();
 
       if (page) {
-        master = page.find(
+        master = page.get(
           'symbolMaster',
           symbol => symbol.symbolID === this.symbolID
         );
@@ -53,10 +53,10 @@ class SymbolInstance extends Layer {
    * Assign a new symbol master to the instance
    * @example
    * //Get any symbol instance
-   * const instance = sketch.pages[0].findLayer('symbolInstance', instance => instance.name === 'button');
+   * const instance = sketch.pages[0].get('symbolInstance', instance => instance.name === 'button');
    *
    * //Get the symbol master named 'new-button'
-   * const master = sketch.getSymbolsPage().findSymbolMaster(symbol => symbol.name === 'new-button');
+   * const master = sketch.getSymbolsPage().get('symbolMaster', symbol => symbol.name === 'new-button');
    *
    * //Apply the new master to the instance
    * instance.setSymbolMaster(master);

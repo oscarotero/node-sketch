@@ -18,11 +18,11 @@ ns.read('design.sketch').then((sketch) => {
     const symbolsPage = sketch.getSymbolsPage();
 
     //Search the symbol named 'button'
-    const buttonSymbol = symbolsPage.findSymbolMaster((symbol) => symbol.name === 'button');
+    const buttonSymbol = symbolsPage.get('symbolMaster', 'button');
 
     //Search all instances of a symbol named 'old-button' and replace it with 'button'
     sketch
-        .findAllLayers('symbolInstance', (instance) => instance.getSymbolMaster().name === 'old-button')
+        .getAll('symbolInstance', (instance) => instance.getSymbolMaster().name === 'old-button')
         .forEach((instance) => instance.setSymbolMaster(buttonSymbol));
 
     //Save the result

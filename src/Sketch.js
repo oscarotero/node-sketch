@@ -35,11 +35,11 @@ class Sketch {
    * Returns all shared styles defined in the document.
    * @example
    * //Get all shared styles
-   * const sharedStyles = sketch.getSharedStyles();
+   * const sharedStyles = sketch.getAllSharedStyles();
    *
    * @return {SharedStyle[]}
    */
-  getSharedStyles() {
+  getAllSharedStyles() {
     return this.document.layerStyles.objects;
   }
 
@@ -47,11 +47,11 @@ class Sketch {
    * Returns all text styles defined in the document.
    * @example
    * //Get all text styles
-   * const textStyles = sketch.getTextStyles();
+   * const textStyles = sketch.getAllTextStyles();
    *
    * @return {SharedStyle[]}
    */
-  getTextStyles() {
+  getAllTextStyles() {
     return this.document.layerTextStyles.objects;
   }
 
