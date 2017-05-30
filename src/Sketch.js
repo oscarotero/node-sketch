@@ -32,63 +32,27 @@ class Sketch {
   }
 
   /**
-   * Search and returns the first shared style matching with the type and condition.
+   * Returns all shared styles defined in the document.
    * @example
-   * //Get the first shared style named 'fill/blue'
-   * const sharedStyle = sketch.findSharedStyle((style) => style.name === 'fill/blue');
+   * //Get all shared styles
+   * const sharedStyles = sketch.getSharedStyles();
    *
-   * @param  {Function} [condition] - A callback to be executed on each shared style that must return true or false.
-   * @return {SharedStyle|undefined}
-   */
-  findSharedStyle(condition) {
-    return this.document.layerStyles.objects.find(
-      style => !condition || condition(style)
-    );
-  }
-
-  /**
-   * Search and returns all shared styles matching with the type and condition.
-   * @example
-   * //Get all shared styles starting with 'fill/'
-   * const sharedStyles = sketch.findAllSharedStyles((style) => style.name.startsWith('fill/'));
-   *
-   * @param  {Function} [condition] - A callback to be executed on each shared style that must return true or false.
    * @return {SharedStyle[]}
    */
-  findAllSharedStyles(condition) {
-    return this.document.layerStyles.objects.filter(
-      style => !condition || condition(style)
-    );
+  getSharedStyles() {
+    return this.document.layerStyles.objects;
   }
 
   /**
-   * Search and returns the first text style matching with the type and condition.
+   * Returns all text styles defined in the document.
    * @example
-   * //Get the first text style named 'title/big'
-   * const textStyle = sketch.findTextStyle((style) => style.name === 'title/big');
+   * //Get all text styles
+   * const textStyles = sketch.getTextStyles();
    *
-   * @param  {Function} [condition] - A callback to be executed on each text style that must return true or false.
-   * @return {textStyle|undefined}
-   */
-  findTextStyle(condition) {
-    return this.document.layerTextStyles.objects.find(
-      style => !condition || condition(style)
-    );
-  }
-
-  /**
-   * Search and returns all text styles matching with the type and condition.
-   * @example
-   * //Get all text styles starting with 'title/'
-   * const textStyles = sketch.findAllTextStyles((style) => style.name.startsWith('title/'));
-   *
-   * @param  {Function} [condition] - A callback to be executed on each text style that must return true or false.
    * @return {SharedStyle[]}
    */
-  findAllTextStyles(condition) {
-    return this.document.layerTextStyles.objects.filter(
-      style => !condition || condition(style)
-    );
+  getTextStyles() {
+    return this.document.layerTextStyles.objects;
   }
 
   /**

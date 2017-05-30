@@ -81,9 +81,6 @@ const Sketch = require('./src/Sketch');
           data.user,
           data.pages
         );
-      })
-      .catch((err) => {
-        console.error(err);
       });
   };
 

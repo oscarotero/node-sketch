@@ -134,8 +134,9 @@ module.exports = Node;
 function getClassType(type) {
   const contructor = lib.getClass(type);
   const instance = new constructor();
+  const Layer = require('./Layer');
 
-  if (instance instanceof lib.Layer) {
+  if (instance instanceof Layer) {
     return 'layer';
   }
 }
