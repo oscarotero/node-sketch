@@ -133,8 +133,11 @@ module.exports = Node;
 
 function getClassType(type) {
   const contructor = lib.getClass(type);
+  const instance = new constructor();
 
-  return contructor._classType || null;
+  if (instance instanceof lib.Layer) {
+    return 'layer';
+  }
 }
 
 function findNode(target, type, condition, result) {

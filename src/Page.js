@@ -18,7 +18,7 @@ class Page extends Node {
     const sketch = this.parent;
 
     if (sketch) {
-      const index = sketch.pages.findIndex((page) => page === this);
+      const index = sketch.pages.findIndex(page => page === this);
 
       if (index !== -1) {
         sketch.pages.splice(index, 1);
@@ -34,8 +34,7 @@ class Page extends Node {
   find(type, condition) {
     if (type === 'symbolMaster' || type === 'artboard') {
       return this.layers.find(
-        layer =>
-          layer._class === type && (!condition || condition(layer))
+        layer => layer._class === type && (!condition || condition(layer))
       );
     }
 
@@ -48,13 +47,11 @@ class Page extends Node {
   findAll(type, condition, result) {
     if (type === 'symbolMaster' || type === 'artboard') {
       return this.layers.filter(
-        layer =>
-          layer._class === type && (!condition || condition(layer))
+        layer => layer._class === type && (!condition || condition(layer))
       );
     }
 
     return super.findAll(type, condition, result);
-
 
     result = result || [];
 

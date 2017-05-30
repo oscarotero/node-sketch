@@ -1,4 +1,3 @@
-const _parent = Symbol.for('Parent');
 const Node = require('./Node');
 
 /**
@@ -42,7 +41,5 @@ class Layer extends Node {
     this.style.setSharedStyle(style);
   }
 }
-
-Layer._classType = 'layer';
 
 module.exports = Layer;
