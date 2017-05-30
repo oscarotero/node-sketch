@@ -8,10 +8,11 @@ const Node = require('./Node');
  *
  * @abstract
  * @extends {Node}
+ * @ignore
  */
 class Layer extends Node {
   /**
-   * Returns the shared style used by this layer, if exists
+   * Returns the shared style used, if exists
    * @example
    * //Returns a layer named 'rectangle'
    * const layer = sketch.pages[0].findLayer('shapeGroup', (shape) => shape.name === 'rectangle');
@@ -26,7 +27,7 @@ class Layer extends Node {
   }
 
   /**
-   * Apply a shared style to this layer, replacing the previous shared style if exists.
+   * Apply a shared style, replacing the previous shared style if exists.
    * @example
    * //Returns a layer named 'rectangle'
    * const layer = sketch.pages[0].findLayer('shapeGroup', (shape) => shape.name === 'rectangle');
@@ -40,31 +41,8 @@ class Layer extends Node {
   setSharedStyle(style) {
     this.style.setSharedStyle(style);
   }
-
-  /**
-   * Removes the layer from its parent
-   * @example
-   * //Returns a group named 'buttons'
-   * const buttons = sketch.pages[0].findLayer('group', (group) => group.name === 'buttons');
-   *
-   * //Removes the first button
-   * const removedButton = buttons.layers[0].detach();
-   *
-   * @return {Layer} The layer itself
-   */
-  detach() {
-    if (this[_parent]) {
-      const index = this.parent.layers.indexOf(this);
-
-      if (index !== -1) {
-        this[_parent].layers.splice(index, 1);
-      }
-    }
-
-    this[_parent] = null;
-
-    return this;
-  }
 }
+
+Layer._classType = 'layer';
 
 module.exports = Layer;

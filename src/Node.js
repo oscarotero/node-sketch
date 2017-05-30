@@ -5,6 +5,7 @@ const lib = require('../');
  * Abstract class that it's used by all other classes, providing basic functionalities.
  *
  * @abstract
+ * @ignore
  */
 class Node {
   /**
@@ -88,31 +89,13 @@ class Node {
    * @return {Node|undefined}
    */
   find(type, condition) {
-    for (let [key, value] of Object.entries(this)) {
-      if (
-        value instanceof Node &&
-        value._class === type &&
-        (!condition || condition(value))
-      ) {
-        return value;
-      }
+    const classType = getClassType(type);
 
-      if (Array.isArray(value)) {
-        for (let child of value) {
-          if (child instanceof Node) {
-            if (child._class === type && (!condition || condition(child))) {
-              return child;
-            }
-
-            const result = child.find(type, condition);
-
-            if (result) {
-              return result;
-            }
-          }
-        }
-      }
+    if (classType === 'layer') {
+      return findLayer(this, type, condition);
     }
+
+    return findNode(this, type, condition);
   }
 
   /**
@@ -136,30 +119,96 @@ class Node {
   findAll(type, condition, result) {
     result = result || [];
 
-    for (let [key, value] of Object.entries(this)) {
-      if (
-        value instanceof Node &&
-        value._class === type &&
-        (!condition || condition(value))
-      ) {
-        result.push(value);
-      }
+    const classType = getClassType(type);
 
-      if (Array.isArray(value)) {
-        for (let child of value) {
-          if (child instanceof Node) {
-            if (child._class === type && (!condition || condition(child))) {
-              result.push(child);
-            }
-
-            child.findAll(type, condition, result);
-          }
-        }
-      }
+    if (classType === 'layer') {
+      return findLayer(this, type, condition, result);
     }
 
-    return result;
+    return findNode(this, type, condition, result);
   }
 }
 
 module.exports = Node;
+
+function getClassType(type) {
+  const contructor = lib.getClass(type);
+
+  return contructor._classType || null;
+}
+
+function findNode(target, type, condition, result) {
+  for (let [key, value] of Object.entries(target)) {
+    if (
+      value instanceof Node &&
+      value._class === type &&
+      (!condition || condition(value))
+    ) {
+      if (result) {
+        result.push(value);
+      } else {
+        return value;
+      }
+    }
+
+    if (Array.isArray(value)) {
+      for (let child of value) {
+        if (child instanceof Node) {
+          if (child._class === type && (!condition || condition(child))) {
+            if (result) {
+              result.push(child);
+            } else {
+              return child;
+            }
+          }
+
+          if (result) {
+            findNode(child, type, condition, result);
+          } else {
+            const found = findNode(child, type, condition);
+
+            if (found) {
+              return found;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  return result;
+}
+
+function findLayer(target, type, condition, result) {
+  if (result) {
+    target.layers
+      .filter(
+        layer => layer._class === type && (!condition || condition(layer))
+      )
+      .forEach(layer => result.push(layer));
+  } else {
+    let layer = this.layers.find(
+      layer => layer._class === type && (!condition || condition(layer))
+    );
+
+    if (layer) {
+      return layer;
+    }
+  }
+
+  for (let [key, value] of Object.entries(target.layers)) {
+    if ('layers' in value) {
+      if (result) {
+        findLayer(value, type, condition, result);
+      } else {
+        const found = findLayer(value, type, condition);
+
+        if (found) {
+          return found;
+        }
+      }
+    }
+  }
+
+  return result;
+}

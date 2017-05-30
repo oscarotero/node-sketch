@@ -1,9 +1,9 @@
-const LayerContainer = require('./LayerContainer');
+const Layer = require('./Layer');
 
 /**
  * Represents a shape group
  *
- * @extends {LayerContainer}
+ * @extends {Layer}
  * @see {@link Oval}
  * @see {@link Polygon}
  * @see {@link Rectangle}
@@ -11,6 +11,6 @@ const LayerContainer = require('./LayerContainer');
  * @see {@link Star}
  * @see {@link Triangle}
  */
-class ShapeGroup extends LayerContainer {}
+class ShapeGroup extends Layer {}
 
 module.exports = ShapeGroup;

@@ -88,10 +88,16 @@ const Sketch = require('./src/Sketch');
   };
 
   lib.create = function (parent, data) {
-    const className = data._class.charAt(0).toUpperCase() + data._class.slice(1);
+    const constructor = lib.getClass(data._class);
+
+    return new constructor(parent, data);
+  };
+
+  lib.getClass = function (type) {
+    const className = type.charAt(0).toUpperCase() + type.slice(1);
 
     if (typeof lib[className] === 'function') {
-      return new lib[className](parent, data);
+      return lib[className];
     }
 
     throw new Error(`Invalid class ${className}`);

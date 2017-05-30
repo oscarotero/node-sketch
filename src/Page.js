@@ -1,53 +1,70 @@
-const LayerContainer = require('./LayerContainer');
+const Node = require('./Node');
 
 /**
  * Represents a Page
  *
- * @extends {LayerContainer}
+ * @extends {Node}
  */
-class Page extends LayerContainer {
-
+class Page extends Node {
   /**
-   * Search and returns one SymbolMaster stored in this page.
-   *
+   * Removes the page
    * @example
-   * //Get the page that contains the symbols
-   * const page = sketch.getSymbolsPage();
+   * //Remove the first page
+   * const firstpage = sketch.pages[0].detach();
    *
-   * //Find a symbol named 'button'
-   * const button = page.findSymbolMaster((symbol) => symbol.name === 'button');
-   *
-   * @param  {Function} [condition] - A callback to be executed on each value and must return true or false.
-   * @return {SymbolMaster|undefined}
+   * @return {Page} The page itself
    */
-  findSymbolMaster(condition) {
-    return this.layers.find(
-      layer =>
-        layer._class === 'symbolMaster' && (!condition || condition(layer))
-    );
+  detach() {
+    const sketch = this.parent;
+
+    if (sketch) {
+      const index = sketch.pages.findIndex((page) => page === this);
+
+      if (index !== -1) {
+        sketch.pages.splice(index, 1);
+      }
+    }
+
+    return this;
   }
 
   /**
-   * Search and returns all SymbolMaster stored in this page.
-   *
-   * @example
-   * //Get the page containing the symbols
-   * const page = sketch.getSymbolsPage();
-   *
-   * //Get all symbols in this page
-   * const allSymbols = page.findAllSymbolMasters();
-   *
-   * //Get only the symbols starting with 'button/'
-   * const buttonSymbols = page.findAllSymbolMasters((symbol) => symbol.name.startsWith('button/'));
-   *
-   * @param  {Function} [condition] - A callback to be executed on each value and must return true or false. If it's not provided, returns all symbols.
-   * @return {SymbolMaster[]}
+   * @inheritdoc
    */
-  findAllSymbolMasters(condition) {
-    return this.layers.filter(
-      layer =>
-        layer._class === 'symbolMaster' && (!condition || condition(layer))
-    );
+  find(type, condition) {
+    if (type === 'symbolMaster' || type === 'artboard') {
+      return this.layers.find(
+        layer =>
+          layer._class === type && (!condition || condition(layer))
+      );
+    }
+
+    return super.find(type, condition);
+  }
+
+  /**
+   * @inheritdoc
+   */
+  findAll(type, condition, result) {
+    if (type === 'symbolMaster' || type === 'artboard') {
+      return this.layers.filter(
+        layer =>
+          layer._class === type && (!condition || condition(layer))
+      );
+    }
+
+    return super.findAll(type, condition, result);
+
+
+    result = result || [];
+
+    const classType = getClassType(type);
+
+    if (classType === 'layer') {
+      return findLayer(this, type, condition, result);
+    }
+
+    return findNode(this, type, condition, result);
   }
 }
 

@@ -28,14 +28,14 @@ class SymbolInstance extends Layer {
 
     //Search in the current page
     let page = this.findParent('page');
-    let master = page.findSymbolMaster(symbol => symbol.symbolID === this.symbolID);
+    let master = page.find('symbolMaster', symbol => symbol.symbolID === this.symbolID);
 
     //Search in the Symbols page
     if (!master) {
       page = page.parent.getSymbolsPage();
 
       if (page) {
-        master = page.findSymbolMaster(symbol => symbol.symbolID === this.symbolID);
+        master = page.find('symbolMaster', symbol => symbol.symbolID === this.symbolID);
       }
     }
 

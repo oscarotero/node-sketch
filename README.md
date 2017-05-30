@@ -38,6 +38,7 @@ This is a list of all classes and subclasses provided
 
 - `Sketch`
 - `Node`
+    - `Artboard`
     - `Blur`
     - `Border`
     - `BorderOptions`
@@ -53,6 +54,7 @@ This is a list of all classes and subclasses provided
     - `LayoutGrid`
     - `MSAttributedString`
     - `MSJSONFileReference`
+    - `Page`
     - `Path`
     - `Rect`
     - `RulerData`
@@ -66,18 +68,15 @@ This is a list of all classes and subclasses provided
     - `TextStyle`
     - `Layer`
         - `Bitmap`
+        - `Group`
         - `Oval`
         - `Polygon`
         - `Rectangle`
+        - `ShapeGroup`
         - `ShapePath`
         - `Slice`
         - `Star`
         - `SymbolInstance`
+        - `SymbolMaster`
         - `Text`
         - `Triangle`
-        - `LayerContainer`
-            - `Artboard`
-            - `Group`
-            - `Page`
-            - `ShapeGroup`
-            - `SymbolMaster`

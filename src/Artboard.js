@@ -1,10 +1,10 @@
-const LayerContainer = require('./LayerContainer');
+const Node = require('./Node');
 
 /**
  * Represents an Artboard
  *
- * @extends {LayerContainer}
+ * @extends {Node}
  */
-class Artboard extends LayerContainer {}
+class Artboard extends Node {}
 
 module.exports = Artboard;

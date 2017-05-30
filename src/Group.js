@@ -1,10 +1,10 @@
-const LayerContainer = require('./LayerContainer');
+const Layer = require('./Layer');
 
 /**
  * Represents a group of layers
  *
- * @extends {LayerContainer}
+ * @extends {Layer}
  */
-class Group extends LayerContainer {}
+class Group extends Layer {}
 
 module.exports = Group;
