@@ -39,15 +39,6 @@ class Node {
   }
 
   /**
-   * The node's id. It's a shortcut of do_objectID.
-   * @readonly
-   * @type {String}
-   */
-  get id() {
-    return this.do_objectID;
-  }
-
-  /**
    * Find a node ascendent matching with the type and condition
    *
    * @param  {String} [type] - The node type
