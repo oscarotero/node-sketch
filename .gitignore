@@ -2,4 +2,5 @@ yarn.lock
 /node_modules/
 /tests/*/*
 /tests/result.sketch
+/examples/result.sketch
 /out

@@ -35,7 +35,7 @@ class SymbolInstance extends Node {
 
     //Search in the Symbols page
     if (!master) {
-      page = page.parent.getSymbolsPage();
+      page = page.parent.symbolsPage;
 
       if (page) {
         master = page.get(

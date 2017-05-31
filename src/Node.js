@@ -113,6 +113,31 @@ class Node {
 
     return findLayer(this, getCondition(type, condition), result);
   }
+
+  /**
+   * Removes this node from parent
+   * 
+   * @return {Node}
+   */
+  detach() {
+    if (this[_parent]) {
+      if (layerClasses.indexOf(this._class) !== -1) {
+        const index = this.parent.layers.indexOf(this);
+
+        if (index !== -1) {
+          this[_parent].layers.splice(index, 1);
+        }
+
+        this[_parent] = null;
+      
+        return this;
+      }
+
+      throw new Error('To-do');
+    }
+
+    return this;
+  }
 }
 
 module.exports = Node;

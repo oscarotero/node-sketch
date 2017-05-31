@@ -9,9 +9,11 @@ const lib = require('../');
  * @property {Node} meta - The meta data
  * @property {Node} user - The user data
  * @property {Page[]} pages - Array with all pages of the document
+ * @property {Page|undefined} symbolsPage - The "Symbols" page if exists
  * @property {SharedStyle[]} sharedStyles - Array with all shared styles of the document
  * @property {SharedStyle[]} textStyles - Array with all text styles of the document
- * @property {Page|undefined} symbolsPage - The "Symbols" page if exists
+ * @property {Node[]} colors - Array with the document color palette
+ * @property {Node[]} gradients - Array with the document gradients palette
  */
 class Sketch {
   constructor(repo, document, meta, user, pages) {
@@ -33,6 +35,14 @@ class Sketch {
 
   get textStyles() {
     return this.document.layerTextStyles.objects;
+  }
+
+  get colors() {
+    return this.document.assets.colors;
+  }
+
+  get gradients() {
+    return this.document.assets.gradients;
   }
 
   /**
