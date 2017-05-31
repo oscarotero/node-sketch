@@ -73,3 +73,10 @@ const button = symbolsPage.get((node) => node._class === 'symbolMaster' && node.
 //or all inner nodes:
 const allSymbols = symbolsPage.getAll('symbolMaster');
 ```
+
+There are other classes extending `Node` to provide special funcionalities in some nodes:
+
+* `Page`
+* `SharedStyle`
+* `Style`
+* `SymbolInstance`
