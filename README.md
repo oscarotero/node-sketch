@@ -65,12 +65,12 @@ const button = symbolsPage.get('symbolMaster');
 const button = symbolsPage.get('symbolMaster', 'button');
 
 //by class and callback
-const button = symbolsPage.get('symbolMaster', (symbol) => symbol.name === 'button');
+const button = symbolsPage.get('symbolMaster', symbol => symbol.name === 'button');
 
 //Just a callback
-const button = symbolsPage.get((node) => node._class === 'symbolMaster' && node.name === 'button');
+const button = symbolsPage.get(node => node._class === 'symbolMaster' && node.name === 'button');
 
-//or all inner nodes:
+//And the same than above but returning all inner nodes instead just the first:
 const allSymbols = symbolsPage.getAll('symbolMaster');
 ```
 
