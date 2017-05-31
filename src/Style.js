@@ -2,27 +2,28 @@ const _sharedstyle = Symbol.for('sharedStyle');
 const Node = require('./Node');
 
 /**
- * Represents a style for a layer
+ * Represents the style of a layer
  *
  * @extends {Node}
  * @see {@link SharedStyle}
+ * 
+ * @property {SharedStyle|undefined} sharedStyle - The shared style used by this style
+ * 
+ * @example
+ * //Get a layer named 'block'
+ * const block = sketch.pages[0].get('shapeGroup', 'block');
+ *
+ * //Get the shared style
+ * const sharedStyle = block.style.sharedStyle;
+ *
+ * //Get a shared style named 'red'
+ * const redStyle = sketch.sharedStyles.find(style => style.name === 'red');
+ *
+ * //Assign a different shared style
+ * block.style.sharedStyle = redStyle;
  */
 class Style extends Node {
-  /**
-   * Returns the shared style used by this style, if exists
-   * @example
-   * //Get a layer named 'block'
-   * const block = sketch.pages[0].findLayer('shapeGroup', (shape) => shape.name === 'block');
-   *
-   * //Get its style
-   * const blockStyle = block.style;
-   *
-   * //Get the shared style used
-   * const sharedStyle = blockStyle.getSharedStyle();
-   *
-   * @return {SharedStyle|undefined}
-   */
-  getSharedStyle() {
+  get sharedStyle() {
     if (this[_sharedstyle]) {
       return this[_sharedstyle];
     }
@@ -43,22 +44,7 @@ class Style extends Node {
     return sharedStyle;
   }
 
-  /**
-   * Assign a new shared style to this style
-   * @example
-   * //Get a layer named 'block'
-   * const block = sketch.pages[0].findLayer('shapeGroup', (shape) => shape.name === 'block');
-   *
-   * //Get its style
-   * const blockStyle = block.style;
-   *
-   * //Get a shared style named 'red'
-   * const red = sketch.findSharedStyle(style => style.name === 'red');
-   *
-   * //Assign the shared style to the style
-   * blockStyle.setSharedStyle(red);
-   */
-  setSharedStyle(sharedStyle) {
+  set sharedStyle(sharedStyle) {
     let clone = new Style(
       this.parent,
       JSON.parse(JSON.stringify(sharedStyle.value))

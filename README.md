@@ -14,16 +14,13 @@ const ns = require('node-sketch');
 
 ns.read('design.sketch').then((sketch) => {
 
-    //Get the 'Symbols' page
-    const symbolsPage = sketch.getSymbolsPage();
-
     //Search the symbol named 'button'
-    const buttonSymbol = symbolsPage.get('symbolMaster', 'button');
+    const buttonSymbol = sketch.symbolsPage.get('symbolMaster', 'button');
 
     //Search all instances of a symbol named 'old-button' and replace it with 'button'
     sketch
-        .getAll('symbolInstance', (instance) => instance.getSymbolMaster().name === 'old-button')
-        .forEach((instance) => instance.setSymbolMaster(buttonSymbol));
+        .getAll('symbolInstance', instance => instance.symbolMaster.name === 'old-button')
+        .forEach(instance => instance.symbolMaster = buttonSymbol);
 
     //Save the result
     sketch.save('modified-design.sketch');
@@ -39,6 +36,7 @@ This is a list of all classes and subclasses provided
 - `Sketch`
 - `Node`
     - `Artboard`
+    - `Bitmap`
     - `Blur`
     - `Border`
     - `BorderOptions`
@@ -66,8 +64,6 @@ This is a list of all classes and subclasses provided
     - `SimpleGrid`
     - `Style`
     - `TextStyle`
-    - `Layer`
-        - `Bitmap`
         - `Group`
         - `Oval`
         - `Polygon`

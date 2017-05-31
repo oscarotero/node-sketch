@@ -3,7 +3,7 @@ const Node = require('./Node');
 
 /**
  * Represents a shared style
- *
+ * @ignore
  * @extends {Node}
  * @see {@link SharedStyleContainer}
  * @see {@link SharedTextStyleContainer}

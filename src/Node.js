@@ -1,5 +1,6 @@
 const _parent = Symbol.for('Parent');
 const lib = require('../');
+const layerClasses = ['artboard', 'bitmap', 'group', 'oval', 'page', 'polygon', 'rectangle', 'shapeGroup', 'shapePath', 'slice', 'star', 'symbolInstance', 'symbolMaster', 'text', 'triangle'];
 
 /**
  * Abstract class that it's used by all other classes, providing basic functionalities.
@@ -39,52 +40,50 @@ class Node {
   }
 
   /**
+   * Returns the parent element
+   *
+   * @return {Node|Sketch|undefined}
+   */
+  get parent() {
+    return this[_parent];
+  }
+
+  /**
    * Find a node ascendent matching with the type and condition
    *
    * @param  {String} [type] - The node type
-   * @param  {Function|string} [condition] - The node name or a callback to be executed on each parent and must return true or false. If it's not provided, only the type argument is be used.
+   * @param  {Function|String} [condition] - The node name or a callback to be executed on each parent and must return true or false. If it's not provided, only the type argument is be used.
    * @return {Node|Sketch|undefined}
    */
   getParent(type, condition) {
     let parent = this[_parent];
 
-    if (!type) {
+    condition = getCondition(type, condition);
+
+    if (!condition) {
       return parent;
     }
 
-    if (typeof condition === 'string') {
-      condition = node => node.name === condition;
-    }
-
-    while (parent) {
-      if (parent._class === type && (!condition || condition(parent))) {
-        return parent;
-      }
-
+    while (parent && !condition(parent)) {
       parent = parent[_parent];
     }
+
+    return parent;
   }
 
   /**
    * Search and returns the first descendant node that match the type and condition.
    *
-   * @param  {string} type - The Node type
-   * @param  {Function|string} [condition] - The node name or a callback to be executed on each node that must return true or false. If it's not provided, only the type argument is be used.
+   * @param  {String} type - The Node type
+   * @param  {Function|String} [condition] - The node name or a callback to be executed on each node that must return true or false. If it's not provided, only the type argument is be used.
    * @return {Node|undefined}
    */
   get(type, condition) {
-    const classType = getClassType(type);
-
-    if (typeof condition === 'string') {
-      const name = condition;
-      condition = node => node.name === name;
+    if (layerClasses.indexOf(type) === -1) {
+      return findNode(this, getCondition(type, condition));
     }
 
-    if (classType === 'layer') {
-      return findLayer(this, type, condition);
-    }
-
-    return findNode(this, type, condition);
+    return findLayer(this, getCondition(type, condition));
   }
 
   /**
@@ -101,47 +100,46 @@ class Node {
    *  return color.blue > 0.5 && color.red < 0.33
    * });
    *
-   * @param  {string} type - The Node type
-   * @param  {Function} [condition] - The node name or a callback to be executed on each node that must return true or false. If it's not provided, only the type argument is be used.
+   * @param  {String} type - The Node type
+   * @param  {Function|String} [condition] - The node name or a callback to be executed on each node that must return true or false. If it's not provided, only the type argument is be used.
    * @return {Node[]}
    */
   getAll(type, condition, result) {
     result = result || [];
 
-    const classType = getClassType(type);
-
-    if (typeof condition === 'string') {
-      const name = condition;
-      condition = node => node.name === name;
+    if (layerClasses.indexOf(type) === -1) {
+      return findNode(this, getCondition(type, condition), result);
     }
 
-    if (classType === 'layer') {
-      return findLayer(this, type, condition, result);
-    }
-
-    return findNode(this, type, condition, result);
+    return findLayer(this, getCondition(type, condition), result);
   }
 }
 
 module.exports = Node;
 
-function getClassType(type) {
-  const contructor = lib.getClass(type);
-  const instance = new constructor();
-  const Layer = require('./Layer');
-
-  if (instance instanceof Layer) {
-    return 'layer';
+function getCondition (type, condition) {
+  if (!type) {
+    return false;
   }
+
+  if (typeof type === 'function') {
+    return type;
+  }
+
+  if (!condition) {
+    return node => node._class === type;
+  }
+
+  if (typeof condition === 'string') {
+    return node => node._class === type && node.name === condition;
+  }
+
+  return node => node._class === type && condition(node);
 }
 
-function findNode(target, type, condition, result) {
+function findNode(target, condition, result) {
   for (let [key, value] of Object.entries(target)) {
-    if (
-      value instanceof Node &&
-      value._class === type &&
-      (!condition || condition(value))
-    ) {
+    if (value instanceof Node && (!condition || condition(value))) {
       if (result) {
         result.push(value);
       } else {
@@ -152,7 +150,7 @@ function findNode(target, type, condition, result) {
     if (Array.isArray(value)) {
       for (let child of value) {
         if (child instanceof Node) {
-          if (child._class === type && (!condition || condition(child))) {
+          if (!condition || condition(child)) {
             if (result) {
               result.push(child);
             } else {
@@ -161,9 +159,9 @@ function findNode(target, type, condition, result) {
           }
 
           if (result) {
-            findNode(child, type, condition, result);
+            findNode(child, condition, result);
           } else {
-            const found = findNode(child, type, condition);
+            const found = findNode(child, condition);
 
             if (found) {
               return found;
@@ -177,17 +175,13 @@ function findNode(target, type, condition, result) {
   return result;
 }
 
-function findLayer(target, type, condition, result) {
+function findLayer(target, condition, result) {
   if (result) {
     target.layers
-      .filter(
-        layer => layer._class === type && (!condition || condition(layer))
-      )
+      .filter(layer => !condition || condition(layer))
       .forEach(layer => result.push(layer));
   } else {
-    let layer = this.layers.find(
-      layer => layer._class === type && (!condition || condition(layer))
-    );
+    let layer = target.layers.find(layer => !condition || condition(layer));
 
     if (layer) {
       return layer;
@@ -197,9 +191,9 @@ function findLayer(target, type, condition, result) {
   for (let [key, value] of Object.entries(target.layers)) {
     if ('layers' in value) {
       if (result) {
-        findLayer(value, type, condition, result);
+        findLayer(value, condition, result);
       } else {
-        const found = findLayer(value, type, condition);
+        const found = findLayer(value, condition);
 
         if (found) {
           return found;

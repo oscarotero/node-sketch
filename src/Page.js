@@ -32,15 +32,8 @@ class Page extends Node {
    * @inheritdoc
    */
   get(type, condition) {
-    if (typeof condition === 'string') {
-      const name = condition;
-      condition = node => node.name === name;
-    }
-
     if (type === 'symbolMaster' || type === 'artboard') {
-      return this.layers.find(
-        layer => layer._class === type && (!condition || condition(layer))
-      );
+      return this.layers.find(getCondition(type, condition));
     }
 
     return super.get(type, condition);
@@ -50,15 +43,8 @@ class Page extends Node {
    * @inheritdoc
    */
   getAll(type, condition, result) {
-    if (typeof condition === 'string') {
-      const name = condition;
-      condition = node => node.name === name;
-    }
-    
     if (type === 'symbolMaster' || type === 'artboard') {
-      return this.layers.filter(
-        layer => layer._class === type && (!condition || condition(layer))
-      );
+      return this.layers.filter(getCondition(type, condition));
     }
 
     return super.getAll(type, condition, result);
@@ -66,3 +52,15 @@ class Page extends Node {
 }
 
 module.exports = Page;
+
+function getCondition (type, condition) {
+  if (!condition) {
+    return node => node._class === type;
+  }
+
+  if (typeof condition === 'string') {
+    return node => node._class === type && node.name === condition;
+  }
+
+  return node => node._class === type && condition(node);
+}

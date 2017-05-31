@@ -1,73 +1,51 @@
 const fs = require('fs');
-const Page = require('./Page');
-const SharedStyleContainer = require('./SharedStyleContainer');
-const SharedTextStyleContainer = require('./SharedTextStyleContainer');
+const lib = require('../');
 
 /**
  * This class represents the sketch file and all this content.
- * @property {JSZip} repo The instance of JSZip containing the raw data
- * @property {Object} document The document data
- * @property {Object} meta The meta data
- * @property {Object} user The user data
- * @property {Page[]} array with all pages of the document
+ * 
+ * @property {JSZip} repo - The instance of JSZip containing the raw data
+ * @property {Node} document - The document data
+ * @property {Node} meta - The meta data
+ * @property {Node} user - The user data
+ * @property {Page[]} pages - Array with all pages of the document
+ * @property {SharedStyle[]} sharedStyles - Array with all shared styles of the document
+ * @property {SharedStyle[]} textStyles - Array with all text styles of the document
+ * @property {Page|undefined} symbolsPage - The "Symbols" page if exists
  */
 class Sketch {
   constructor(repo, document, meta, user, pages) {
     this._class = 'sketch';
     this.repo = repo;
-    this.document = document;
-    this.meta = meta;
-    this.user = user;
-    this.pages = pages.map(page => new Page(this, page));
-
-    //To-do: create Document class
-    this.document.layerStyles = new SharedStyleContainer(
-      this,
-      this.document.layerStyles
-    );
-    this.document.layerTextStyles = new SharedTextStyleContainer(
-      this,
-      this.document.layerTextStyles
-    );
+    this.document = lib.create(this, document);
+    this.meta = lib.create(this, meta);
+    this.user = lib.create(this, user);
+    this.pages = pages.map(page => lib.create(this, page));
   }
 
-  /**
-   * Returns all shared styles defined in the document.
-   * @example
-   * //Get all shared styles
-   * const sharedStyles = sketch.getAllSharedStyles();
-   *
-   * @return {SharedStyle[]}
-   */
-  getAllSharedStyles() {
+  get symbolsPage() {
+    return this.pages.find(page => page.name === 'Symbols');
+  }
+
+  get sharedStyles() {
     return this.document.layerStyles.objects;
   }
 
-  /**
-   * Returns all text styles defined in the document.
-   * @example
-   * //Get all text styles
-   * const textStyles = sketch.getAllTextStyles();
-   *
-   * @return {SharedStyle[]}
-   */
-  getAllTextStyles() {
+  get textStyles() {
     return this.document.layerTextStyles.objects;
   }
 
   /**
-   * Returns the "Symbols" page if exists
-   *
-   * @return {Page|undefined}
-   */
-  getSymbolsPage() {
-    return this.pages.find(page => page.name === 'Symbols');
-  }
-
-  /**
    * Save the document as a sketch file
-   *
+   * @example
+   * ns.read('input.sketch').then((sketch) => {
+   * 
+   *  //modify the sketch data
+   *  
+   *  return sketch.save('output.sketch')
+   * })
    * @param  {string} file - The file path
+   * @return {Promise} A promise that is resolved when the file is saved
    */
   save(file) {
     const pagesFolder = this.repo.folder('pages');
