@@ -27,8 +27,9 @@
   },
   "scripts": {
     "pretty": "prettier --single-quote '{src,tests}/*.js' --write",
-    "docs": "jsdoc src/*.js README.md --template node_modules/docdash",
-    "test": "mocha tests/*.js"
+    "docs": "jsdoc src/*.js README.md index.js --template node_modules/docdash",
+    "test": "mocha tests/*.js",
+    "example": "node examples"
   },
   "homepage": "https://github.com/oscarotero/node-sketch"
 }

@@ -3,6 +3,7 @@ const Node = require('./Node');
 /**
  * Represents a Page
  *
+ * @ignore
  * @extends {Node}
  */
 class Page extends Node {

@@ -6,7 +6,6 @@ const layerClasses = ['artboard', 'bitmap', 'group', 'oval', 'page', 'polygon', 
  * Abstract class that it's used by all other classes, providing basic functionalities.
  *
  * @abstract
- * @ignore
  */
 class Node {
   /**

@@ -4,7 +4,7 @@ const JSZip = require('jszip');
 
 describe('Read sketch files', function() {
   it('Should open the file without errors', () => {
-    return sketch.read(__dirname + '/original.sketch').then(file => {
+    return sketch.read(__dirname + '/test.sketch').then(file => {
       describe('Must exist the sketch data', () => {
         it('file.repo', () => assert(file.repo instanceof JSZip));
         it('file.document', () => assert(typeof file.document === 'object'));
