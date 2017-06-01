@@ -47,7 +47,6 @@ const Sketch = require('./src/Sketch');
   const Node = require('./src/Node');
   const classes = {
     page:           require('./src/Page'),
-    sharedStyle:    require('./src/SharedStyle'),
     style:          require('./src/Style'),
     symbolInstance: require('./src/SymbolInstance')
   };

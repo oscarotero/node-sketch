@@ -115,28 +115,83 @@ class Node {
   }
 
   /**
-   * Removes this node from parent
+   * Removes the node from its parent
    * 
    * @return {Node}
    */
   detach() {
-    if (this[_parent]) {
-      if (layerClasses.indexOf(this._class) !== -1) {
-        const index = this.parent.layers.indexOf(this);
+    const parent = this[_parent];
+    this[_parent] = undefined;
 
-        if (index !== -1) {
-          this[_parent].layers.splice(index, 1);
-        }
+    if (!parent) {
+      throw new Error('Unable to detach a node without parent');
+    }
 
-        this[_parent] = null;
-      
+    for (let [key, value] of Object.entries(parent)) {
+      if (value === this) {
+        parent[key] = undefined;
         return this;
       }
 
-      throw new Error('To-do');
+      if (Array.isArray(value)) {
+        const index = value.indexOf(this);
+
+        if (index !== -1) {
+          value.splice(index, 1);
+          return this;
+        }
+      }
     }
 
-    return this;
+    throw new Error('Unable to detach a node with incorrect parent');
+  }
+
+  /**
+   * Replace this node with other
+   *
+   * @param {Node} node - The node to use
+   *
+   * @return {Node} The new node
+   */
+  replaceWith(node) {
+    const parent = this[_parent];
+
+    if (!parent) {
+      throw new Error('Unable to replace a node without parent');
+    }
+
+    node[_parent] = parent;
+
+    for (let [key, value] of Object.entries(parent)) {
+      if (value === this) {
+        parent[key] = node;
+        return node;
+      }
+
+      if (Array.isArray(value)) {
+        const index = value.indexOf(this);
+
+        if (index !== -1) {
+          value[index] = node;
+          return node;
+        }
+      }
+    }
+
+    throw new Error('Unable to replace a node with incorrect parent');
+  }
+
+  /**
+   * Creates a deep clone of this node
+   *
+   * @param {Node|undefined} parent - The new parent of the clone. If it's not defined use the current parent.
+   * 
+   * @return {Node}
+   */
+  clone(parent) {
+    const data = JSON.parse(JSON.stringify(this));
+
+    return lib.create(parent || this.parent, data);
   }
 }
 

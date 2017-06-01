@@ -30,12 +30,12 @@ class Style extends Node {
 
     const sketch = this.getParent('sketch');
 
-    let sharedStyle = sketch.findSharedStyle(
+    let sharedStyle = sketch.sharedStyles.find(
       style => style.do_objectID === this.sharedObjectID
     );
 
     if (!sharedStyle) {
-      sharedStyle = sketch.findTextStyle(
+      sharedStyle = sketch.textStyles.find(
         style => style.do_objectID === this.sharedObjectID
       );
     }
@@ -45,13 +45,22 @@ class Style extends Node {
   }
 
   set sharedStyle(sharedStyle) {
-    let clone = new Style(
-      this.parent,
-      JSON.parse(JSON.stringify(sharedStyle.value))
-    );
-    clone[_sharedstyle] = sharedStyle;
-    clone.sharedObjectID = sharedStyle.do_objectID;
-    this.parent.style = clone;
+    this[_sharedstyle] = sharedStyle;
+
+    if (sharedStyle) {
+      this.sharedObjectID = sharedStyle.do_objectID;
+    }
+  }
+
+  /**
+   * Apply a shared style discarding the previous styles
+   * 
+   * @param  {SharedStyle} sharedStyle - The shared style to apply
+   * 
+   * @return {Style} The new style applied
+   */
+  applySharedStyle(sharedStyle) {
+    return this.replaceWith(sharedStyle.value.clone());
   }
 }
 

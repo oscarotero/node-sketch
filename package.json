@@ -28,8 +28,7 @@
   "scripts": {
     "pretty": "prettier --single-quote '{src,tests}/*.js' --write",
     "docs": "jsdoc src/*.js README.md --template node_modules/docdash",
-    "test": "mocha tests/*.js",
-    "test:unzip": "unzip tests/original.sketch -d tests/original"
+    "test": "mocha tests/*.js"
   },
   "homepage": "https://github.com/oscarotero/node-sketch"
 }

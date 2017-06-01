@@ -22,4 +22,6 @@ module.exports = function (sketch) {
 	});
 
 	duplicatedSymbols.forEach(symbol => symbol.detach());
+
+	console.log(`Removed ${duplicatedSymbols.length} duplicated symbols`);
 }
