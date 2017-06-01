@@ -1,97 +1,62 @@
 const fs = require('fs');
-const Page = require('./Page');
-const SharedStyleContainer = require('./SharedStyleContainer');
-const SharedTextStyleContainer = require('./SharedTextStyleContainer');
+const lib = require('../');
 
+/**
+ * This class represents the sketch file and all this content.
+ * 
+ * @property {JSZip} repo - The instance of JSZip containing the raw data
+ * @property {Node} document - The document data
+ * @property {Node} meta - The meta data
+ * @property {Node} user - The user data
+ * @property {Page[]} pages - Array with all pages of the document
+ * @property {Page|undefined} symbolsPage - The "Symbols" page if exists
+ * @property {SharedStyle[]} sharedStyles - Array with all shared styles of the document
+ * @property {SharedStyle[]} textStyles - Array with all text styles of the document
+ * @property {Node[]} colors - Array with the document color palette
+ * @property {Node[]} gradients - Array with the document gradients palette
+ */
 class Sketch {
   constructor(repo, document, meta, user, pages) {
     this._class = 'sketch';
     this.repo = repo;
-    this.document = document;
-    this.meta = meta;
-    this.user = user;
-    this.pages = pages.map(page => new Page(this, page));
-
-    //To-do: create Document class
-    this.document.layerStyles = new SharedStyleContainer(
-      this,
-      this.document.layerStyles
-    );
-    this.document.layerTextStyles = new SharedTextStyleContainer(
-      this,
-      this.document.layerTextStyles
-    );
+    this.document = lib.create(this, document);
+    this.meta = lib.create(this, meta);
+    this.user = lib.create(this, user);
+    this.pages = pages.map(page => lib.create(this, page));
   }
 
-  find(type, condition) {
-    for (let page of this.pages) {
-      let node = page.find(type, condition);
-
-      if (node) {
-        return node;
-      }
-    }
-  }
-
-  findAll(type, condition, result) {
-    result = result || [];
-
-    for (let page of this.pages) {
-      page.findAll(type, condition).forEach(node => result.push(node));
-    }
-
-    return result;
-  }
-
-  findLayer(type, condition) {
-    for (let page of this.pages) {
-      let layer = page.findLayer(type, condition);
-
-      if (layer) {
-        return layer;
-      }
-    }
-  }
-
-  findAllLayers(type, condition, result) {
-    result = result || [];
-
-    for (let page of this.pages) {
-      page.findAllLayers(type, condition).forEach(layer => result.push(layer));
-    }
-
-    return result;
-  }
-
-  findSharedStyle(condition) {
-    return this.document.layerStyles.objects.find(
-      style => !condition || condition(style)
-    );
-  }
-
-  findAllSharedStyles(condition) {
-    return this.document.layerStyles.objects.filter(
-      style => !condition || condition(style)
-    );
-  }
-
-  findTextStyle(condition) {
-    return this.document.layerTextStyles.objects.find(
-      style => !condition || condition(style)
-    );
-  }
-
-  findAllTextStyles(condition) {
-    return this.document.layerTextStyles.objects.filter(
-      style => !condition || condition(style)
-    );
-  }
-
-  getSymbolsPage() {
+  get symbolsPage() {
     return this.pages.find(page => page.name === 'Symbols');
   }
 
-  //Save document as sketch file
+  get sharedStyles() {
+    return this.document.layerStyles.objects;
+  }
+
+  get textStyles() {
+    return this.document.layerTextStyles.objects;
+  }
+
+  get colors() {
+    return this.document.assets.colors;
+  }
+
+  get gradients() {
+    return this.document.assets.gradients;
+  }
+
+  /**
+   * Save the document as a sketch file
+   * @example
+   * ns.read('input.sketch').then((sketch) => {
+   * 
+   *  //modify the sketch data
+   *  
+   *  return sketch.save('output.sketch')
+   * })
+   * @param  {string} file - The file path
+   * @return {Promise} A promise that is resolved when the file is saved
+   */
   save(file) {
     const pagesFolder = this.repo.folder('pages');
 

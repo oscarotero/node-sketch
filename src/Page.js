@@ -1,19 +1,46 @@
-const LayerContainer = require('./LayerContainer');
+const Node = require('./Node');
 
-class Page extends LayerContainer {
-  findSymbolMaster(condition) {
-    return this.layers.find(
-      layer =>
-        layer._class === 'symbolMaster' && (!condition || condition(layer))
-    );
+/**
+ * Represents a Page
+ *
+ * @ignore
+ * @extends {Node}
+ */
+class Page extends Node {
+
+  /**
+   * @inheritdoc
+   */
+  get(type, condition) {
+    if (type === 'symbolMaster' || type === 'artboard') {
+      return this.layers.find(getCondition(type, condition));
+    }
+
+    return super.get(type, condition);
   }
 
-  findAllSymbolMasters(condition) {
-    return this.layers.filter(
-      layer =>
-        layer._class === 'symbolMaster' && (!condition || condition(layer))
-    );
+  /**
+   * @inheritdoc
+   */
+  getAll(type, condition, result) {
+    if (type === 'symbolMaster' || type === 'artboard') {
+      return this.layers.filter(getCondition(type, condition));
+    }
+
+    return super.getAll(type, condition, result);
   }
 }
 
 module.exports = Page;
+
+function getCondition (type, condition) {
+  if (!condition) {
+    return node => node._class === type;
+  }
+
+  if (typeof condition === 'string') {
+    return node => node._class === type && node.name === condition;
+  }
+
+  return node => node._class === type && condition(node);
+}

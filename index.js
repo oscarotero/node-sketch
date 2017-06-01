@@ -2,74 +2,66 @@ const fs     = require('fs');
 const JSZip  = require('jszip');
 const Sketch = require('./src/Sketch');
 
+/**
+ * @module node-sketch
+ */
 (function (lib) {
-  lib.Artboard                 = require('./src/Artboard');
-  lib.Bitmap                   = require('./src/Bitmap');
-  lib.Blur                     = require('./src/Blur');
-  lib.Border                   = require('./src/Border');
-  lib.BorderOptions            = require('./src/BorderOptions');
-  lib.Color                    = require('./src/Color');
-  lib.CurvePoint               = require('./src/CurvePoint');
-  lib.Gradient                 = require('./src/Gradient');
-  lib.GradientStop             = require('./src/GradientStop');
-  lib.Group                    = require('./src/Group');
-  lib.ExportFormat             = require('./src/ExportFormat');
-  lib.ExportOptions            = require('./src/ExportOptions');
-  lib.Fill                     = require('./src/Fill');
-  lib.GraphicsContextSettings  = require('./src/GraphicsContextSettings');
-  lib.InnerShadow              = require('./src/InnerShadow');
-  lib.LayoutGrid               = require('./src/LayoutGrid');
-  lib.MSAttributedString       = require('./src/MSAttributedString');
-  lib.MSJSONFileReference      = require('./src/MSJSONFileReference');
-  lib.Oval                     = require('./src/Oval');
-  lib.Page                     = require('./src/Page');
-  lib.Path                     = require('./src/Path');
-  lib.Polygon                  = require('./src/Polygon');
-  lib.Rect                     = require('./src/Rect');
-  lib.Rectangle                = require('./src/Rectangle');
-  lib.RulerData                = require('./src/RulerData');
-  lib.Shadow                   = require('./src/Shadow');
-  lib.ShapeGroup               = require('./src/ShapeGroup');
-  lib.ShapePath                = require('./src/ShapePath');
-  lib.SharedStyle              = require('./src/SharedStyle');
-  lib.SharedStyleContainer     = require('./src/SharedStyleContainer');
-  lib.SharedTextStyleContainer = require('./src/SharedTextStyleContainer');
-  lib.SimpleGrid               = require('./src/SimpleGrid');
-  lib.Slice                    = require('./src/Slice');
-  lib.Star                     = require('./src/Star');
-  lib.Style                    = require('./src/Style');
-  lib.SymbolInstance           = require('./src/SymbolInstance');
-  lib.SymbolMaster             = require('./src/SymbolMaster');
-  lib.Text                     = require('./src/Text');
-  lib.TextStyle                = require('./src/TextStyle');
-  lib.Triangle                 = require('./src/Triangle');
 
   // Read a .sketch file and return an instance of Sketch
+  /**
+   * Read a sketch file and returns a promise with a Sketch instance
+   * @alias module:node-sketch.read
+   * @param  {Array|String} file - Can be a path or an array of paths
+   *
+   * @example
+   * //Load a file
+   * nodeSketch.read('design.sketch').then(sketch => {
+   *   console.log(sketch);
+   * }).catch(err => {
+   *   console.error('Error reading the file');
+   * });
+   *
+   * //Load an array of files
+   * nodeSketch.read(['design.sketch', 'other-design.sketch']).then(files => {
+   *   let [design, other] = files;
+   *   
+   *   console.log(design);
+   *   console.log(other);
+   * }).catch(err => {
+   *   console.error('Error reading some files');
+   * })
+   * 
+   * @return {Promise}
+   */
   lib.read = function (file) {
+    if (Array.isArray(file)) {
+      return Promise.all(file.map(each => lib.read(each)));
+    }
+
     return JSZip.loadAsync(fs.readFileSync(file))
-      .then(async (zip) => {
-        const document = await zip.file('document.json').async('string');
-        const meta = await zip.file('meta.json').async('string');
-        const user = await zip.file('user.json').async('string');
-
-        return {
-          repo: zip,
-          document: JSON.parse(document),
-          meta: JSON.parse(meta),
-          user: JSON.parse(user)
-        };
+      .then(zip => {
+        return Promise.all([
+            zip.file('document.json').async('string'),
+            zip.file('meta.json').async('string'),
+            zip.file('user.json').async('string')
+          ])
+          .then(result => {
+            return {
+              repo: zip,
+              document: JSON.parse(result[0]),
+              meta: JSON.parse(result[1]),
+              user: JSON.parse(result[2])
+            };
+          });
       })
-      .then(async (data) => {
-        data.pages = [];
-
+      .then(data => {
         return Promise.all(
-          data.document.pages.map(async (page) => {
-            const contents = await data.repo.file(`${page._ref}.json`).async('string');
-            return JSON.parse(contents);
+          data.document.pages.map(page => {
+            return data.repo.file(`${page._ref}.json`).async('string');
           })
         )
-        .then((pages) => {
-          data.pages = pages;
+        .then(pages => {
+          data.pages = pages.map(page => JSON.parse(page));
           return data;
         });
       })
@@ -81,20 +73,31 @@ const Sketch = require('./src/Sketch');
           data.user,
           data.pages
         );
-      })
-      .catch((err) => {
-        console.error(err);
       });
   };
 
-  lib.create = function (parent, data) {
-    const className = data._class.charAt(0).toUpperCase() + data._class.slice(1);
+  const Node = require('./src/Node');
+  const classes = {
+    page:           require('./src/Page'),
+    style:          require('./src/Style'),
+    symbolInstance: require('./src/SymbolInstance')
+  };
 
-    if (typeof lib[className] === 'function') {
-      return new lib[className](parent, data);
+  /**
+   * Creates a new Node elements
+   * 
+   * @ignore
+   * @param  {Node|Sketch} parent - The node parent
+   * @param  {Object} - The json with the raw data
+   * 
+   * @return {Node}
+   */
+  lib.create = function (parent, data) {
+    if (data._class in classes) {
+      return new classes[data._class](parent, data);
     }
 
-    throw new Error(`Invalid class ${className}`);
+    return new Node(parent, data);
   };
 
 })(require('./index'));

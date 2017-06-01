@@ -1,22 +1,47 @@
 const _symbol = Symbol.for('symbolMaster');
-const Layer = require('./Layer');
+const Node = require('./Node');
 
-class SymbolInstance extends Layer {
-  getSymbolMaster() {
+/**
+ * Represents the instance of a symbol
+ *
+ * @property {Node} symbolMaster - The symbolMaster object used by the instance
+ *
+ * @example
+ * //Get any symbol instance
+ * const instance = sketch.pages[0].get('symbolInstance', 'button');
+ *
+ * console.log(`The instance named ${instance.name} belongs to the master symbol ${instance.symbolMaster.name}`);
+ *
+ * //Get the symbol master named 'new-button'
+ * const master = sketch.getSymbolsPage().get('symbolMaster', 'new-button');
+ *
+ * //Apply the new master to the instance
+ * instance.symbolMaster = master;
+ *
+ * @extends {Node}
+ */
+class SymbolInstance extends Node {
+  get symbolMaster() {
     if (this[_symbol]) {
       return this[_symbol];
     }
 
     //Search in the current page
-    let page = this.findParent('page');
-    let master = page.findSymbolMaster(symbol => symbol.symbolID === this.symbolID);
+    let page = this.getParent('page');
+    let master = page.get(
+      'symbolMaster',
+      symbol => symbol.symbolID === this.symbolID
+    );
 
     //Search in the Symbols page
     if (!master) {
-      page = page.parent.getSymbolsPage();
+      page = page.parent.symbolsPage;
 
       if (page) {
-        master = page.findSymbolMaster(symbol => symbol.symbolID === this.symbolID);
+        master = page.get(
+          'symbolMaster',
+          symbol => symbol.symbolID === this.symbolID
+        );
       }
     }
 
@@ -24,7 +49,7 @@ class SymbolInstance extends Layer {
     return master;
   }
 
-  setSymbolMaster(master) {
+  set symbolMaster(master) {
     this.symbolID = master.symbolID;
     this[_symbol] = master;
   }

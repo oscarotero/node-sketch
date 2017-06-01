@@ -9,8 +9,10 @@
     "jszip": "^3.1.3"
   },
   "devDependencies": {
+    "docdash": "^0.4.0",
+    "jsdoc": "^3.4.3",
     "jsondiffpatch": "^0.2.4",
-    "mocha": "^3.4.1",
+    "mocha": "^3.4.2",
     "prettier": "^1.3.1"
   },
   "repository": {
@@ -25,11 +27,9 @@
   },
   "scripts": {
     "pretty": "prettier --single-quote '{src,tests}/*.js' --write",
-    "test": "npm run-script test:clean && npm run-script test:run && npm run-script test:diff1 && npm run-script test:diff2",
-    "test:clean": "rm -rf tests/original && rm -rf tests/result",
-    "test:run": "node tests/test.js && unzip tests/original.sketch -d tests/original && unzip tests/result.sketch -d tests/result",
-    "test:diff1": "jsondiffpatch tests/original/pages/6624F3F7-470D-4370-9BDE-F81657777324.json tests/result/pages/6624F3F7-470D-4370-9BDE-F81657777324.json",
-    "test:diff2": "jsondiffpatch tests/original/pages/A660427D-210F-4E17-AA74-DD9E72DA0E3B.json tests/result/pages/A660427D-210F-4E17-AA74-DD9E72DA0E3B.json"
+    "docs": "jsdoc src/*.js README.md index.js --template node_modules/docdash",
+    "test": "mocha tests/*.js",
+    "example": "node examples"
   },
   "homepage": "https://github.com/oscarotero/node-sketch"
 }

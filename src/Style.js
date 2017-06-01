@@ -1,20 +1,41 @@
 const _sharedstyle = Symbol.for('sharedStyle');
 const Node = require('./Node');
 
+/**
+ * Represents the style of a layer
+ *
+ * @extends {Node}
+ * @see {@link SharedStyle}
+ * 
+ * @property {SharedStyle|undefined} sharedStyle - The shared style used by this style
+ * 
+ * @example
+ * //Get a layer named 'block'
+ * const block = sketch.pages[0].get('shapeGroup', 'block');
+ *
+ * //Get the shared style
+ * const sharedStyle = block.style.sharedStyle;
+ *
+ * //Get a shared style named 'red'
+ * const redStyle = sketch.sharedStyles.find(style => style.name === 'red');
+ *
+ * //Assign a different shared style
+ * block.style.sharedStyle = redStyle;
+ */
 class Style extends Node {
-  getSharedStyle() {
+  get sharedStyle() {
     if (this[_sharedstyle]) {
       return this[_sharedstyle];
     }
 
-    const sketch = this.findParent('sketch');
+    const sketch = this.getParent('sketch');
 
-    let sharedStyle = sketch.findSharedStyle(
+    let sharedStyle = sketch.sharedStyles.find(
       style => style.do_objectID === this.sharedObjectID
     );
 
     if (!sharedStyle) {
-      sharedStyle = sketch.findTextStyle(
+      sharedStyle = sketch.textStyles.find(
         style => style.do_objectID === this.sharedObjectID
       );
     }
@@ -23,14 +44,23 @@ class Style extends Node {
     return sharedStyle;
   }
 
-  setSharedStyle(sharedStyle) {
-    let clone = new Style(
-      this.parent,
-      JSON.parse(JSON.stringify(sharedStyle.value))
-    );
-    clone[_sharedstyle] = sharedStyle;
-    clone.sharedObjectID = sharedStyle.do_objectID;
-    this.parent.style = clone;
+  set sharedStyle(sharedStyle) {
+    this[_sharedstyle] = sharedStyle;
+
+    if (sharedStyle) {
+      this.sharedObjectID = sharedStyle.do_objectID;
+    }
+  }
+
+  /**
+   * Apply a shared style discarding the previous styles
+   * 
+   * @param  {SharedStyle} sharedStyle - The shared style to apply
+   * 
+   * @return {Style} The new style applied
+   */
+  applySharedStyle(sharedStyle) {
+    return this.replaceWith(sharedStyle.value.clone());
   }
 }
 
