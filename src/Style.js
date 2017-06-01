@@ -23,45 +23,45 @@ const Node = require('./Node');
  * block.style.sharedStyle = redStyle;
  */
 class Style extends Node {
-  get sharedStyle() {
-    if (this[_sharedstyle]) {
-      return this[_sharedstyle];
+    get sharedStyle() {
+        if (this[_sharedstyle]) {
+            return this[_sharedstyle];
+        }
+
+        const sketch = this.getParent('sketch');
+
+        let sharedStyle = sketch.sharedStyles.find(
+            style => style.do_objectID === this.sharedObjectID
+        );
+
+        if (!sharedStyle) {
+            sharedStyle = sketch.textStyles.find(
+                style => style.do_objectID === this.sharedObjectID
+            );
+        }
+
+        this[_sharedstyle] = sharedStyle;
+        return sharedStyle;
     }
 
-    const sketch = this.getParent('sketch');
+    set sharedStyle(sharedStyle) {
+        this[_sharedstyle] = sharedStyle;
 
-    let sharedStyle = sketch.sharedStyles.find(
-      style => style.do_objectID === this.sharedObjectID
-    );
-
-    if (!sharedStyle) {
-      sharedStyle = sketch.textStyles.find(
-        style => style.do_objectID === this.sharedObjectID
-      );
+        if (sharedStyle) {
+            this.sharedObjectID = sharedStyle.do_objectID;
+        }
     }
 
-    this[_sharedstyle] = sharedStyle;
-    return sharedStyle;
-  }
-
-  set sharedStyle(sharedStyle) {
-    this[_sharedstyle] = sharedStyle;
-
-    if (sharedStyle) {
-      this.sharedObjectID = sharedStyle.do_objectID;
-    }
-  }
-
-  /**
+    /**
    * Apply a shared style discarding the previous styles
    * 
    * @param  {SharedStyle} sharedStyle - The shared style to apply
    * 
    * @return {Style} The new style applied
    */
-  applySharedStyle(sharedStyle) {
-    return this.replaceWith(sharedStyle.value.clone());
-  }
+    applySharedStyle(sharedStyle) {
+        return this.replaceWith(sharedStyle.value.clone());
+    }
 }
 
 module.exports = Style;

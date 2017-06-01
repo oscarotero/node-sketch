@@ -21,38 +21,38 @@ const Node = require('./Node');
  * @extends {Node}
  */
 class SymbolInstance extends Node {
-  get symbolMaster() {
-    if (this[_symbol]) {
-      return this[_symbol];
-    }
+    get symbolMaster() {
+        if (this[_symbol]) {
+            return this[_symbol];
+        }
 
-    //Search in the current page
-    let page = this.getParent('page');
-    let master = page.get(
-      'symbolMaster',
-      symbol => symbol.symbolID === this.symbolID
-    );
-
-    //Search in the Symbols page
-    if (!master) {
-      page = page.parent.symbolsPage;
-
-      if (page) {
-        master = page.get(
-          'symbolMaster',
-          symbol => symbol.symbolID === this.symbolID
+        //Search in the current page
+        let page = this.getParent('page');
+        let master = page.get(
+            'symbolMaster',
+            symbol => symbol.symbolID === this.symbolID
         );
-      }
+
+        //Search in the Symbols page
+        if (!master) {
+            page = page.parent.symbolsPage;
+
+            if (page) {
+                master = page.get(
+                    'symbolMaster',
+                    symbol => symbol.symbolID === this.symbolID
+                );
+            }
+        }
+
+        this[_symbol] = master;
+        return master;
     }
 
-    this[_symbol] = master;
-    return master;
-  }
-
-  set symbolMaster(master) {
-    this.symbolID = master.symbolID;
-    this[_symbol] = master;
-  }
+    set symbolMaster(master) {
+        this.symbolID = master.symbolID;
+        this[_symbol] = master;
+    }
 }
 
 module.exports = SymbolInstance;
