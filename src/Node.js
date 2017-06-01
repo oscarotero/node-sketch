@@ -92,10 +92,10 @@ class Node {
    * const page = sketch.pages[0];
    *
    * //Get all colors found in this page
-   * const colors = page.findAll('color');
+   * const colors = page.getAll('color');
    *
    * //Get all colors with specific values
-   * const blueColors = page.findAll('color', (color) => {
+   * const blueColors = page.getAll('color', (color) => {
    *  return color.blue > 0.5 && color.red < 0.33
    * });
    *
@@ -115,7 +115,7 @@ class Node {
 
   /**
    * Removes the node from its parent
-   * 
+   *
    * @return {Node}
    */
   detach() {
@@ -184,7 +184,7 @@ class Node {
    * Creates a deep clone of this node
    *
    * @param {Node|undefined} parent - The new parent of the clone. If it's not defined use the current parent.
-   * 
+   *
    * @return {Node}
    */
   clone(parent) {
