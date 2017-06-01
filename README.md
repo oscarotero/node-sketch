@@ -77,3 +77,5 @@ const allSymbols = symbolsPage.getAll('symbolMaster');
 ```
 
 There are other classes extending `Node` to provide special funcionalities in some nodes, like `Page`, `Style` or `SymbolInstance`.
+
+[See the API detailed](https://oscarotero.github.io/node-sketch/)
