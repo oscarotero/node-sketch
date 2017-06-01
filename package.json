@@ -27,7 +27,7 @@
   },
   "scripts": {
     "pretty": "prettier --single-quote '{src,tests}/*.js' --write",
-    "docs": "jsdoc src/*.js README.md index.js --template node_modules/docdash",
+    "docs": "jsdoc src/*.js README.md index.js --template node_modules/docdash -d ./docs/",
     "test": "mocha tests/*.js",
     "example": "node examples"
   },

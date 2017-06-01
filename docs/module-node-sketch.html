@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>node-sketch - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Node.html">Node</a><ul class='methods'><li data-type='method'><a href="Node.html#clone">clone</a></li><li data-type='method'><a href="Node.html#detach">detach</a></li><li data-type='method'><a href="Node.html#get">get</a></li><li data-type='method'><a href="Node.html#getAll">getAll</a></li><li data-type='method'><a href="Node.html#getParent">getParent</a></li><li data-type='method'><a href="Node.html#replaceWith">replaceWith</a></li></ul></li><li><a href="Sketch.html">Sketch</a><ul class='methods'><li data-type='method'><a href="Sketch.html#save">save</a></li></ul></li><li><a href="Style.html">Style</a><ul class='methods'><li data-type='method'><a href="Style.html#applySharedStyle">applySharedStyle</a></li><li data-type='method'><a href="Style.html#clone">clone</a></li><li data-type='method'><a href="Style.html#detach">detach</a></li><li data-type='method'><a href="Style.html#get">get</a></li><li data-type='method'><a href="Style.html#getAll">getAll</a></li><li data-type='method'><a href="Style.html#getParent">getParent</a></li><li data-type='method'><a href="Style.html#replaceWith">replaceWith</a></li></ul></li><li><a href="SymbolInstance.html">SymbolInstance</a><ul class='methods'><li data-type='method'><a href="SymbolInstance.html#clone">clone</a></li><li data-type='method'><a href="SymbolInstance.html#detach">detach</a></li><li data-type='method'><a href="SymbolInstance.html#get">get</a></li><li data-type='method'><a href="SymbolInstance.html#getAll">getAll</a></li><li data-type='method'><a href="SymbolInstance.html#getParent">getParent</a></li><li data-type='method'><a href="SymbolInstance.html#replaceWith">replaceWith</a></li></ul></li></ul><h3>Modules</h3><ul><li><a href="module-node-sketch.html">node-sketch</a><ul class='methods'><li data-type='method'><a href="module-node-sketch.html#.read">read</a></li></ul></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">node-sketch</h1>
+    
+
+    
+
+
+
+
+<section>
+
+<header>
+    
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    <h4 class="name" id=".read"><span class="type-signature">(static) </span>read<span class="signature">(file)</span><span class="type-signature"> &rarr; {Promise}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line36">line 36</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    Read a sketch file and returns a promise with a Sketch instance
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>//Load a file
+nodeSketch.read('design.sketch').then(sketch => {
+  console.log(sketch);
+}).catch(err => {
+  console.error('Error reading the file');
+});
+
+//Load an array of files
+nodeSketch.read(['design.sketch', 'other-design.sketch']).then(files => {
+  let [design, other] = files;
+  
+  console.log(design);
+  console.log(other);
+}).catch(err => {
+  console.error('Error reading some files');
+})</code></pre>
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>file</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array</span>
+|
+
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Can be a path or an array of paths</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+        
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Thu Jun 01 2017 14:13:03 GMT+0200 (CEST) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>
