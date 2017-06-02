@@ -27,7 +27,7 @@ ns.read('design.sketch').then(sketch => {
 });
 ```
 
-[View more examples in the /examples folder](examples)
+[View more examples in the /examples folder](https://github.com/oscarotero/node-sketch/tree/master/examples)
 
 ## API
 
