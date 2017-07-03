@@ -10,7 +10,8 @@ nodeSketch
     .then(files => {
         let [sketch, resources] = files;
 
-        sketch.use(new RemoveDuplicatedSymbols())
+        sketch
+            .use(new RemoveDuplicatedSymbols())
             .use(new RemoveDuplicatedStyles())
             .use(new UpdateStyles(resources))
             .use(new UpdateSymbols(resources))
