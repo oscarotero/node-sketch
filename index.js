@@ -1,37 +1,36 @@
 const fs = require('fs');
 const JSZip = require('jszip');
-const Sketch = require('./src/Sketch');
+const Sketch = require('./lib/Sketch');
 
 /**
  * @module node-sketch
  */
 (function(lib) {
-    // Read a .sketch file and return an instance of Sketch
     /**
-   * Read a sketch file and returns a promise with a Sketch instance
-   * @alias module:node-sketch.read
-   * @param  {Array|String} file - Can be a path or an array of paths
-   *
-   * @example
-   * //Load a file
-   * nodeSketch.read('design.sketch').then(sketch => {
-   *   console.log(sketch);
-   * }).catch(err => {
-   *   console.error('Error reading the file');
-   * });
-   *
-   * //Load an array of files
-   * nodeSketch.read(['design.sketch', 'other-design.sketch']).then(files => {
-   *   let [design, other] = files;
-   *
-   *   console.log(design);
-   *   console.log(other);
-   * }).catch(err => {
-   *   console.error('Error reading some files');
-   * })
-   *
-   * @return {Promise}
-   */
+     * Read a sketch file and returns a promise with a Sketch instance
+     * @alias module:node-sketch.read
+     * @param  {Array|String} file - Can be a path or an array of paths
+     *
+     * @example
+     * //Load a file
+     * nodeSketch.read('design.sketch').then(sketch => {
+     *   console.log(sketch);
+     * }).catch(err => {
+     *   console.error('Error reading the file');
+     * });
+     *
+     * //Load an array of files
+     * nodeSketch.read(['design.sketch', 'other-design.sketch']).then(files => {
+     *   let [design, other] = files;
+     *
+     *   console.log(design);
+     *   console.log(other);
+     * }).catch(err => {
+     *   console.error('Error reading some files');
+     * })
+     *
+     * @return {Promise}
+     */
     lib.read = function(file) {
         if (Array.isArray(file)) {
             return Promise.all(file.map(each => lib.read(each)));
@@ -75,21 +74,21 @@ const Sketch = require('./src/Sketch');
             });
     };
 
-    const Node = require('./src/Node');
+    const Node = require('./lib/Node');
     const classes = {
-        style: require('./src/Style'),
-        symbolInstance: require('./src/SymbolInstance')
+        style: require('./lib/Style'),
+        symbolInstance: require('./lib/SymbolInstance')
     };
 
     /**
-   * Creates a new Node elements
-   *
-   * @ignore
-   * @param  {Node|Sketch} parent - The node parent
-   * @param  {Object} - The json with the raw data
-   *
-   * @return {Node}
-   */
+     * Creates a new Node elements
+     *
+     * @ignore
+     * @param  {Node|Sketch} parent - The node parent
+     * @param  {Object} - The json with the raw data
+     *
+     * @return {Node}
+     */
     lib.create = function(parent, data) {
         if (data._class in classes) {
             return new classes[data._class](parent, data);

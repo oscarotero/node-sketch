@@ -10,4 +10,5 @@ First stable version, trying to fulfill the following goals:
 
 * Provide a simple but powerful API to find, edit and remove elements.
 * Create a basic structure that can be easy to extend with extra features over time.
+* Some basic plugins.
 * Fast and reliable.

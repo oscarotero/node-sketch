@@ -1,18 +1,20 @@
 const nodeSketch = require('../');
-const removeDuplicatedSymbols = require('./remove-duplicated-symbols');
-const removeDuplicatedStyles = require('./remove-duplicated-styles');
-const updateResources = require('./update-resources');
+
+const RemoveDuplicatedSymbols = require('../plugins/RemoveDuplicatedSymbols');
+const RemoveDuplicatedStyles = require('../plugins/RemoveDuplicatedStyles');
+const UpdateStyles = require('../plugins/updateStyles');
+const UpdateSymbols = require('../plugins/updateSymbols');
 
 nodeSketch
     .read([__dirname + '/example.sketch', __dirname + '/resources.sketch'])
     .then(files => {
         let [sketch, resources] = files;
 
-        removeDuplicatedSymbols(sketch);
-        removeDuplicatedStyles(sketch);
-        updateResources(sketch, resources);
-
-        return sketch.save(__dirname + '/result.sketch');
+        sketch.use(new RemoveDuplicatedSymbols())
+            .use(new RemoveDuplicatedStyles())
+            .use(new UpdateStyles(resources))
+            .use(new UpdateSymbols(resources))
+            .save(__dirname + '/result.sketch');
     })
     .catch(err => {
         console.error('Error reading the sketch file');
