@@ -22,6 +22,8 @@ class RemoveDuplicatedSymbols {
         });
 
         this.duplicatedSymbols.forEach(symbol => symbol.detach());
+
+        return Promise.resolve();
     }
 }
 

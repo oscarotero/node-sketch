@@ -77,7 +77,8 @@ const Sketch = require('./lib/Sketch');
     const Node = require('./lib/Node');
     const classes = {
         style: require('./lib/Style'),
-        symbolInstance: require('./lib/SymbolInstance')
+        symbolInstance: require('./lib/SymbolInstance'),
+        MSJSONFileReference: require('./lib/FileReference')
     };
 
     /**

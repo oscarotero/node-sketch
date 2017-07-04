@@ -35,6 +35,8 @@ class RemoveDuplicatedStyles {
         });
 
         this.duplicatedStyles.forEach(style => style.detach());
+
+        return Promise.resolve();
     }
 }
 
