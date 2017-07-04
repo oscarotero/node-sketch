@@ -82,9 +82,9 @@ There are other classes extending `Node` to provide special funcionalities in so
 
 The `plugins` namespace contains a set of plugins with common functions. For example:
 
+```js
 const sketch = require('node-sketch');
 
-```js
 sketch
     .read(__dirname + '/example.sketch')
     .then(file => {
