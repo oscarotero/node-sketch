@@ -3,12 +3,12 @@ const JSZip = require('jszip');
 const Sketch = require('./lib/Sketch');
 
 /**
- * @module node-sketch
+ * @module index
  */
 (function(lib) {
     /**
      * Read a sketch file and returns a promise with a Sketch instance
-     * @alias module:node-sketch.read
+     * @alias module:index.read
      * @param  {Array|String} file - Can be a path or an array of paths
      *
      * @example

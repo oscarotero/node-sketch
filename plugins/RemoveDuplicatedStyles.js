@@ -1,3 +1,8 @@
+/**
+ * Plugin to remove duplicated styles
+ * 
+ * @module plugins/RemoveDuplicatedStyles
+ */
 class RemoveDuplicatedStyles {
     run(sketch) {
         this.uniqueSharedStyles = new Map();
