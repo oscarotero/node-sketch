@@ -1,20 +1,14 @@
-const nodeSketch = require('../');
+const sketch = require('../');
 
-const RemoveDuplicatedSymbols = require('../plugins/RemoveDuplicatedSymbols');
-const RemoveDuplicatedStyles = require('../plugins/RemoveDuplicatedStyles');
-const UpdateStyles = require('../plugins/UpdateStyles');
-const UpdateSymbols = require('../plugins/UpdateSymbols');
-const ExportImages = require('../plugins/ExportImages');
-
-nodeSketch
+sketch
     .read(__dirname + '/example.sketch')
-    .then(sketch => {
-        sketch
-            .use(new RemoveDuplicatedSymbols())
-            .use(new RemoveDuplicatedStyles())
-            .use(new UpdateStyles(__dirname + '/resources.sketch'))
-            .use(new UpdateSymbols(__dirname + '/resources.sketch'))
-            .use(new ExportImages(__dirname))
+    .then(file => {
+        file
+            .use(new sketch.plugins.RemoveDuplicatedSymbols())
+            .use(new sketch.plugins.RemoveDuplicatedStyles())
+            .use(new sketch.plugins.UpdateStyles(__dirname + '/resources.sketch'))
+            .use(new sketch.plugins.UpdateSymbols(__dirname + '/resources.sketch'))
+            .use(new sketch.plugins.ExportImages(__dirname))
             .save(__dirname + '/result.sketch');
     })
     .catch(err => {

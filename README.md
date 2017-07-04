@@ -78,4 +78,30 @@ const allSymbols = symbolsPage.getAll('symbolMaster');
 
 There are other classes extending `Node` to provide special funcionalities in some nodes, like `Style` or `SymbolInstance`.
 
+### Plugins
+
+The `plugins` namespace contains a set of plugins with common functions. For example:
+
+const sketch = require('node-sketch');
+
+```js
+sketch
+    .read(__dirname + '/example.sketch')
+    .then(file => {
+        file
+            .use(new sketch.plugins.RemoveDuplicatedSymbols())
+            .use(new sketch.plugins.RemoveDuplicatedStyles())
+            .use(new sketch.plugins.ExportImages(__dirname))
+            .save(__dirname + '/result.sketch');
+    })
+    .catch(err => {
+        console.error('Error reading the sketch file');
+        console.error(err);
+    });
+```
+
+You can see the [list of available plugins here](plugins)
+
+---
+
 [See the API detailed](https://oscarotero.github.io/node-sketch/)
