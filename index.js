@@ -2,13 +2,10 @@ const fs = require('fs');
 const JSZip = require('jszip');
 const Sketch = require('./lib/Sketch');
 
-/**
- * @module index
- */
 (function(lib) {
     /**
      * Read a sketch file and returns a promise with a Sketch instance
-     * @alias module:index.read
+     * @alias read
      * @param  {Array|String} file - Can be a path or an array of paths
      *
      * @example
@@ -80,6 +77,21 @@ const Sketch = require('./lib/Sketch');
         symbolInstance: require('./lib/SymbolInstance'),
         MSJSONFileReference: require('./lib/FileReference')
     };
+
+    /**
+     * @module plugins
+     */
+    lib.plugins = {};
+
+    [
+        'ExportImages',
+        'RemoveDuplicatedStyles',
+        'RemoveDuplicatedSymbols',
+        'UpdatedStyles',
+        'UpdatedSymbols'
+    ].forEach(plugin => {
+        lib.plugins[plugin] = require('./plugins/' + plugin);
+    });
 
     /**
      * Creates a new Node elements

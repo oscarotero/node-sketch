@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>src/Node.js - Documentation</title>
+    <title>lib/Node.js - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -22,12 +22,12 @@
 <label for="nav-trigger" class="overlay"></label>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Node.html">Node</a><ul class='methods'><li data-type='method'><a href="Node.html#clone">clone</a></li><li data-type='method'><a href="Node.html#detach">detach</a></li><li data-type='method'><a href="Node.html#get">get</a></li><li data-type='method'><a href="Node.html#getAll">getAll</a></li><li data-type='method'><a href="Node.html#getParent">getParent</a></li><li data-type='method'><a href="Node.html#replaceWith">replaceWith</a></li></ul></li><li><a href="Sketch.html">Sketch</a><ul class='methods'><li data-type='method'><a href="Sketch.html#save">save</a></li></ul></li><li><a href="Style.html">Style</a><ul class='methods'><li data-type='method'><a href="Style.html#applySharedStyle">applySharedStyle</a></li><li data-type='method'><a href="Style.html#clone">clone</a></li><li data-type='method'><a href="Style.html#detach">detach</a></li><li data-type='method'><a href="Style.html#get">get</a></li><li data-type='method'><a href="Style.html#getAll">getAll</a></li><li data-type='method'><a href="Style.html#getParent">getParent</a></li><li data-type='method'><a href="Style.html#replaceWith">replaceWith</a></li></ul></li><li><a href="SymbolInstance.html">SymbolInstance</a><ul class='methods'><li data-type='method'><a href="SymbolInstance.html#clone">clone</a></li><li data-type='method'><a href="SymbolInstance.html#detach">detach</a></li><li data-type='method'><a href="SymbolInstance.html#get">get</a></li><li data-type='method'><a href="SymbolInstance.html#getAll">getAll</a></li><li data-type='method'><a href="SymbolInstance.html#getParent">getParent</a></li><li data-type='method'><a href="SymbolInstance.html#replaceWith">replaceWith</a></li></ul></li></ul><h3>Modules</h3><ul><li><a href="module-node-sketch.html">node-sketch</a><ul class='methods'><li data-type='method'><a href="module-node-sketch.html#.read">read</a></li></ul></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="FileReference.html">FileReference</a><ul class='methods'><li data-type='method'><a href="FileReference.html#clone">clone</a></li><li data-type='method'><a href="FileReference.html#detach">detach</a></li><li data-type='method'><a href="FileReference.html#export">export</a></li><li data-type='method'><a href="FileReference.html#get">get</a></li><li data-type='method'><a href="FileReference.html#getAll">getAll</a></li><li data-type='method'><a href="FileReference.html#getParent">getParent</a></li><li data-type='method'><a href="FileReference.html#replaceWith">replaceWith</a></li></ul></li><li><a href="module-plugins.ExportImages.html">ExportImages</a></li><li><a href="module-plugins.RemoveDuplicatedStyles.html">RemoveDuplicatedStyles</a></li><li><a href="module-plugins.RemoveDuplicatedSymbols.html">RemoveDuplicatedSymbols</a></li><li><a href="module-plugins.UpdateStyles.html">UpdateStyles</a></li><li><a href="module-plugins.UpdateSymbols.html">UpdateSymbols</a></li><li><a href="Node.html">Node</a><ul class='methods'><li data-type='method'><a href="Node.html#clone">clone</a></li><li data-type='method'><a href="Node.html#detach">detach</a></li><li data-type='method'><a href="Node.html#get">get</a></li><li data-type='method'><a href="Node.html#getAll">getAll</a></li><li data-type='method'><a href="Node.html#getParent">getParent</a></li><li data-type='method'><a href="Node.html#replaceWith">replaceWith</a></li></ul></li><li><a href="Sketch.html">Sketch</a><ul class='methods'><li data-type='method'><a href="Sketch.html#save">save</a></li><li data-type='method'><a href="Sketch.html#use">use</a></li></ul></li><li><a href="Style.html">Style</a><ul class='methods'><li data-type='method'><a href="Style.html#applySharedStyle">applySharedStyle</a></li><li data-type='method'><a href="Style.html#clone">clone</a></li><li data-type='method'><a href="Style.html#detach">detach</a></li><li data-type='method'><a href="Style.html#get">get</a></li><li data-type='method'><a href="Style.html#getAll">getAll</a></li><li data-type='method'><a href="Style.html#getParent">getParent</a></li><li data-type='method'><a href="Style.html#replaceWith">replaceWith</a></li></ul></li><li><a href="SymbolInstance.html">SymbolInstance</a><ul class='methods'><li data-type='method'><a href="SymbolInstance.html#clone">clone</a></li><li data-type='method'><a href="SymbolInstance.html#detach">detach</a></li><li data-type='method'><a href="SymbolInstance.html#get">get</a></li><li data-type='method'><a href="SymbolInstance.html#getAll">getAll</a></li><li data-type='method'><a href="SymbolInstance.html#getParent">getParent</a></li><li data-type='method'><a href="SymbolInstance.html#replaceWith">replaceWith</a></li></ul></li></ul><h3>Modules</h3><ul><li><a href="module-plugins.html">plugins</a></li></ul><h3>Global</h3><ul><li><a href="global.html#read">read</a></li></ul>
 </nav>
 
 <div id="main">
     
-    <h1 class="page-title">src/Node.js</h1>
+    <h1 class="page-title">lib/Node.js</h1>
     
 
     
@@ -67,11 +67,11 @@ const layers = {
  */
 class Node {
     /**
-   * @constructor
-   *
-   * @param  {Node|Sketch} parent - The parent of the element
-   * @param  {Object} data - The raw data from the sketch file
-   */
+     * @constructor
+     *
+     * @param  {Node|Sketch} parent - The parent of the element
+     * @param  {Object} data - The raw data from the sketch file
+     */
     constructor(parent, data) {
         this[_parent] = parent;
 
@@ -97,21 +97,21 @@ class Node {
     }
 
     /**
-   * Returns the parent element
-   *
-   * @return {Node|Sketch|undefined}
-   */
+     * Returns the parent element
+     *
+     * @return {Node|Sketch|undefined}
+     */
     get parent() {
         return this[_parent];
     }
 
     /**
-   * Find a node ascendent matching with the type and condition
-   *
-   * @param  {String} [type] - The node type
-   * @param  {Function|String} [condition] - The node name or a callback to be executed on each parent and must return true or false. If it's not provided, only the type argument is be used.
-   * @return {Node|Sketch|undefined}
-   */
+     * Find a node ascendent matching with the type and condition
+     *
+     * @param  {String} [type] - The node type
+     * @param  {Function|String} [condition] - The node name or a callback to be executed on each parent and must return true or false. If it's not provided, only the type argument is be used.
+     * @return {Node|Sketch|undefined}
+     */
     getParent(type, condition) {
         let parent = this[_parent];
 
@@ -129,12 +129,12 @@ class Node {
     }
 
     /**
-   * Search and returns the first descendant node that match the type and condition.
-   *
-   * @param  {String} type - The Node type
-   * @param  {Function|String} [condition] - The node name or a callback to be executed on each node that must return true or false. If it's not provided, only the type argument is be used.
-   * @return {Node|undefined}
-   */
+     * Search and returns the first descendant node that match the type and condition.
+     *
+     * @param  {String} type - The Node type
+     * @param  {Function|String} [condition] - The node name or a callback to be executed on each node that must return true or false. If it's not provided, only the type argument is be used.
+     * @return {Node|undefined}
+     */
     get(type, condition) {
         //page has always as direct children artboard and symbolMasters
         if (layers[this._class] &amp;&amp; layers[this._class].indexOf(type) !== -1) {
@@ -149,23 +149,23 @@ class Node {
     }
 
     /**
-   * Search and returns all descendant nodes matching with the type and condition.
-   * @example
-   * //Get the first page
-   * const page = sketch.pages[0];
-   *
-   * //Get all colors found in this page
-   * const colors = page.getAll('color');
-   *
-   * //Get all colors with specific values
-   * const blueColors = page.getAll('color', (color) => {
-   *  return color.blue > 0.5 &amp;&amp; color.red &lt; 0.33
-   * });
-   *
-   * @param  {String} type - The Node type
-   * @param  {Function|String} [condition] - The node name or a callback to be executed on each node that must return true or false. If it's not provided, only the type argument is be used.
-   * @return {Node[]}
-   */
+     * Search and returns all descendant nodes matching with the type and condition.
+     * @example
+     * //Get the first page
+     * const page = sketch.pages[0];
+     *
+     * //Get all colors found in this page
+     * const colors = page.getAll('color');
+     *
+     * //Get all colors with specific values
+     * const blueColors = page.getAll('color', (color) => {
+     *  return color.blue > 0.5 &amp;&amp; color.red &lt; 0.33
+     * });
+     *
+     * @param  {String} type - The Node type
+     * @param  {Function|String} [condition] - The node name or a callback to be executed on each node that must return true or false. If it's not provided, only the type argument is be used.
+     * @return {Node[]}
+     */
     getAll(type, condition, result) {
         //page has always as direct children artboard and symbolMasters
         if (layers[this._class] &amp;&amp; layers[this._class].indexOf(type) !== -1) {
@@ -182,10 +182,10 @@ class Node {
     }
 
     /**
-   * Removes the node from its parent
-   *
-   * @return {Node}
-   */
+     * Removes the node from its parent
+     *
+     * @return {Node}
+     */
     detach() {
         const parent = this[_parent];
         this[_parent] = undefined;
@@ -214,12 +214,12 @@ class Node {
     }
 
     /**
-   * Replace this node with other
-   *
-   * @param {Node} node - The node to use
-   *
-   * @return {Node} The new node
-   */
+     * Replace this node with other
+     *
+     * @param {Node} node - The node to use
+     *
+     * @return {Node} The new node
+     */
     replaceWith(node) {
         const parent = this[_parent];
 
@@ -249,12 +249,12 @@ class Node {
     }
 
     /**
-   * Creates a deep clone of this node
-   *
-   * @param {Node|undefined} parent - The new parent of the clone. If it's not defined use the current parent.
-   *
-   * @return {Node}
-   */
+     * Creates a deep clone of this node
+     *
+     * @param {Node|undefined} parent - The new parent of the clone. If it's not defined use the current parent.
+     *
+     * @return {Node}
+     */
     clone(parent) {
         const data = JSON.parse(JSON.stringify(this));
 
@@ -363,7 +363,7 @@ function findLayer(target, condition, result) {
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Sat Jun 03 2017 11:02:20 GMT+0200 (CEST) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Tue Jul 04 2017 21:09:21 GMT+0200 (CEST) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
 </footer>
 
 <script>prettyPrint();</script>

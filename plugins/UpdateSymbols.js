@@ -1,6 +1,18 @@
 const lib = require('../');
 
+/**
+ * Plugin to update the document styles with the symbols defined in an external document
+ *
+ * @alias module:plugins.UpdateSymbols
+ * @example
+ * sketch.use(new UpdateSymbols('path/to/symbols.sketch'));
+ */
 class UpdateSymbols {
+    /**
+     * @constructor
+     *
+     * @param {string} resources Filepath of the sketch file with the symbols
+     */
     constructor(resources) {
         this.resources = resources;
     }

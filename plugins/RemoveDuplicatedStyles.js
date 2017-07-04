@@ -1,7 +1,9 @@
 /**
  * Plugin to remove duplicated styles
- * 
- * @module plugins/RemoveDuplicatedStyles
+ *
+ * @alias module:plugins.RemoveDuplicatedStyles
+ * @example
+ * sketch.use(new RemoveDuplicatedStyles());
  */
 class RemoveDuplicatedStyles {
     run(sketch) {

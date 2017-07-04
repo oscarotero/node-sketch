@@ -1,6 +1,18 @@
 const lib = require('../');
 
+/**
+ * Plugin to update the document styles with the styles defined in an external document
+ *
+ * @alias module:plugins.UpdateStyles
+ * @example
+ * sketch.use(new UpdateStyles('path/to/styles.sketch'));
+ */
 class UpdateStyles {
+    /**
+     * @constructor
+     *
+     * @param {string} resources Filepath of the sketch file with the styles
+     */
     constructor(resources) {
         this.resources = resources;
     }

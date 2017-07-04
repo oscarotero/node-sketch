@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>index.js - Documentation</title>
+    <title>plugins/RemoveDuplicatedSymbols.js - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -27,7 +27,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">index.js</h1>
+    <h1 class="page-title">plugins/RemoveDuplicatedSymbols.js</h1>
     
 
     
@@ -37,118 +37,43 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>const fs = require('fs');
-const JSZip = require('jszip');
-const Sketch = require('./lib/Sketch');
+            <pre class="prettyprint source linenums"><code>/**
+ * Plugin to remove duplicated symbols
+ *
+ * @alias module:plugins.RemoveDuplicatedSymbols
+ * @example
+ * sketch.use(new RemoveDuplicatedSymbols());
+ */
+class RemoveDuplicatedSymbols {
+    run(sketch) {
+        this.uniqueSymbols = new Map();
+        this.duplicatedSymbols = [];
 
-(function(lib) {
-    /**
-     * Read a sketch file and returns a promise with a Sketch instance
-     * @alias read
-     * @param  {Array|String} file - Can be a path or an array of paths
-     *
-     * @example
-     * //Load a file
-     * nodeSketch.read('design.sketch').then(sketch => {
-     *   console.log(sketch);
-     * }).catch(err => {
-     *   console.error('Error reading the file');
-     * });
-     *
-     * //Load an array of files
-     * nodeSketch.read(['design.sketch', 'other-design.sketch']).then(files => {
-     *   let [design, other] = files;
-     *
-     *   console.log(design);
-     *   console.log(other);
-     * }).catch(err => {
-     *   console.error('Error reading some files');
-     * })
-     *
-     * @return {Promise}
-     */
-    lib.read = function(file) {
-        if (Array.isArray(file)) {
-            return Promise.all(file.map(each => lib.read(each)));
-        }
+        sketch.pages.forEach(page => {
+            page.getAll('symbolMaster').forEach(master => {
+                if (this.uniqueSymbols.has(master.name)) {
+                    this.duplicatedSymbols.push(master);
+                } else {
+                    this.uniqueSymbols.set(master.name, master);
+                }
+            });
+        });
 
-        return JSZip.loadAsync(fs.readFileSync(file))
-            .then(zip => {
-                return Promise.all([
-                    zip.file('document.json').async('string'),
-                    zip.file('meta.json').async('string'),
-                    zip.file('user.json').async('string')
-                ]).then(result => {
-                    return {
-                        repo: zip,
-                        document: JSON.parse(result[0]),
-                        meta: JSON.parse(result[1]),
-                        user: JSON.parse(result[2])
-                    };
-                });
-            })
-            .then(data => {
-                return Promise.all(
-                    data.document.pages.map(page => {
-                        return data.repo
-                            .file(`${page._ref}.json`)
-                            .async('string');
-                    })
-                ).then(pages => {
-                    data.pages = pages.map(page => JSON.parse(page));
-                    return data;
-                });
-            })
-            .then(data => {
-                return new Sketch(
-                    data.repo,
-                    data.document,
-                    data.meta,
-                    data.user,
-                    data.pages
+        sketch.pages.forEach(page => {
+            page.getAll('symbolInstance').forEach(instance => {
+                instance.symbolMaster = this.uniqueSymbols.get(
+                    instance.symbolMaster.name
                 );
             });
-    };
+        });
 
-    const Node = require('./lib/Node');
-    const classes = {
-        style: require('./lib/Style'),
-        symbolInstance: require('./lib/SymbolInstance'),
-        MSJSONFileReference: require('./lib/FileReference')
-    };
+        this.duplicatedSymbols.forEach(symbol => symbol.detach());
 
-    /**
-     * @module plugins
-     */
-    lib.plugins = {};
+        return Promise.resolve();
+    }
+}
 
-    [
-        'ExportImages',
-        'RemoveDuplicatedStyles',
-        'RemoveDuplicatedSymbols',
-        'UpdatedStyles',
-        'UpdatedSymbols'
-    ].forEach(plugin => {
-        lib.plugins[plugin] = require('./plugins/' + plugin);
-    });
-
-    /**
-     * Creates a new Node elements
-     *
-     * @ignore
-     * @param  {Node|Sketch} parent - The node parent
-     * @param  {Object} - The json with the raw data
-     *
-     * @return {Node}
-     */
-    lib.create = function(parent, data) {
-        if (data._class in classes) {
-            return new classes[data._class](parent, data);
-        }
-
-        return new Node(parent, data);
-    };
-})(require('./index'));
+module.exports = RemoveDuplicatedSymbols;
 </code></pre>
         </article>
     </section>

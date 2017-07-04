@@ -1,11 +1,17 @@
 const path = require('path');
-
 /**
  * Plugin to export the images of a sketch file into a directory
- * 
- * @module plugins/ExportImages
+ *
+ * @alias module:plugins.ExportImages
+ * @example
+ * sketch.use(new ExportImages('path/to/dest'));
  */
 class ExportImages {
+    /**
+     * @constructor
+     *
+     * @param {string} dest Directory where the images are saved
+     */
     constructor(dest) {
         this.dest = dest;
     }

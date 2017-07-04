@@ -2,3 +2,4 @@ yarn.lock
 /node_modules/
 /tests/*/*
 result.sketch
+/examples/*.png

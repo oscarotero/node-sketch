@@ -1,3 +1,10 @@
+/**
+ * Plugin to remove duplicated symbols
+ *
+ * @alias module:plugins.RemoveDuplicatedSymbols
+ * @example
+ * sketch.use(new RemoveDuplicatedSymbols());
+ */
 class RemoveDuplicatedSymbols {
     run(sketch) {
         this.uniqueSymbols = new Map();
