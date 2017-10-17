@@ -3,3 +3,4 @@ yarn.lock
 /tests/*/*
 result.sketch
 /examples/*.png
+/docs

@@ -10,6 +10,7 @@
   },
   "devDependencies": {
     "docdash": "^0.4.0",
+    "gh-pages": "^1.0.0",
     "jsdoc": "^3.4.3",
     "jsondiffpatch": "^0.2.4",
     "mocha": "^3.4.2",
@@ -27,7 +28,8 @@
   },
   "scripts": {
     "pretty": "prettier --single-quote '{src,tests,examples}/*.js' index.js --tab-width 4 --write",
-    "docs": "rm -rf docs && jsdoc lib/*.js plugins/*.js README.md index.js --template node_modules/docdash -d ./docs/",
+    "docs": "rm -rf docs && jsdoc src/*.js plugins/*.js README.md index.js --template node_modules/docdash -d ./docs/",
+    "publish-docs": "gh-pages -d docs",
     "test": "mocha tests/*.js",
     "example": "node examples"
   },

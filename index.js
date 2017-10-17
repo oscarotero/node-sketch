@@ -1,6 +1,6 @@
 const fs = require('fs');
 const JSZip = require('jszip');
-const Sketch = require('./lib/Sketch');
+const Sketch = require('./src/Sketch');
 
 (function(lib) {
     /**
@@ -71,11 +71,11 @@ const Sketch = require('./lib/Sketch');
             });
     };
 
-    const Node = require('./lib/Node');
+    const Node = require('./src/Node');
     const classes = {
-        style: require('./lib/Style'),
-        symbolInstance: require('./lib/SymbolInstance'),
-        MSJSONFileReference: require('./lib/FileReference')
+        style: require('./src/Style'),
+        symbolInstance: require('./src/SymbolInstance'),
+        MSJSONFileReference: require('./src/FileReference')
     };
 
     /**
