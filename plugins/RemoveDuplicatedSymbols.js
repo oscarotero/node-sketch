@@ -22,9 +22,11 @@ class RemoveDuplicatedSymbols {
 
         sketch.pages.forEach(page => {
             page.getAll('symbolInstance').forEach(instance => {
-                instance.symbolMaster = this.uniqueSymbols.get(
-                    instance.symbolMaster.name
-                );
+                const newMaster = this.uniqueSymbols.get(instance.symbolMaster.name);
+
+                if (newMaster) {
+                    instance.symbolMaster = newMaster;
+                }
             });
         });
 
