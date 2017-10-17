@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>index.js - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="FileReference.html">FileReference</a><ul class='methods'><li data-type='method'><a href="FileReference.html#clone">clone</a></li><li data-type='method'><a href="FileReference.html#detach">detach</a></li><li data-type='method'><a href="FileReference.html#export">export</a></li><li data-type='method'><a href="FileReference.html#get">get</a></li><li data-type='method'><a href="FileReference.html#getAll">getAll</a></li><li data-type='method'><a href="FileReference.html#getParent">getParent</a></li><li data-type='method'><a href="FileReference.html#replaceWith">replaceWith</a></li></ul></li><li><a href="module-plugins.ExportImages.html">ExportImages</a></li><li><a href="module-plugins.RemoveDuplicatedStyles.html">RemoveDuplicatedStyles</a></li><li><a href="module-plugins.RemoveDuplicatedSymbols.html">RemoveDuplicatedSymbols</a></li><li><a href="module-plugins.UpdateStyles.html">UpdateStyles</a></li><li><a href="module-plugins.UpdateSymbols.html">UpdateSymbols</a></li><li><a href="Node.html">Node</a><ul class='methods'><li data-type='method'><a href="Node.html#clone">clone</a></li><li data-type='method'><a href="Node.html#detach">detach</a></li><li data-type='method'><a href="Node.html#get">get</a></li><li data-type='method'><a href="Node.html#getAll">getAll</a></li><li data-type='method'><a href="Node.html#getParent">getParent</a></li><li data-type='method'><a href="Node.html#replaceWith">replaceWith</a></li></ul></li><li><a href="Sketch.html">Sketch</a><ul class='methods'><li data-type='method'><a href="Sketch.html#save">save</a></li><li data-type='method'><a href="Sketch.html#use">use</a></li></ul></li><li><a href="Style.html">Style</a><ul class='methods'><li data-type='method'><a href="Style.html#applySharedStyle">applySharedStyle</a></li><li data-type='method'><a href="Style.html#clone">clone</a></li><li data-type='method'><a href="Style.html#detach">detach</a></li><li data-type='method'><a href="Style.html#get">get</a></li><li data-type='method'><a href="Style.html#getAll">getAll</a></li><li data-type='method'><a href="Style.html#getParent">getParent</a></li><li data-type='method'><a href="Style.html#replaceWith">replaceWith</a></li></ul></li><li><a href="SymbolInstance.html">SymbolInstance</a><ul class='methods'><li data-type='method'><a href="SymbolInstance.html#clone">clone</a></li><li data-type='method'><a href="SymbolInstance.html#detach">detach</a></li><li data-type='method'><a href="SymbolInstance.html#get">get</a></li><li data-type='method'><a href="SymbolInstance.html#getAll">getAll</a></li><li data-type='method'><a href="SymbolInstance.html#getParent">getParent</a></li><li data-type='method'><a href="SymbolInstance.html#replaceWith">replaceWith</a></li></ul></li></ul><h3>Modules</h3><ul><li><a href="module-plugins.html">plugins</a></li></ul><h3>Global</h3><ul><li><a href="global.html#read">read</a></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">index.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>const fs = require('fs');
+const JSZip = require('jszip');
+const Sketch = require('./src/Sketch');
+
+(function(lib) {
+    /**
+     * Read a sketch file and returns a promise with a Sketch instance
+     * @alias read
+     * @param  {Array|String} file - Can be a path or an array of paths
+     *
+     * @example
+     * //Load a file
+     * nodeSketch.read('design.sketch').then(sketch => {
+     *   console.log(sketch);
+     * }).catch(err => {
+     *   console.error('Error reading the file');
+     * });
+     *
+     * //Load an array of files
+     * nodeSketch.read(['design.sketch', 'other-design.sketch']).then(files => {
+     *   let [design, other] = files;
+     *
+     *   console.log(design);
+     *   console.log(other);
+     * }).catch(err => {
+     *   console.error('Error reading some files');
+     * })
+     *
+     * @return {Promise}
+     */
+    lib.read = function(file) {
+        if (Array.isArray(file)) {
+            return Promise.all(file.map(each => lib.read(each)));
+        }
+
+        return JSZip.loadAsync(fs.readFileSync(file))
+            .then(zip => {
+                return Promise.all([
+                    zip.file('document.json').async('string'),
+                    zip.file('meta.json').async('string'),
+                    zip.file('user.json').async('string')
+                ]).then(result => {
+                    return {
+                        repo: zip,
+                        document: JSON.parse(result[0]),
+                        meta: JSON.parse(result[1]),
+                        user: JSON.parse(result[2])
+                    };
+                });
+            })
+            .then(data => {
+                return Promise.all(
+                    data.document.pages.map(page => {
+                        return data.repo
+                            .file(`${page._ref}.json`)
+                            .async('string');
+                    })
+                ).then(pages => {
+                    data.pages = pages.map(page => JSON.parse(page));
+                    return data;
+                });
+            })
+            .then(data => {
+                return new Sketch(
+                    data.repo,
+                    data.document,
+                    data.meta,
+                    data.user,
+                    data.pages
+                );
+            });
+    };
+
+    const Node = require('./src/Node');
+    const classes = {
+        style: require('./src/Style'),
+        symbolInstance: require('./src/SymbolInstance'),
+        MSJSONFileReference: require('./src/FileReference')
+    };
+
+    /**
+     * @module plugins
+     */
+    lib.plugins = {};
+
+    [
+        'ExportImages',
+        'RemoveDuplicatedStyles',
+        'RemoveDuplicatedSymbols',
+        'UpdateStyles',
+        'UpdateSymbols'
+    ].forEach(plugin => {
+        lib.plugins[plugin] = require('./plugins/' + plugin);
+    });
+
+    /**
+     * Creates a new Node elements
+     *
+     * @ignore
+     * @param  {Node|Sketch} parent - The node parent
+     * @param  {Object} - The json with the raw data
+     *
+     * @return {Node}
+     */
+    lib.create = function(parent, data) {
+        if (data._class in classes) {
+            return new classes[data._class](parent, data);
+        }
+
+        return new Node(parent, data);
+    };
+})(require('./index'));
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Tue Oct 17 2017 10:38:59 GMT+0200 (CEST) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>

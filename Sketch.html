@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Sketch - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="FileReference.html">FileReference</a><ul class='methods'><li data-type='method'><a href="FileReference.html#clone">clone</a></li><li data-type='method'><a href="FileReference.html#detach">detach</a></li><li data-type='method'><a href="FileReference.html#export">export</a></li><li data-type='method'><a href="FileReference.html#get">get</a></li><li data-type='method'><a href="FileReference.html#getAll">getAll</a></li><li data-type='method'><a href="FileReference.html#getParent">getParent</a></li><li data-type='method'><a href="FileReference.html#replaceWith">replaceWith</a></li></ul></li><li><a href="module-plugins.ExportImages.html">ExportImages</a></li><li><a href="module-plugins.RemoveDuplicatedStyles.html">RemoveDuplicatedStyles</a></li><li><a href="module-plugins.RemoveDuplicatedSymbols.html">RemoveDuplicatedSymbols</a></li><li><a href="module-plugins.UpdateStyles.html">UpdateStyles</a></li><li><a href="module-plugins.UpdateSymbols.html">UpdateSymbols</a></li><li><a href="Node.html">Node</a><ul class='methods'><li data-type='method'><a href="Node.html#clone">clone</a></li><li data-type='method'><a href="Node.html#detach">detach</a></li><li data-type='method'><a href="Node.html#get">get</a></li><li data-type='method'><a href="Node.html#getAll">getAll</a></li><li data-type='method'><a href="Node.html#getParent">getParent</a></li><li data-type='method'><a href="Node.html#replaceWith">replaceWith</a></li></ul></li><li><a href="Sketch.html">Sketch</a><ul class='methods'><li data-type='method'><a href="Sketch.html#save">save</a></li><li data-type='method'><a href="Sketch.html#use">use</a></li></ul></li><li><a href="Style.html">Style</a><ul class='methods'><li data-type='method'><a href="Style.html#applySharedStyle">applySharedStyle</a></li><li data-type='method'><a href="Style.html#clone">clone</a></li><li data-type='method'><a href="Style.html#detach">detach</a></li><li data-type='method'><a href="Style.html#get">get</a></li><li data-type='method'><a href="Style.html#getAll">getAll</a></li><li data-type='method'><a href="Style.html#getParent">getParent</a></li><li data-type='method'><a href="Style.html#replaceWith">replaceWith</a></li></ul></li><li><a href="SymbolInstance.html">SymbolInstance</a><ul class='methods'><li data-type='method'><a href="SymbolInstance.html#clone">clone</a></li><li data-type='method'><a href="SymbolInstance.html#detach">detach</a></li><li data-type='method'><a href="SymbolInstance.html#get">get</a></li><li data-type='method'><a href="SymbolInstance.html#getAll">getAll</a></li><li data-type='method'><a href="SymbolInstance.html#getParent">getParent</a></li><li data-type='method'><a href="SymbolInstance.html#replaceWith">replaceWith</a></li></ul></li></ul><h3>Modules</h3><ul><li><a href="module-plugins.html">plugins</a></li></ul><h3>Global</h3><ul><li><a href="global.html#read">read</a></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">Sketch</h1>
+    
+
+    
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>
+        Sketch
+        </h2>
+        
+            <div class="class-description">This class represents the sketch file and all this content.</div>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+
+    
+    <h2>Constructor</h2>
+    
+
+    <h4 class="name" id="Sketch"><span class="type-signature"></span>new Sketch<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="src_Sketch.js.html">src/Sketch.js</a>, <a href="src_Sketch.js.html#line20">line 20</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    
+
+<table class="props">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>repo</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">JSZip</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The instance of JSZip containing the raw data</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>document</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="Node.html">Node</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The document data</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>meta</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="Node.html">Node</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The meta data</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>user</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="Node.html">Node</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The user data</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>pages</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;Page></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Array with all pages of the document</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>symbolsPage</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Page</span>
+|
+
+<span class="param-type">undefined</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The "Symbols" page if exists</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>localSymbols</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;<a href="Node.html">Node</a>></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Array with all local symbols (symbols stored in any page of the document)</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>foreignSymbols</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;<a href="Node.html">Node</a>></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Array with all foreign symbols used in the document (symbols loaded from libraries)</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>sharedStyles</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;SharedStyle></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Array with all shared styles of the document</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>textStyles</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;SharedStyle></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Array with all text styles of the document</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>colors</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;<a href="Node.html">Node</a>></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Array with the document color palette</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>gradients</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;<a href="Node.html">Node</a>></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Array with the document gradients palette</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    <h4 class="name" id="save"><span class="type-signature"></span>save<span class="signature">(file)</span><span class="type-signature"> &rarr; {Promise}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="src_Sketch.js.html">src/Sketch.js</a>, <a href="src_Sketch.js.html#line88">line 88</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    Save the document as a sketch file
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>ns.read('input.sketch').then((sketch) => {
+
+ //modify the sketch data
+ 
+ return sketch.save('output.sketch')
+})</code></pre>
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>file</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The file path</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    A promise that is resolved when the file is saved
+</div>
+
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="use"><span class="type-signature"></span>use<span class="signature">(plugin)</span><span class="type-signature"> &rarr; {this}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="src_Sketch.js.html">src/Sketch.js</a>, <a href="src_Sketch.js.html#line66">line 66</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    Execute a plugin with the sketch
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>plugin</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The plugin to execute</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">this</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+        
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Tue Oct 17 2017 10:38:59 GMT+0200 (CEST) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>
