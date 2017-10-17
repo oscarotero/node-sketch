@@ -24,16 +24,9 @@ describe('Read sketch files', function() {
             });
 
             describe('Must read the symbols', () => {
-                it('count symbols', () => {
-                    assert.equal(
-                        file.symbolsPage.getAll('symbolMaster').length,
-                        2
-                    );
-                    assert.equal(
-                        file.pages[0].getAll('symbolMaster').length,
-                        0
-                    );
-                });
+                it('count symbols local symbols', () => assert.equal(file.localSymbols.length, 2));
+                it('count foreign symbols', () => assert.equal(file.foreignSymbols.length, 2));
+                it('count symbols in one page', () => assert.equal(file.pages[0].getAll('symbolMaster').length, 0));
 
                 it('count instances', () => {
                     assert.equal(
@@ -42,11 +35,11 @@ describe('Read sketch files', function() {
                     );
                     assert.equal(
                         file.pages[0].getAll('symbolInstance').length,
-                        2
+                        3
                     );
                 });
 
-                it('instance.symbolMaster', () => {
+                it('get local master of an instance', () => {
                     const instance = file.pages[1].get(
                         'symbolInstance',
                         'circle'
@@ -55,6 +48,15 @@ describe('Read sketch files', function() {
                         'symbolMaster',
                         'circle'
                     );
+                    assert.strictEqual(instance.symbolMaster, expected);
+                });
+
+                it('get foreign master of an instance', () => {
+                    const instance = file.pages[0].get(
+                        'symbolInstance',
+                        'arrow'
+                    );
+                    const expected = file.foreignSymbols.find(symbol => symbol.name === 'arrow/down');
                     assert.strictEqual(instance.symbolMaster, expected);
                 });
             });
