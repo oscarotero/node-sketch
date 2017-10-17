@@ -33,7 +33,9 @@ class Sketch {
     }
 
     get localSymbols() {
-        return this.pages.map(page => page.getAll('symbolMaster')).reduce((symbols, currentPage) => symbols.concat(currentPage));
+        return this.pages
+            .map(page => page.getAll('symbolMaster'))
+            .reduce((symbols, currentPage) => symbols.concat(currentPage));
     }
 
     get foreignSymbols() {

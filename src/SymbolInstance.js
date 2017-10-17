@@ -47,7 +47,9 @@ class SymbolInstance extends Node {
 
         //Search in the foreignSymbols
         if (!master) {
-            master = page.parent.foreignSymbols.find(symbol => symbol.symbolID === this.symbolID);
+            master = page.parent.foreignSymbols.find(
+                symbol => symbol.symbolID === this.symbolID
+            );
         }
 
         this[_symbol] = master;

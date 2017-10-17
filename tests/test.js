@@ -24,9 +24,15 @@ describe('Read sketch files', function() {
             });
 
             describe('Must read the symbols', () => {
-                it('count symbols local symbols', () => assert.equal(file.localSymbols.length, 2));
-                it('count foreign symbols', () => assert.equal(file.foreignSymbols.length, 2));
-                it('count symbols in one page', () => assert.equal(file.pages[0].getAll('symbolMaster').length, 0));
+                it('count symbols local symbols', () =>
+                    assert.equal(file.localSymbols.length, 2));
+                it('count foreign symbols', () =>
+                    assert.equal(file.foreignSymbols.length, 2));
+                it('count symbols in one page', () =>
+                    assert.equal(
+                        file.pages[0].getAll('symbolMaster').length,
+                        0
+                    ));
 
                 it('count instances', () => {
                     assert.equal(
@@ -56,7 +62,9 @@ describe('Read sketch files', function() {
                         'symbolInstance',
                         'arrow'
                     );
-                    const expected = file.foreignSymbols.find(symbol => symbol.name === 'arrow/down');
+                    const expected = file.foreignSymbols.find(
+                        symbol => symbol.name === 'arrow/down'
+                    );
                     assert.strictEqual(instance.symbolMaster, expected);
                 });
             });

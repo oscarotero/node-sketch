@@ -6,8 +6,14 @@ sketch
         file
             .use(new sketch.plugins.RemoveDuplicatedSymbols())
             .use(new sketch.plugins.RemoveDuplicatedStyles())
-            .use(new sketch.plugins.UpdateStyles(__dirname + '/resources.sketch'))
-            .use(new sketch.plugins.UpdateSymbols(__dirname + '/resources.sketch'))
+            .use(
+                new sketch.plugins.UpdateStyles(__dirname + '/resources.sketch')
+            )
+            .use(
+                new sketch.plugins.UpdateSymbols(
+                    __dirname + '/resources.sketch'
+                )
+            )
             .use(new sketch.plugins.ExportImages(__dirname))
             .save(__dirname + '/result.sketch');
     })

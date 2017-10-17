@@ -32,17 +32,24 @@ class FileReference extends Node {
     export(dir) {
         return new Promise((fulfill, reject) => {
             const sketch = this.getParent('sketch');
-            const file = sketch.repo.filter(f => {
+            const file = sketch.repo
+                .filter(f => {
                     return f.startsWith(this.file);
-                }).pop();
+                })
+                .pop();
 
             if (file) {
                 const dest = path.join(dir, path.basename(file.name));
 
-                file.nodeStream()
+                file
+                    .nodeStream()
                     .pipe(fs.createWriteStream(dest))
-                    .on('finish', () => { fulfill(dest) })
-                    .on('error', (err) => { reject(err) });
+                    .on('finish', () => {
+                        fulfill(dest);
+                    })
+                    .on('error', err => {
+                        reject(err);
+                    });
             } else {
                 reject('No file found');
             }
