@@ -105,3 +105,5 @@ You can see the [list of available plugins here](plugins)
 ---
 
 [See the API detailed](https://oscarotero.github.io/node-sketch/)
+
+Or build it locally with `npm run docs`
