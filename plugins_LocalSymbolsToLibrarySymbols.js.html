@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>UpdateStyles - Documentation</title>
+    <title>plugins/LocalSymbolsToLibrarySymbols.js - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -27,190 +27,91 @@
 
 <div id="main">
     
-    <h1 class="page-title">UpdateStyles</h1>
+    <h1 class="page-title">plugins/LocalSymbolsToLibrarySymbols.js</h1>
     
 
     
 
 
 
-
-<section>
-
-<header>
     
-        <h2>
-            <span class="ancestors"><a href="module-plugins.html">plugins</a>.</span>
-        
-        UpdateStyles
-        </h2>
-        
-            <div class="class-description">Plugin to update the document styles with the styles defined in an external document</div>
-        
-    
-</header>
-
-<article>
-    <div class="container-overview">
-    
-        
-
-    
-    <h2>Constructor</h2>
-    
-
-    <h4 class="name" id="UpdateStyles"><span class="type-signature"></span>new UpdateStyles<span class="signature">(resources)</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-
-<dl class="details">
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="plugins_UpdateStyles.js.html">plugins/UpdateStyles.js</a>, <a href="plugins_UpdateStyles.js.html#line10">line 10</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <h5>Example</h5>
-    
-    <pre class="prettyprint"><code>sketch.use(new UpdateStyles('path/to/styles.sketch'));</code></pre>
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>resources</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Filepath of the sketch file with the styles</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-    </div>
-
-    
-
-    
-
-    
-
-     
-
-    
-
-    
-
-    
-
-    
-
-    
-</article>
-
-</section>
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>const lib = require('../');
+const path = require('path');
+
+/**
+ * Plugin to replace local symbols with foreign symbols (from libraries)
+ * This fixes the copy/paste symbols from one document to another.
+ *
+ * @alias module:plugins.LocalSymbolsToForeignSymbols
+ * @example
+ * sketch.use(new LocalSymbolsToForeignSymbols([
+ *   'path/to/libraries/buttons.sketch',
+ *   'path/to/libraries/icons.sketch',
+ * ]));
+ */
+class LocalSymbolsToLibrarySymbols {
+    /**
+     * @constructor
+     *
+     * @param {array} libraries Filepath of the sketch file with the symbols
+     */
+    constructor(libraries) {
+        this.libraries = libraries;
+    }
+
+    run(sketch) {
+        return lib.read(this.libraries)
+            .then(sketches => {
+                const library = [];
+
+                sketches.forEach((sketch, index) => {
+                    const sourceLibraryName = path.basename(this.libraries[index], '.sketch');
+                    const libraryID = sketch.document.do_objectID;
+
+                    sketch.localSymbols.forEach(symbol => {
+                        library.push({
+                            symbolMaster: symbol,
+                            libraryID: libraryID,
+                            sourceLibraryName: sourceLibraryName
+                        });
+                    });
+                });
+
+                return library;
+            })
+            .then(library => {
+                //Collect all symbols
+                sketch.localSymbols.forEach(master => {
+                    const libSymbol = library.find(symbol => symbol.symbolMaster.name === master.name);
+
+                    if (libSymbol) {
+                        sketch.document.foreignSymbols.push(lib.create(sketch.document, {
+                            _class: 'MSImmutableForeignSymbol',
+                            libraryID: libSymbol.libraryID,
+                            originalMaster: libSymbol.symbolMaster.toJson(),
+                            symbolMaster: master.toJson(),
+                            sourceLibraryName: libSymbol.sourceLibraryName
+                        }));
+
+                        master.detach();
+                    }
+                });
+
+                const symbolsPage = sketch.symbolsPage;
+
+                if (symbolsPage &amp;&amp; symbolsPage.layers.length === 0) {
+                    symbolsPage.detach();
+                }
+            });
+    }
+}
+
+module.exports = LocalSymbolsToLibrarySymbols;
+</code></pre>
+        </article>
+    </section>
 
 
 
