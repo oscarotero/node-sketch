@@ -5,9 +5,9 @@ const path = require('path');
  * Plugin to replace local symbols with foreign symbols (from libraries)
  * This fixes the copy/paste symbols from one document to another.
  *
- * @alias module:plugins.LocalSymbolsToForeignSymbols
+ * @alias module:plugins.LocalSymbolsToLibrarySymbols
  * @example
- * sketch.use(new LocalSymbolsToForeignSymbols([
+ * sketch.use(new LocalSymbolsToLibrarySymbols([
  *   'path/to/libraries/buttons.sketch',
  *   'path/to/libraries/icons.sketch',
  * ]));
