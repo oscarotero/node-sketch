@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>UpdateStyles - Documentation</title>
+    <title>LocalSymbolsToLibrarySymbols - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -27,7 +27,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">UpdateStyles</h1>
+    <h1 class="page-title">LocalSymbolsToLibrarySymbols</h1>
     
 
     
@@ -42,10 +42,11 @@
         <h2>
             <span class="ancestors"><a href="module-plugins.html">plugins</a>.</span>
         
-        UpdateStyles
+        LocalSymbolsToLibrarySymbols
         </h2>
         
-            <div class="class-description">Plugin to update the document styles with the styles defined in an external document</div>
+            <div class="class-description">Plugin to replace local symbols with foreign symbols (from libraries)
+This fixes the copy/paste symbols from one document to another.</div>
         
     
 </header>
@@ -59,7 +60,7 @@
     <h2>Constructor</h2>
     
 
-    <h4 class="name" id="UpdateStyles"><span class="type-signature"></span>new UpdateStyles<span class="signature">(resources)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="LocalSymbolsToLibrarySymbols"><span class="type-signature"></span>new LocalSymbolsToLibrarySymbols<span class="signature">(libraries)</span><span class="type-signature"></span></h4>
 
     
 
@@ -71,7 +72,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="plugins_UpdateStyles.js.html">plugins/UpdateStyles.js</a>, <a href="plugins_UpdateStyles.js.html#line10">line 10</a>
+        <a href="plugins_LocalSymbolsToLibrarySymbols.js.html">plugins/LocalSymbolsToLibrarySymbols.js</a>, <a href="plugins_LocalSymbolsToLibrarySymbols.js.html#line15">line 15</a>
     </li></ul></dd>
     
 
@@ -120,7 +121,10 @@
 
     <h5>Example</h5>
     
-    <pre class="prettyprint"><code>sketch.use(new UpdateStyles('path/to/styles.sketch'));</code></pre>
+    <pre class="prettyprint"><code>sketch.use(new LocalSymbolsToLibrarySymbols([
+  'path/to/libraries/buttons.sketch',
+  'path/to/libraries/icons.sketch',
+]));</code></pre>
 
 
 
@@ -150,13 +154,13 @@
 
         <tr>
             
-                <td class="name"><code>resources</code></td>
+                <td class="name"><code>libraries</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">string</span>
+<span class="param-type">array</span>
 
 
             
@@ -166,7 +170,7 @@
 
             
 
-            <td class="description last">Filepath of the sketch file with the styles</td>
+            <td class="description last">Filepath of the sketch file with the symbols</td>
         </tr>
 
     
