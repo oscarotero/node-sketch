@@ -88,7 +88,8 @@ const Sketch = require('./src/Sketch');
         'RemoveDuplicatedStyles',
         'RemoveDuplicatedSymbols',
         'UpdateStyles',
-        'UpdateSymbols'
+        'UpdateSymbols',
+        'LocalSymbolsToLibrarySymbols'
     ].forEach(plugin => {
         lib.plugins[plugin] = require('./plugins/' + plugin);
     });

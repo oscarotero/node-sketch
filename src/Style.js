@@ -6,9 +6,9 @@ const Node = require('./Node');
  *
  * @extends {Node}
  * @see {@link SharedStyle}
- * 
+ *
  * @property {SharedStyle|undefined} sharedStyle - The shared style used by this style
- * 
+ *
  * @example
  * //Get a layer named 'block'
  * const block = sketch.pages[0].get('shapeGroup', 'block');
@@ -54,9 +54,9 @@ class Style extends Node {
 
     /**
      * Apply a shared style discarding the previous styles
-     * 
+     *
      * @param  {SharedStyle} sharedStyle - The shared style to apply
-     * 
+     *
      * @return {Style} The new style applied
      */
     applySharedStyle(sharedStyle) {

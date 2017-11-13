@@ -26,28 +26,21 @@ class SymbolInstance extends Node {
             return this[_symbol];
         }
 
-        //Search in the current page
-        let page = this.getParent('page');
-        let master = page.get(
-            'symbolMaster',
+        //Search the symbols
+        const sketch = this.getSketch();
+
+        if (!sketch) {
+            return;
+        }
+
+        //Search in the document
+        let master = sketch.localSymbols.find(
             symbol => symbol.symbolID === this.symbolID
         );
 
-        //Search in the Symbols page
-        if (!master) {
-            page = page.parent.symbolsPage;
-
-            if (page) {
-                master = page.get(
-                    'symbolMaster',
-                    symbol => symbol.symbolID === this.symbolID
-                );
-            }
-        }
-
         //Search in the foreignSymbols
         if (!master) {
-            master = page.parent.foreignSymbols.find(
+            master = sketch.foreignSymbols.find(
                 symbol => symbol.symbolID === this.symbolID
             );
         }

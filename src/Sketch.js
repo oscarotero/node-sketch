@@ -3,7 +3,7 @@ const lib = require('../');
 
 /**
  * This class represents the sketch file and all this content.
- * 
+ *
  * @property {JSZip} repo - The instance of JSZip containing the raw data
  * @property {Node} document - The document data
  * @property {Node} meta - The meta data
@@ -77,49 +77,57 @@ class Sketch {
      * Save the document as a sketch file
      * @example
      * ns.read('input.sketch').then((sketch) => {
-     * 
+     *
      *  //modify the sketch data
-     *  
+     *
      *  return sketch.save('output.sketch')
      * })
      * @param  {string} file - The file path
-     * @return {Promise} A promise that is resolved when the file is saved
+     * @return {this}
      */
     save(file) {
-        const pagesFolder = this.repo.folder('pages');
+        if (!this.queue) {
+            this.queue = this.save(file);
+        } else {
+            this.queue.then(() => {
+                const pagesFolder = this.repo.folder('pages');
 
-        this.document.pages = this.pages.map(page => {
-            this.repo.file(
-                `pages/${page.do_objectID}.json`,
-                JSON.stringify(page)
-            );
+                this.document.pages = this.pages.map(page => {
+                    this.repo.file(
+                        `pages/${page.do_objectID}.json`,
+                        JSON.stringify(page)
+                    );
 
-            return {
-                _class: 'MSJSONFileReference',
-                _ref_class: 'MSImmutablePage',
-                _ref: `pages/${page.do_objectID}`
-            };
-        });
-
-        this.repo.file('document.json', JSON.stringify(this.document));
-        this.repo.file('meta.json', JSON.stringify(this.meta));
-        this.repo.file('user.json', JSON.stringify(this.user));
-
-        return new Promise((resolve, reject) => {
-            this.repo
-                .generateNodeStream({
-                    type: 'nodebuffer',
-                    streamFiles: true,
-                    compression: 'DEFLATE'
-                })
-                .pipe(fs.createWriteStream(file))
-                .on('finish', () => {
-                    resolve(file);
-                })
-                .on('error', err => {
-                    reject(err);
+                    return {
+                        _class: 'MSJSONFileReference',
+                        _ref_class: 'MSImmutablePage',
+                        _ref: `pages/${page.do_objectID}`
+                    };
                 });
-        });
+
+                this.repo.file('document.json', JSON.stringify(this.document));
+                this.repo.file('meta.json', JSON.stringify(this.meta));
+                this.repo.file('user.json', JSON.stringify(this.user));
+
+                return new Promise((resolve, reject) => {
+                    this.repo
+                        .generateNodeStream({
+                            type: 'nodebuffer',
+                            streamFiles: true,
+                            compression: 'DEFLATE'
+                        })
+                        .pipe(fs.createWriteStream(file))
+                        .on('finish', () => {
+                            resolve(file);
+                        })
+                        .on('error', err => {
+                            reject(err);
+                        });
+                });
+            });
+        }
+
+        return this;
     }
 }
 

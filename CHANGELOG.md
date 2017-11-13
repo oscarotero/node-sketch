@@ -13,6 +13,23 @@ First stable version, trying to fulfill the following goals:
 * Some basic plugins.
 * Fast and reliable.
 
+## 0.7.0 - 2017-11-13
+
+### Added
+
+* New plugin `LocalSymbolsToLibrarySymbols`
+* New function `Node::getSketch()` returning the sketch instance containing the node
+* New method `Node::toJson()` returning the node as json
+
+### Fixed
+
+* Fixed `Sketch::save` combined with plugins.
+* `SymbolInstance.symbolMaster` property now searches the symbolMaster in all pages instead only in Symbols page.
+
+### Changed
+
+* `Sketch::save` returns `this` instead a prommise
+
 ## 0.6.0 - 2017-10-17
 
 Added support for libraries, introduced in sketch 47.

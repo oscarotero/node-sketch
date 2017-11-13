@@ -1,5 +1,6 @@
 const _parent = Symbol.for('Parent');
 const lib = require('../');
+const Sketch = require('./Sketch');
 const layers = {
     classes: [
         'artboard',
@@ -87,6 +88,23 @@ class Node {
         }
 
         return parent;
+    }
+
+    /**
+     * Get the sketch element associated with this node
+     *
+     * @return {Sketch|undefined}
+     */
+    getSketch() {
+        let parent = this;
+
+        while (parent[_parent]) {
+            parent = parent[_parent];
+        }
+
+        if (parent instanceof Sketch) {
+            return parent;
+        }
     }
 
     /**
@@ -217,9 +235,16 @@ class Node {
      * @return {Node}
      */
     clone(parent) {
-        const data = JSON.parse(JSON.stringify(this));
+        return lib.create(parent || this.parent, this.toJson());
+    }
 
-        return lib.create(parent || this.parent, data);
+    /**
+     * Returns a json with the node data
+     *
+     * @return {Object}
+     */
+    toJson() {
+        return JSON.parse(JSON.stringify(this));
     }
 }
 
