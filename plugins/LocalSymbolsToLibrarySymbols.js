@@ -48,13 +48,13 @@ class LocalSymbolsToLibrarySymbols {
                     const libSymbol = library.find(symbol => symbol.symbolMaster.name === master.name);
 
                     if (libSymbol) {
-                        sketch.document.foreignSymbols.push(lib.create(sketch.document, {
+                        sketch.document.push('foreignSymbols', {
                             _class: 'MSImmutableForeignSymbol',
                             libraryID: libSymbol.libraryID,
                             originalMaster: libSymbol.symbolMaster.toJson(),
                             symbolMaster: master.toJson(),
                             sourceLibraryName: libSymbol.sourceLibraryName
-                        }));
+                        });
 
                         master.detach();
                     }

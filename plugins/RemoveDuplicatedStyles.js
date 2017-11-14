@@ -1,5 +1,5 @@
 /**
- * Plugin to remove duplicated styles
+ * Plugin to remove duplicated styles (text/shape styles with the same name)
  *
  * @alias module:plugins.RemoveDuplicatedStyles
  * @example

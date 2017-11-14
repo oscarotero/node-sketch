@@ -37,25 +37,7 @@ class Node {
     constructor(parent, data) {
         this[_parent] = parent;
 
-        Object.keys(data).forEach(key => {
-            //is a subclass
-            if (typeof data[key] === 'object' && '_class' in data[key]) {
-                this[key] = lib.create(this, data[key]);
-                return;
-            }
-
-            //is an array of subclasses
-            if (
-                Array.isArray(data[key]) &&
-                typeof data[key][0] === 'object' &&
-                '_class' in data[key][0]
-            ) {
-                this[key] = data[key].map(child => lib.create(this, child));
-                return;
-            }
-
-            this[key] = data[key];
-        });
+        Object.keys(data).forEach(key => this.set(key, data[key]));
     }
 
     /**
@@ -105,6 +87,61 @@ class Node {
         if (parent instanceof Sketch) {
             return parent;
         }
+    }
+
+    /**
+     * Add/replace new childrens in this node
+     * @param {string} key  The node key
+     * @param {Node|Object|Array} node The node/s to insert
+     */
+    set(key, node) {
+        if (node instanceof Node) {
+            node = node.toJson();
+        }
+
+        //is a subclass
+        if (typeof node === 'object' && '_class' in node) {
+            this[key] = lib.create(this, node);
+            return;
+        }
+
+        //is an array of subclasses
+        if (
+            Array.isArray(node) &&
+            typeof node[0] === 'object' &&
+            '_class' in node[0]
+        ) {
+            this[key] = node.map(child => lib.create(this, child));
+            return;
+        }
+
+        this[key] = node;
+    }
+
+    /**
+     * Push a new children in this node
+     * @param {string} key The node key
+     * @param {Node|Object} node The node/s to insert
+     *
+     * @return {Node} The new node inserted
+     */
+    push(key, node) {
+        if (node instanceof Node) {
+            node = node.toJson();
+        }
+
+        if (!Array.isArray(this[key])) {
+            throw new Error(`Unable to push new children. ${key} must be an array`);
+        }
+
+        //is a subclass
+        if (typeof node === 'object' && '_class' in node) {
+            node = lib.create(this, node);
+        }
+
+        this[key].push(node);
+
+        return node;
     }
 
     /**

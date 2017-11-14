@@ -1,5 +1,5 @@
 /**
- * Plugin to remove duplicated symbols
+ * Plugin to remove duplicated symbols (symbols with the same name)
  *
  * @alias module:plugins.RemoveDuplicatedSymbols
  * @example

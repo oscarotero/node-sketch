@@ -1,7 +1,7 @@
 const lib = require('../');
 
 /**
- * Plugin to update the document styles with the symbols defined in an external document
+ * Plugin to update the document styles with the symbols defined in an external document (using the symbol name)
  *
  * @alias module:plugins.UpdateSymbols
  * @example

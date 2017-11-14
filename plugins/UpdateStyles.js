@@ -1,7 +1,7 @@
 const lib = require('../');
 
 /**
- * Plugin to update the document styles with the styles defined in an external document
+ * Plugin to update the document styles with the styles defined in an external document (using the style name)
  *
  * @alias module:plugins.UpdateStyles
  * @example

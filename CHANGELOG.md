@@ -13,22 +13,30 @@ First stable version, trying to fulfill the following goals:
 * Some basic plugins.
 * Fast and reliable.
 
+## 0.8.0 - UNRELEASED
+
+### Added
+
+* New plugin `ImportArtboards`
+* API: new method `Node.set(key, Node)`
+* API: new method `Node.push(key, Node)`
+
 ## 0.7.0 - 2017-11-13
 
 ### Added
 
 * New plugin `LocalSymbolsToLibrarySymbols`
-* New function `Node::getSketch()` returning the sketch instance containing the node
-* New method `Node::toJson()` returning the node as json
+* API: New function `Node.getSketch()` returning the sketch instance containing the node
+* API: New method `Node.toJson()` returning the node as json
 
 ### Fixed
 
-* Fixed `Sketch::save` combined with plugins.
+* Fixed `Sketch.save` combined with plugins.
 * `SymbolInstance.symbolMaster` property now searches the symbolMaster in all pages instead only in Symbols page.
 
 ### Changed
 
-* `Sketch::save` returns `this` instead a prommise
+* `Sketch.save` returns `this` instead a prommise
 
 ## 0.6.0 - 2017-10-17
 
