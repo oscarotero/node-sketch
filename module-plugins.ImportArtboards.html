@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>src/Sketch.js - Documentation</title>
+    <title>ImportArtboards - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -27,153 +27,193 @@
 
 <div id="main">
     
-    <h1 class="page-title">src/Sketch.js</h1>
+    <h1 class="page-title">ImportArtboards</h1>
     
 
     
 
 
 
+
+<section>
+
+<header>
     
-    <section>
-        <article>
-            <pre class="prettyprint source linenums"><code>const fs = require('fs');
-const lib = require('../');
+        <h2>
+            <span class="ancestors"><a href="module-plugins.html">plugins</a>.</span>
+        
+        ImportArtboards
+        </h2>
+        
+            <div class="class-description">Plugin to import pages and artboards from external sketch files.
+This fixes some issues in sketch on copy/paste artboards containing symbols.
+It only imports pages and artboards not existing in the destination sketch (with the same name)
+It also imports the library symbols used</div>
+        
+    
+</header>
 
-/**
- * This class represents the sketch file and all this content.
- *
- * @property {JSZip} repo - The instance of JSZip containing the raw data
- * @property {Node} document - The document data
- * @property {Node} meta - The meta data
- * @property {Node} user - The user data
- * @property {Page[]} pages - Array with all pages of the document
- * @property {Page|undefined} symbolsPage - The "Symbols" page if exists
- * @property {Node[]} localSymbols - Array with all local symbols (symbols stored in any page of the document)
- * @property {Node[]} foreignSymbols - Array with all foreign symbols used in the document (symbols loaded from libraries)
- * @property {SharedStyle[]} sharedStyles - Array with all shared styles of the document
- * @property {SharedStyle[]} textStyles - Array with all text styles of the document
- * @property {Node[]} colors - Array with the document color palette
- * @property {Node[]} gradients - Array with the document gradients palette
- */
-class Sketch {
-    constructor(repo, document, meta, user, pages) {
-        this._class = 'sketch';
-        this.repo = repo;
-        this.document = lib.create(this, document);
-        this.meta = lib.create(this, meta);
-        this.user = lib.create(this, user);
-        this.pages = pages.map(page => lib.create(this, page));
-        this.queue = null;
-    }
+<article>
+    <div class="container-overview">
+    
+        
 
-    get symbolsPage() {
-        return this.pages.find(page => page.name === 'Symbols');
-    }
+    
+    <h2>Constructor</h2>
+    
 
-    get localSymbols() {
-        return this.pages
-            .map(page => page.getAll('symbolMaster'))
-            .reduce((symbols, currentPage) => symbols.concat(currentPage));
-    }
+    <h4 class="name" id="ImportArtboards"><span class="type-signature"></span>new ImportArtboards<span class="signature">(source)</span><span class="type-signature"></span></h4>
 
-    get foreignSymbols() {
-        return this.document.foreignSymbols.map(symbol => symbol.symbolMaster);
-    }
+    
 
-    get sharedStyles() {
-        return this.document.layerStyles.objects;
-    }
 
-    get textStyles() {
-        return this.document.layerTextStyles.objects;
-    }
 
-    get colors() {
-        return this.document.assets.colors;
-    }
 
-    get gradients() {
-        return this.document.assets.gradients;
-    }
+<dl class="details">
 
-    /**
-     * Execute a plugin with the sketch
-     * @param  {function} plugin The plugin to execute
-     * @return {this}
-     */
-    use(plugin) {
-        if (this.queue) {
-            this.queue.then(() => plugin.run(this));
-        } else {
-            this.queue = plugin.run(this);
-        }
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="plugins_ImportArtboards.js.html">plugins/ImportArtboards.js</a>, <a href="plugins_ImportArtboards.js.html#line13">line 13</a>
+    </li></ul></dd>
+    
 
-        return this;
-    }
+    
 
-    /**
-     * Save the document as a sketch file
-     * @example
-     * ns.read('input.sketch').then((sketch) => {
-     *
-     *  //modify the sketch data
-     *
-     *  return sketch.save('output.sketch')
-     * })
-     * @param  {string} file - The file path
-     * @return {this}
-     */
-    save(file) {
-        if (!this.queue) {
-            this.queue = this.save(file);
-        } else {
-            this.queue.then(() => {
-                const pagesFolder = this.repo.folder('pages');
+    
 
-                this.document.pages = this.pages.map(page => {
-                    this.repo.file(
-                        `pages/${page.do_objectID}.json`,
-                        JSON.stringify(page)
-                    );
+    
 
-                    return {
-                        _class: 'MSJSONFileReference',
-                        _ref_class: 'MSImmutablePage',
-                        _ref: `pages/${page.do_objectID}`
-                    };
-                });
+    
 
-                this.repo.file('document.json', JSON.stringify(this.document));
-                this.repo.file('meta.json', JSON.stringify(this.meta));
-                this.repo.file('user.json', JSON.stringify(this.user));
+    
 
-                return new Promise((resolve, reject) => {
-                    this.repo
-                        .generateNodeStream({
-                            type: 'nodebuffer',
-                            streamFiles: true,
-                            compression: 'DEFLATE'
-                        })
-                        .pipe(fs.createWriteStream(file))
-                        .on('finish', () => {
-                            resolve(file);
-                        })
-                        .on('error', err => {
-                            reject(err);
-                        });
-                });
-            });
-        }
+    
 
-        return this;
-    }
-}
+    
 
-module.exports = Sketch;
-</code></pre>
-        </article>
-    </section>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>sketch.use(new ImportArtboards('path/to/source.sketch'));</code></pre>
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>source</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Path to the sketch file containing the pages to import</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
 
 
 

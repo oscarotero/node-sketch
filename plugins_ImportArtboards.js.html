@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>src/Sketch.js - Documentation</title>
+    <title>plugins/ImportArtboards.js - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -27,7 +27,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">src/Sketch.js</h1>
+    <h1 class="page-title">plugins/ImportArtboards.js</h1>
     
 
     
@@ -37,140 +37,88 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>const fs = require('fs');
-const lib = require('../');
+            <pre class="prettyprint source linenums"><code>const lib = require('../');
 
 /**
- * This class represents the sketch file and all this content.
+ * Plugin to import pages and artboards from external sketch files.
+ * This fixes some issues in sketch on copy/paste artboards containing symbols.
+ * It only imports pages and artboards not existing in the destination sketch (with the same name)
+ * It also imports the library symbols used
  *
- * @property {JSZip} repo - The instance of JSZip containing the raw data
- * @property {Node} document - The document data
- * @property {Node} meta - The meta data
- * @property {Node} user - The user data
- * @property {Page[]} pages - Array with all pages of the document
- * @property {Page|undefined} symbolsPage - The "Symbols" page if exists
- * @property {Node[]} localSymbols - Array with all local symbols (symbols stored in any page of the document)
- * @property {Node[]} foreignSymbols - Array with all foreign symbols used in the document (symbols loaded from libraries)
- * @property {SharedStyle[]} sharedStyles - Array with all shared styles of the document
- * @property {SharedStyle[]} textStyles - Array with all text styles of the document
- * @property {Node[]} colors - Array with the document color palette
- * @property {Node[]} gradients - Array with the document gradients palette
+ * @alias module:plugins.ImportArtboards
+ * @example
+ * sketch.use(new ImportArtboards('path/to/source.sketch'));
  */
-class Sketch {
-    constructor(repo, document, meta, user, pages) {
-        this._class = 'sketch';
-        this.repo = repo;
-        this.document = lib.create(this, document);
-        this.meta = lib.create(this, meta);
-        this.user = lib.create(this, user);
-        this.pages = pages.map(page => lib.create(this, page));
-        this.queue = null;
-    }
-
-    get symbolsPage() {
-        return this.pages.find(page => page.name === 'Symbols');
-    }
-
-    get localSymbols() {
-        return this.pages
-            .map(page => page.getAll('symbolMaster'))
-            .reduce((symbols, currentPage) => symbols.concat(currentPage));
-    }
-
-    get foreignSymbols() {
-        return this.document.foreignSymbols.map(symbol => symbol.symbolMaster);
-    }
-
-    get sharedStyles() {
-        return this.document.layerStyles.objects;
-    }
-
-    get textStyles() {
-        return this.document.layerTextStyles.objects;
-    }
-
-    get colors() {
-        return this.document.assets.colors;
-    }
-
-    get gradients() {
-        return this.document.assets.gradients;
-    }
-
+class ImportArtboards {
     /**
-     * Execute a plugin with the sketch
-     * @param  {function} plugin The plugin to execute
-     * @return {this}
+     * @constructor
+     *
+     * @param {string} source Path to the sketch file containing the pages to import
      */
-    use(plugin) {
-        if (this.queue) {
-            this.queue.then(() => plugin.run(this));
-        } else {
-            this.queue = plugin.run(this);
-        }
-
-        return this;
+    constructor(source) {
+        this.source = source;
     }
 
-    /**
-     * Save the document as a sketch file
-     * @example
-     * ns.read('input.sketch').then((sketch) => {
-     *
-     *  //modify the sketch data
-     *
-     *  return sketch.save('output.sketch')
-     * })
-     * @param  {string} file - The file path
-     * @return {this}
-     */
-    save(file) {
-        if (!this.queue) {
-            this.queue = this.save(file);
-        } else {
-            this.queue.then(() => {
-                const pagesFolder = this.repo.folder('pages');
+    run(sketch) {
+        return lib.read(this.source)
+            .then(source => {
+                source.pages.forEach(srcPage => {
+                    const page = sketch.pages.find(page => page.name === srcPage.name);
 
-                this.document.pages = this.pages.map(page => {
-                    this.repo.file(
-                        `pages/${page.do_objectID}.json`,
-                        JSON.stringify(page)
-                    );
+                    if (page) {
+                        const offsetY = getOffsetY(page, srcPage) + 50;
 
-                    return {
-                        _class: 'MSJSONFileReference',
-                        _ref_class: 'MSImmutablePage',
-                        _ref: `pages/${page.do_objectID}`
-                    };
+                        srcPage.layers.forEach(srcLayer => {
+                            const layer = page.layers.find(layer => layer.name === srcLayer.name);
+
+                            if (!layer) {
+                                page.push('layers', srcLayer).frame.y += offsetY;
+                            }
+                        });
+                    } else {
+                        sketch.pages.push(srcPage);
+                    }
                 });
 
-                this.repo.file('document.json', JSON.stringify(this.document));
-                this.repo.file('meta.json', JSON.stringify(this.meta));
-                this.repo.file('user.json', JSON.stringify(this.user));
+                //Import foreign symbols
+                const foreignSymbols = sketch.foreignSymbols;
 
-                return new Promise((resolve, reject) => {
-                    this.repo
-                        .generateNodeStream({
-                            type: 'nodebuffer',
-                            streamFiles: true,
-                            compression: 'DEFLATE'
-                        })
-                        .pipe(fs.createWriteStream(file))
-                        .on('finish', () => {
-                            resolve(file);
-                        })
-                        .on('error', err => {
-                            reject(err);
-                        });
+                source.foreignSymbols.forEach(symbol => {
+                    const existing = foreignSymbols.find(fs => fs.symbolID === symbol.symbolID);
+
+                    if (!existing) {
+                        sketch.document.push('foreignSymbols', symbol.parent);
+                    }
                 });
             });
-        }
-
-        return this;
     }
 }
 
-module.exports = Sketch;
+function getOffsetY(page, srcPage) {
+    let pageY = 0, srcPageY;
+
+    page.layers.forEach(layer => {
+        const y = layer.frame.y + layer.frame.height;
+
+        if (y > pageY) {
+            pageY = y;
+        }
+    });
+
+    srcPage.layers.forEach(layer => {
+        const y = layer.frame.y;
+
+        if (srcPageY === undefined) {
+            srcPageY = y;
+        } else if (srcPageY > y) {
+            srcPageY = y;
+        }
+    });
+
+    return pageY - srcPageY;
+}
+
+module.exports = ImportArtboards;
 </code></pre>
         </article>
     </section>
