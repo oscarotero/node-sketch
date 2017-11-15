@@ -131,7 +131,9 @@ class Node {
         }
 
         if (!Array.isArray(this[key])) {
-            throw new Error(`Unable to push new children. ${key} must be an array`);
+            throw new Error(
+                `Unable to push new children. ${key} must be an array`
+            );
         }
 
         //is a subclass
