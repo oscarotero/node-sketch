@@ -25,7 +25,7 @@ class Sketch {
         this.meta = lib.create(this, meta);
         this.user = lib.create(this, user);
         this.pages = pages.map(page => lib.create(this, page));
-        this.queue = null;
+        this.queue = Promise.resolve();
     }
 
     get symbolsPage() {
@@ -64,11 +64,7 @@ class Sketch {
      * @return {this}
      */
     use(plugin) {
-        if (this.queue) {
-            this.queue.then(() => plugin.run(this));
-        } else {
-            this.queue = plugin.run(this);
-        }
+        this.queue.then(() => plugin.run(this));
 
         return this;
     }
@@ -80,52 +76,48 @@ class Sketch {
      *
      *  //modify the sketch data
      *
-     *  return sketch.save('output.sketch')
+     *  sketch.save('output.sketch')
      * })
      * @param  {string} file - The file path
      * @return {this}
      */
     save(file) {
-        if (!this.queue) {
-            this.queue = this.save(file);
-        } else {
-            this.queue.then(() => {
-                const pagesFolder = this.repo.folder('pages');
+        this.queue.then(() => {
+            const pagesFolder = this.repo.folder('pages');
 
-                this.document.pages = this.pages.map(page => {
-                    this.repo.file(
-                        `pages/${page.do_objectID}.json`,
-                        JSON.stringify(page)
-                    );
+            this.document.pages = this.pages.map(page => {
+                this.repo.file(
+                    `pages/${page.do_objectID}.json`,
+                    JSON.stringify(page)
+                );
 
-                    return {
-                        _class: 'MSJSONFileReference',
-                        _ref_class: 'MSImmutablePage',
-                        _ref: `pages/${page.do_objectID}`
-                    };
-                });
-
-                this.repo.file('document.json', JSON.stringify(this.document));
-                this.repo.file('meta.json', JSON.stringify(this.meta));
-                this.repo.file('user.json', JSON.stringify(this.user));
-
-                return new Promise((resolve, reject) => {
-                    this.repo
-                        .generateNodeStream({
-                            type: 'nodebuffer',
-                            streamFiles: true,
-                            compression: 'DEFLATE'
-                        })
-                        .pipe(fs.createWriteStream(file))
-                        .on('finish', () => {
-                            resolve(file);
-                        })
-                        .on('error', err => {
-                            reject(err);
-                        });
-                });
+                return {
+                    _class: 'MSJSONFileReference',
+                    _ref_class: 'MSImmutablePage',
+                    _ref: `pages/${page.do_objectID}`
+                };
             });
-        }
+
+            this.repo.file('document.json', JSON.stringify(this.document));
+            this.repo.file('meta.json', JSON.stringify(this.meta));
+            this.repo.file('user.json', JSON.stringify(this.user));
+
+            return new Promise((resolve, reject) => {
+                this.repo
+                    .generateNodeStream({
+                        type: 'nodebuffer',
+                        streamFiles: true,
+                        compression: 'DEFLATE'
+                    })
+                    .pipe(fs.createWriteStream(file))
+                    .on('finish', () => {
+                        resolve(file);
+                    })
+                    .on('error', err => {
+                        reject(err);
+                    });
+            });
+        });
 
         return this;
     }

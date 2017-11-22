@@ -13,6 +13,12 @@ First stable version, trying to fulfill the following goals:
 * Some basic plugins.
 * Fast and reliable.
 
+## 0.8.0 - 2017-11-22
+
+### Fixed
+
+* Infinite recursion bug resolved
+
 ## 0.8.0 - 2017-11-15
 
 ### Added
