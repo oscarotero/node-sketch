@@ -41,19 +41,25 @@ Represents the sketch file and contains all data (pages, symbols, styles, shapes
 const ns = require('node-sketch');
 
 ns.read('input.sketch').then(sketch => {
-    console.log(sketch.pages) //return all pages
-    console.log(sketch.sharedStyles) //return the shared styles
-    console.log(sketch.textStyles) //return the text styles
-    //etc...
+    sketch.document         // document data
+    sketch.meta             // meta data
+    sketch.user             // user data
+    sketch.pages            // array with all pages
+    sketch.symbolsPage      // the Symbols page
+    sketch.sharedStyles     // array with the shared styles
+    sketch.textStyles       // array with the text styles
+    sketch.colors           // array containing the colors stored in the color palette
+    sketch.gradients        // array containing the gradients stored in the gradient palette
+    sketch.localSymbols     // array with all symbols stored in the document
+    sketch.foreignSymbols   // array with the symbols loaded from external libraries
 
     sketch.save('output.sketch');
 });
-
 ```
 
 ### `Node`
 
-It's the base class used by all other elements. Any page, symbol, color, etc is an instance of this class containing all its properties.
+It's the base class used by all other elements. Any page, symbol, color, etc is an instance of this class.
 
 ```js
 const symbolsPage = sketch.symbolsPage;
