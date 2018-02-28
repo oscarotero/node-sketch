@@ -90,6 +90,7 @@ const Sketch = require('./src/Sketch');
         'UpdateStyles',
         'UpdateSymbols',
         'LocalSymbolsToLibrarySymbols',
+        'LibrarySymbolsToLocalSymbols',
         'ImportArtboards'
     ].forEach(plugin => {
         lib.plugins[plugin] = require('./plugins/' + plugin);
