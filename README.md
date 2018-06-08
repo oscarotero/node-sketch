@@ -84,6 +84,11 @@ const allSymbols = symbolsPage.getAll('symbolMaster');
 
 There are other classes extending `Node` to provide special funcionalities in some nodes, like `Style` or `SymbolInstance`.
 
+### JSON Scheme
+
+Technically, the sketch format consist in a zip with some json files. To manipulate a sketch file with this library, you need to know the scheme of json. You can see here [an example of the data of a page](https://github.com/oscarotero/node-sketch/wiki/page)
+
+
 ### Plugins
 
 The `plugins` namespace contains a set of plugins with common functions. For example:
