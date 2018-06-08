@@ -1,4 +1,5 @@
 const fs = require('fs');
+const path = require('path');
 const lib = require('../');
 
 /**
@@ -83,24 +84,7 @@ class Sketch {
      */
     save(file) {
         this.queue.then(() => {
-            const pagesFolder = this.repo.folder('pages');
-
-            this.document.pages = this.pages.map(page => {
-                this.repo.file(
-                    `pages/${page.do_objectID}.json`,
-                    JSON.stringify(page)
-                );
-
-                return {
-                    _class: 'MSJSONFileReference',
-                    _ref_class: 'MSImmutablePage',
-                    _ref: `pages/${page.do_objectID}`
-                };
-            });
-
-            this.repo.file('document.json', JSON.stringify(this.document));
-            this.repo.file('meta.json', JSON.stringify(this.meta));
-            this.repo.file('user.json', JSON.stringify(this.user));
+            this._saveJson();
 
             return new Promise((resolve, reject) => {
                 this.repo
@@ -120,6 +104,76 @@ class Sketch {
         });
 
         return this;
+    }
+
+    /**
+     * Save the document into a directory with pretty json
+     * Useful to inspect the json scheme of a sketch file
+     *
+     * @param  {string} dir [description]
+     * @return {this}
+     */
+    saveDir(dir) {
+        this._saveJson(true);
+        const promises = [];
+
+        this.repo.forEach((name, file) => {
+            promises.push(
+                new Promise((fulfill, reject) => {
+                    if (file.dir) {
+                        return;
+                    }
+
+                    const dest = path.join(dir, name);
+                    const destDir = path.dirname(dest);
+
+                    if (!fs.existsSync(destDir)) {
+                        fs.mkdirSync(destDir);
+                    }
+
+                    file
+                        .nodeStream()
+                        .pipe(fs.createWriteStream(dest))
+                        .on('finish', () => {
+                            fulfill(dest);
+                        })
+                        .on('error', err => {
+                            reject(err);
+                        });
+                })
+            );
+        });
+
+        this.queue.then(() => Promise.all(promises));
+
+        return this;
+    }
+
+    /**
+     * @private
+     */
+    _saveJson(pretty) {
+        const space = pretty ? 2 : 0;
+
+        this.document.pages = this.pages.map(page => {
+            this.repo.file(
+                `pages/${page.do_objectID}.json`,
+                JSON.stringify(page, null, space)
+            );
+
+            return {
+                _class: 'MSJSONFileReference',
+                _ref_class: 'MSImmutablePage',
+                _ref: `pages/${page.do_objectID}`
+            };
+        });
+
+        this.repo.file(
+            'document.json',
+            JSON.stringify(this.document, null, space)
+        );
+        this.repo.file('meta.json', JSON.stringify(this.meta, null, space));
+        this.repo.file('user.json', JSON.stringify(this.user, null, space));
     }
 }
 

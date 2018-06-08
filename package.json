@@ -1,6 +1,6 @@
 {
   "name": "node-sketch",
-  "version": "0.8.1",
+  "version": "0.9.0",
   "description": "Javascript library to manipulate sketch files",
   "main": "index.js",
   "author": "Oscar Otero",
@@ -10,11 +10,11 @@
   },
   "devDependencies": {
     "docdash": "^0.4.0",
-    "gh-pages": "^1.0.0",
+    "gh-pages": "^1.2.0",
     "jsdoc": "^3.4.3",
-    "jsondiffpatch": "^0.3.2",
-    "mocha": "^5.0.0",
-    "prettier": "^1.3.1"
+    "jsondiffpatch": "^0.3.10",
+    "mocha": "^5.2.0",
+    "prettier": "^1.13.4"
   },
   "repository": {
     "type": "git",

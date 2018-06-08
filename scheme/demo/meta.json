@@ -1,0 +1,43 @@
+{
+  "commit": "4e7e2f5d7940a711b59f89190b5b7e3029f050f5",
+  "pagesAndArtboards": {
+    "B6BB7C92-F812-4003-AF4B-673017BD9105": {
+      "name": "Symbols",
+      "artboards": {
+        "BFD39205-D514-41F0-BADC-6E2CA2BA713E": {
+          "name": "Red rectangle with black border"
+        }
+      }
+    },
+    "99D55BD5-25C6-4099-B475-DDFDCC46480A": {
+      "name": "Page 1",
+      "artboards": {
+        "D6366DAF-D5AE-416C-933C-AC716186ADDC": {
+          "name": "My Artboard"
+        }
+      }
+    }
+  },
+  "version": 103,
+  "fonts": [
+    "Roboto-Regular"
+  ],
+  "compatibilityVersion": 99,
+  "app": "com.bohemiancoding.sketch3",
+  "autosaved": 0,
+  "variant": "NONAPPSTORE",
+  "created": {
+    "commit": "4e7e2f5d7940a711b59f89190b5b7e3029f050f5",
+    "appVersion": "50.2",
+    "build": 55047,
+    "app": "com.bohemiancoding.sketch3",
+    "compatibilityVersion": 99,
+    "version": 103,
+    "variant": "NONAPPSTORE"
+  },
+  "saveHistory": [
+    "NONAPPSTORE.55047"
+  ],
+  "appVersion": "50.2",
+  "build": 55047
+}

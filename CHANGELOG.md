@@ -13,6 +13,12 @@ First stable version, trying to fulfill the following goals:
 * Some basic plugins.
 * Fast and reliable.
 
+## 0.9.0 - 2018-06-08
+
+### Added
+
+* New method `saveDir` to save the sketch as a directory, in order to inspect the json scheme
+
 ## 0.8.1 - 2017-11-22
 
 ### Fixed
