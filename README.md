@@ -86,7 +86,14 @@ There are other classes extending `Node` to provide special funcionalities in so
 
 ### JSON Scheme
 
-Technically, the sketch format consist in a zip with some json files. To manipulate a sketch file with this library, you need to know the scheme of json. You can see here [an example of the data of a page](https://github.com/oscarotero/node-sketch/wiki/page)
+Technically, the sketch format consist in a zip with some json files. To manipulate a sketch file with this library, you need to know the scheme of json. You can use this code to read and extract a sketch file into a directory, in order to inspect the json scheme:
+
+```js
+const ns = require('../');
+
+ns.read('demo.sketch').then(sketch => sketch.saveDir('demo'));
+```
+Here you can see [an example of extracted file](scheme)
 
 
 ### Plugins
