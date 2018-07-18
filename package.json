@@ -6,6 +6,7 @@
   "author": "Oscar Otero",
   "license": "MIT",
   "dependencies": {
+    "bplist-parser": "^0.1.1",
     "jszip": "^3.1.3"
   },
   "devDependencies": {
