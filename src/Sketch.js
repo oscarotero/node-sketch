@@ -11,10 +11,12 @@ const lib = require('../');
  * @property {Node} user - The user data
  * @property {Page[]} pages - Array with all pages of the document
  * @property {Page|undefined} symbolsPage - The "Symbols" page if exists
- * @property {Node[]} localSymbols - Array with all local symbols (symbols stored in any page of the document)
+ * @property {Node[]} symbols - Array with all local symbols (symbols stored in any page of the document)
  * @property {Node[]} foreignSymbols - Array with all foreign symbols used in the document (symbols loaded from libraries)
- * @property {SharedStyle[]} sharedStyles - Array with all shared styles of the document
+ * @property {SharedStyle[]} layerStyles - Array with all shared styles of the document
+ * @property {SharedStyle[]} foreignLayerStyles - Array with all shared styles used and loaded from external libraries
  * @property {SharedStyle[]} textStyles - Array with all text styles of the document
+ * @property {SharedStyle[]} foreignTextStyles - Array with all text styles used and loaded from external libraries
  * @property {Node[]} colors - Array with the document color palette
  * @property {Node[]} gradients - Array with the document gradients palette
  */
@@ -33,7 +35,7 @@ class Sketch {
         return this.pages.find(page => page.name === 'Symbols');
     }
 
-    get localSymbols() {
+    get symbols() {
         return this.pages
             .map(page => page.getAll('symbolMaster'))
             .reduce((symbols, currentPage) => symbols.concat(currentPage));
@@ -43,12 +45,20 @@ class Sketch {
         return this.document.foreignSymbols.map(symbol => symbol.symbolMaster);
     }
 
-    get sharedStyles() {
+    get layerStyles() {
         return this.document.layerStyles.objects;
+    }
+
+    get foreignLayerStyles() {
+        return this.document.foreignLayerStyles.map(style => style.localSharedStyle);
     }
 
     get textStyles() {
         return this.document.layerTextStyles.objects;
+    }
+
+    get foreignTextStyles() {
+        return this.document.foreignTextStyles.map(style => style.localSharedStyle);
     }
 
     get colors() {

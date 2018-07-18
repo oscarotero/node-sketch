@@ -34,7 +34,7 @@ class SymbolInstance extends Node {
         }
 
         //Search in the document
-        let master = sketch.localSymbols.find(
+        let master = sketch.symbols.find(
             symbol => symbol.symbolID === this.symbolID
         );
 

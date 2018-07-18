@@ -25,7 +25,7 @@ describe('Read sketch files', function() {
 
             describe('Must read the symbols', () => {
                 it('count symbols local symbols', () =>
-                    assert.equal(file.localSymbols.length, 2));
+                    assert.equal(file.symbols.length, 2));
                 it('count foreign symbols', () =>
                     assert.equal(file.foreignSymbols.length, 2));
                 it('count symbols in one page', () =>
@@ -71,13 +71,17 @@ describe('Read sketch files', function() {
 
             describe('Must read the shared styles', () => {
                 it('count layer styles', () =>
-                    assert.equal(file.sharedStyles.length, 2));
+                    assert.equal(file.layerStyles.length, 2));
+                it('count foreign layer styles', () =>
+                    assert.equal(file.foreignLayerStyles.length, 1));
                 it('first layer style name', () =>
-                    assert.equal(file.sharedStyles[0].name, 'style-1'));
+                    assert.equal(file.layerStyles[0].name, 'style-1'));
                 it('second layer style name', () =>
-                    assert.equal(file.sharedStyles[1].name, 'style-2'));
+                    assert.equal(file.layerStyles[1].name, 'style-2'));
                 it('count text styles', () =>
                     assert.equal(file.textStyles.length, 2));
+                it('count foreign text styles', () =>
+                    assert.equal(file.foreignTextStyles.length, 1));
                 it('first text style name', () =>
                     assert.equal(file.textStyles[0].name, 'style-1'));
                 it('second text style name', () =>

@@ -17,7 +17,7 @@ const Node = require('./Node');
  * const sharedStyle = block.style.sharedStyle;
  *
  * //Get a shared style named 'red'
- * const redStyle = sketch.sharedStyles.find(style => style.name === 'red');
+ * const redStyle = sketch.layerStyles.find(style => style.name === 'red');
  *
  * //Assign a different shared style
  * block.style.sharedStyle = redStyle;
@@ -30,12 +30,24 @@ class Style extends Node {
 
         const sketch = this.getParent('sketch');
 
-        let sharedStyle = sketch.sharedStyles.find(
+        let sharedStyle = sketch.layerStyles.find(
             style => style.do_objectID === this.sharedObjectID
         );
 
         if (!sharedStyle) {
             sharedStyle = sketch.textStyles.find(
+                style => style.do_objectID === this.sharedObjectID
+            );
+        }
+
+        if (!sharedStyle) {
+            sharedStyle = sketch.foreignLayerStyles.find(
+                style => style.do_objectID === this.sharedObjectID
+            );
+        }
+
+        if (!sharedStyle) {
+            sharedStyle = sketch.foreignTextStyles.find(
                 style => style.do_objectID === this.sharedObjectID
             );
         }
