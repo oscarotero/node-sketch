@@ -20,16 +20,16 @@ class UpdateStyles {
     run (sketch) {
         return lib.read(this.resources)
             .then(resources => {
-                this.sharedStyles = new Map();
+                this.layerStyles = new Map();
 
-                resources.sharedStyles.forEach(style =>
-                    this.sharedStyles.set(style.name, style)
+                resources.layerStyles.forEach(style =>
+                    this.layerStyles.set(style.name, style)
                 );
 
-                sketch.sharedStyles.forEach(sharedStyle => {
-                    if (this.sharedStyles.has(sharedStyle.name)) {
-                        const newSharedStyle = sharedStyle.replaceWith(
-                            this.sharedStyles.get(sharedStyle.name).clone()
+                sketch.layerStyles.forEach(layerStyle => {
+                    if (this.layerStyles.has(layerStyle.name)) {
+                        const newLayerStyle = layerStyle.replaceWith(
+                            this.layerStyles.get(layerStyle.name).clone()
                         );
 
                         //Update the referencies
@@ -38,9 +38,9 @@ class UpdateStyles {
                                 .getAll(
                                     'style',
                                     style =>
-                                        style.sharedObjectID === sharedStyle.do_objectID
+                                        style.sharedObjectID === layerStyle.do_objectID
                                 )
-                                .forEach(style => style.applySharedStyle(newSharedStyle));
+                                .forEach(style => style.applySharedStyle(newLayerStyle));
                         });
                     }
                 });

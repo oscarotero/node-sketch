@@ -67,7 +67,7 @@ class Style extends Node {
     /**
      * Apply a shared style discarding the previous styles
      *
-     * @param  {SharedStyle} sharedStyle - The shared style to apply
+     * @param  {SharedStyle} sharedStyle - The shared style (layout or text) to apply
      *
      * @return {Style} The new style applied
      */

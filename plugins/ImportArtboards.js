@@ -42,9 +42,9 @@ class ImportArtboards {
                 });
 
                 //Import foreign symbols
-                const foreignSymbols = sketch.foreignSymbols;
+                const foreignSymbols = sketch.symbols;
 
-                source.foreignSymbols.forEach(symbol => {
+                source.symbols.forEach(symbol => {
                     const existing = foreignSymbols.find(fs => fs.symbolID === symbol.symbolID);
 
                     if (!existing) {

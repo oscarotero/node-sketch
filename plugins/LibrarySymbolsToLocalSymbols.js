@@ -12,7 +12,7 @@ class LibrarySymbolsToLocalSymbols {
     run(sketch) {
         const symbolsPage = sketch.symbolsPage;
 
-        sketch.foreignSymbols.forEach(symbol => symbolsPage.push('layers', symbol));
+        sketch.symbols.forEach(symbol => symbolsPage.push('layers', symbol));
         sketch.document.foreignSymbols = [];
     }
 }

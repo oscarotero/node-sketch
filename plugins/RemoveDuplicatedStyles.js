@@ -7,15 +7,15 @@
  */
 class RemoveDuplicatedStyles {
     run(sketch) {
-        this.uniqueSharedStyles = new Map();
+        this.uniqueLayerStyles = new Map();
         this.uniqueTextStyles = new Map();
         this.duplicatedStyles = [];
 
-        sketch.sharedStyles.forEach(style => {
-            if (this.uniqueSharedStyles.has(style.name)) {
+        sketch.layerStyles.forEach(style => {
+            if (this.uniqueLayerStyles.has(style.name)) {
                 this.duplicatedStyles.push(style);
             } else {
-                this.uniqueSharedStyles.set(style.name, style);
+                this.uniqueLayerStyles.set(style.name, style);
             }
         });
 
@@ -34,7 +34,7 @@ class RemoveDuplicatedStyles {
                         style.sharedStyle.name
                     );
                 } else {
-                    style.sharedStyle = this.uniqueSharedStyles.get(
+                    style.sharedStyle = this.uniqueLayerStyles.get(
                         style.sharedStyle.name
                     );
                 }
