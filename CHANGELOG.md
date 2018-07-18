@@ -13,6 +13,7 @@ First stable version.
 
 ### Added
 
+- New node `Attributes` to parse and return the attributes of text styles (read-only by now)
 - Added `sketch.foreignLayerStyles`
 - Added `sketch.foreignTextStyles`
 

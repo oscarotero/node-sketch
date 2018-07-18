@@ -3,8 +3,7 @@ const sketch = require('../');
 sketch
     .read(__dirname + '/example.sketch')
     .then(file => {
-        file
-            .use(new sketch.plugins.RemoveDuplicatedSymbols())
+        file.use(new sketch.plugins.RemoveDuplicatedSymbols())
             .use(new sketch.plugins.RemoveDuplicatedStyles())
             .use(
                 new sketch.plugins.UpdateStyles(__dirname + '/resources.sketch')

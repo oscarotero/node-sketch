@@ -50,7 +50,9 @@ class Sketch {
     }
 
     get foreignLayerStyles() {
-        return this.document.foreignLayerStyles.map(style => style.localSharedStyle);
+        return this.document.foreignLayerStyles.map(
+            style => style.localSharedStyle
+        );
     }
 
     get textStyles() {
@@ -58,7 +60,9 @@ class Sketch {
     }
 
     get foreignTextStyles() {
-        return this.document.foreignTextStyles.map(style => style.localSharedStyle);
+        return this.document.foreignTextStyles.map(
+            style => style.localSharedStyle
+        );
     }
 
     get colors() {
@@ -141,8 +145,7 @@ class Sketch {
                         fs.mkdirSync(destDir);
                     }
 
-                    file
-                        .nodeStream()
+                    file.nodeStream()
                         .pipe(fs.createWriteStream(dest))
                         .on('finish', () => {
                             fulfill(dest);

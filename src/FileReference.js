@@ -41,8 +41,7 @@ class FileReference extends Node {
             if (file) {
                 const dest = path.join(dir, path.basename(file.name));
 
-                file
-                    .nodeStream()
+                file.nodeStream()
                     .pipe(fs.createWriteStream(dest))
                     .on('finish', () => {
                         fulfill(dest);
