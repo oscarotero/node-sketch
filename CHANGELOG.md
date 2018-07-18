@@ -13,7 +13,7 @@ First stable version.
 
 ### Added
 
-- New node `Attributes` to parse and return the attributes of text styles (read-only by now)
+- [#7] New node `Attributes` to parse and return the attributes of text styles (read-only by now)
 - Added `sketch.foreignLayerStyles`
 - Added `sketch.foreignTextStyles`
 
@@ -73,6 +73,7 @@ Added support for libraries, introduced in sketch 47.
 
 - Removed the docs directory from the repo (you can build using `yarn docs` or `npm run docs`)
 
+[#7]: https://github.com/oscarotero/sketch/issues/7
 
 [UNRELEASED]: https://github.com/oscarotero/sketch/compare/v0.10.0...HEAD
 [0.10.0]: https://github.com/oscarotero/sketch/compare/v0.9.0...v0.10.0
