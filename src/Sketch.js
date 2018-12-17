@@ -28,7 +28,6 @@ class Sketch {
         this.meta = lib.create(this, meta);
         this.user = lib.create(this, user);
         this.pages = pages.map(page => lib.create(this, page));
-        this.queue = Promise.resolve();
     }
 
     get symbolsPage() {
@@ -74,17 +73,6 @@ class Sketch {
     }
 
     /**
-     * Execute a plugin with the sketch
-     * @param  {function} plugin The plugin to execute
-     * @return {this}
-     */
-    use(plugin) {
-        this.queue.then(() => plugin.run(this));
-
-        return this;
-    }
-
-    /**
      * Save the document as a sketch file
      * @example
      * ns.read('input.sketch').then((sketch) => {
@@ -94,30 +82,26 @@ class Sketch {
      *  sketch.save('output.sketch')
      * })
      * @param  {string} file - The file path
-     * @return {this}
+     * @return {Promise}
      */
     save(file) {
-        this.queue.then(() => {
-            this._saveJson();
+        this._saveJson();
 
-            return new Promise((resolve, reject) => {
-                this.repo
-                    .generateNodeStream({
-                        type: 'nodebuffer',
-                        streamFiles: true,
-                        compression: 'DEFLATE'
-                    })
-                    .pipe(fs.createWriteStream(file))
-                    .on('finish', () => {
-                        resolve(file);
-                    })
-                    .on('error', err => {
-                        reject(err);
-                    });
-            });
+        return new Promise((resolve, reject) => {
+            this.repo
+                .generateNodeStream({
+                    type: 'nodebuffer',
+                    streamFiles: true,
+                    compression: 'DEFLATE'
+                })
+                .pipe(fs.createWriteStream(file))
+                .on('finish', () => {
+                    resolve(file);
+                })
+                .on('error', err => {
+                    reject(err);
+                });
         });
-
-        return this;
     }
 
     /**
@@ -125,7 +109,7 @@ class Sketch {
      * Useful to inspect the json scheme of a sketch file
      *
      * @param  {string} dir [description]
-     * @return {this}
+     * @return {Promise}
      */
     saveDir(dir) {
         this._saveJson(true);
@@ -157,9 +141,7 @@ class Sketch {
             );
         });
 
-        this.queue.then(() => Promise.all(promises));
-
-        return this;
+        return Promise.all(promises);
     }
 
     /**

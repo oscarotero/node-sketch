@@ -27,8 +27,6 @@ ns.read('design.sketch').then(sketch => {
 });
 ```
 
-[View more examples in the /examples folder](https://github.com/oscarotero/node-sketch/tree/master/examples)
-
 ## API
 
 Two classes are used to manage sketch files:
@@ -97,31 +95,6 @@ const ns = require('../');
 ns.read('demo.sketch').then(sketch => sketch.saveDir('demo'));
 ```
 Here you can see [an example of extracted file](scheme)
-
-
-### Plugins
-
-The `plugins` namespace contains a set of plugins with common functions. For example:
-
-```js
-const sketch = require('node-sketch');
-
-sketch
-    .read(__dirname + '/example.sketch')
-    .then(file => {
-        file
-            .use(new sketch.plugins.RemoveDuplicatedSymbols())
-            .use(new sketch.plugins.RemoveDuplicatedStyles())
-            .use(new sketch.plugins.ExportImages(__dirname))
-            .save(__dirname + '/result.sketch');
-    })
-    .catch(err => {
-        console.error('Error reading the sketch file');
-        console.error(err);
-    });
-```
-
-You can see the [list of available plugins here](plugins)
 
 ---
 

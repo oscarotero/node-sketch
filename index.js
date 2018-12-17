@@ -80,24 +80,6 @@ const Sketch = require('./src/Sketch');
     };
 
     /**
-     * @module plugins
-     */
-    lib.plugins = {};
-
-    [
-        'ExportImages',
-        'RemoveDuplicatedStyles',
-        'RemoveDuplicatedSymbols',
-        'UpdateStyles',
-        'UpdateSymbols',
-        'LocalSymbolsToLibrarySymbols',
-        'LibrarySymbolsToLocalSymbols',
-        'ImportArtboards'
-    ].forEach(plugin => {
-        lib.plugins[plugin] = require('./plugins/' + plugin);
-    });
-
-    /**
      * Creates a new Node elements
      *
      * @ignore

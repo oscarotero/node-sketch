@@ -5,3 +5,4 @@ package-lock.json
 result.sketch
 /examples/*.png
 /docs
+/local

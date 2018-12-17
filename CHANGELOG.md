@@ -5,9 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [UNRELEASED]
+## [0.11.0] - UNRELEASED
+### Removed
+- The provided plugins are removed to keep this library simpler
+- Dropped `sketch.use()`
 
-First stable version.
+### Changed
+
+- `sketch.save()` and `sketch.saveDir()` returns a promise instead `this`.
 
 ## [0.10.0] - 2018-07-18
 
