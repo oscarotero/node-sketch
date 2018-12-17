@@ -12,7 +12,8 @@ npm install node-sketch
 ```js
 const ns = require('node-sketch');
 
-ns.read('design.sketch').then(sketch => {
+async function run() {
+    const sketch = await ns.read(__dirname + '/design.sketch');
 
     //Search the symbol named 'button'
     const buttonSymbol = sketch.symbolsPage.get('symbolMaster', 'button');
@@ -23,8 +24,11 @@ ns.read('design.sketch').then(sketch => {
         .forEach(instance => instance.symbolMaster = buttonSymbol);
 
     //Save the result
-    sketch.save('modified-design.sketch');
-});
+    sketch.save('modified-design.sketch')
+        .then(console.log('File saved!!'));
+}
+
+run();
 ```
 
 ## API
