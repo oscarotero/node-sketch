@@ -51,9 +51,7 @@ const Sketch = require('./src/Sketch');
             .then(data => {
                 return Promise.all(
                     data.document.pages.map(page => {
-                        return data.repo
-                            .file(`${page._ref}.json`)
-                            .async('string');
+                        return data.repo.file(`${page._ref}.json`).async('string');
                     })
                 ).then(pages => {
                     data.pages = pages.map(page => JSON.parse(page));
@@ -61,13 +59,7 @@ const Sketch = require('./src/Sketch');
                 });
             })
             .then(data => {
-                return new Sketch(
-                    data.repo,
-                    data.document,
-                    data.meta,
-                    data.user,
-                    data.pages
-                );
+                return new Sketch(data.repo, data.document, data.meta, data.user, data.pages);
             });
     };
 

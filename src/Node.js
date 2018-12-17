@@ -106,11 +106,7 @@ class Node {
         }
 
         //is an array of subclasses
-        if (
-            Array.isArray(node) &&
-            typeof node[0] === 'object' &&
-            '_class' in node[0]
-        ) {
+        if (Array.isArray(node) && typeof node[0] === 'object' && '_class' in node[0]) {
             this[key] = node.map(child => lib.create(this, child));
             return;
         }
@@ -131,9 +127,7 @@ class Node {
         }
 
         if (!Array.isArray(this[key])) {
-            throw new Error(
-                `Unable to push new children. ${key} must be an array`
-            );
+            throw new Error(`Unable to push new children. ${key} must be an array`);
         }
 
         //is a subclass
@@ -349,9 +343,7 @@ function findNode(target, condition, result) {
 
 function findLayer(target, condition, result) {
     if (result) {
-        target.layers
-            .filter(layer => !condition || condition(layer))
-            .forEach(layer => result.push(layer));
+        target.layers.filter(layer => !condition || condition(layer)).forEach(layer => result.push(layer));
     } else {
         let layer = target.layers.find(layer => !condition || condition(layer));
 

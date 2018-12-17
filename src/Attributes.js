@@ -49,11 +49,7 @@ function parseArchive(stringArchive) {
     function getReferenceById(id) {
         const object = objects[id];
 
-        if (
-            typeof object === 'string' ||
-            typeof object === 'number' ||
-            typeof object === 'boolean'
-        ) {
+        if (typeof object === 'string' || typeof object === 'number' || typeof object === 'boolean') {
             return object;
         }
 
@@ -63,11 +59,7 @@ function parseArchive(stringArchive) {
             for (let index in object) {
                 if (object[index].UID) {
                     reference[index] = getReferenceById(object[index].UID);
-                } else if (
-                    Array.isArray(object[index]) &&
-                    index !== 'NS.keys' &&
-                    index !== 'NS.objects'
-                ) {
+                } else if (Array.isArray(object[index]) && index !== 'NS.keys' && index !== 'NS.objects') {
                     reference[index] = [];
                     object[index].forEach(ao => {
                         if (ao.UID) {
@@ -85,9 +77,7 @@ function parseArchive(stringArchive) {
         if (object['NS.keys']) {
             object['NS.keys'].forEach((keyObj, index) => {
                 const key = getReferenceById(keyObj.UID);
-                reference[key] = getReferenceById(
-                    object['NS.objects'][index].UID
-                );
+                reference[key] = getReferenceById(object['NS.objects'][index].UID);
             });
         }
 

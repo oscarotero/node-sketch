@@ -30,26 +30,18 @@ class Style extends Node {
 
         const sketch = this.getParent('sketch');
 
-        let sharedStyle = sketch.layerStyles.find(
-            style => style.do_objectID === this.sharedObjectID
-        );
+        let sharedStyle = sketch.layerStyles.find(style => style.do_objectID === this.sharedObjectID);
 
         if (!sharedStyle) {
-            sharedStyle = sketch.textStyles.find(
-                style => style.do_objectID === this.sharedObjectID
-            );
+            sharedStyle = sketch.textStyles.find(style => style.do_objectID === this.sharedObjectID);
         }
 
         if (!sharedStyle) {
-            sharedStyle = sketch.foreignLayerStyles.find(
-                style => style.do_objectID === this.sharedObjectID
-            );
+            sharedStyle = sketch.foreignLayerStyles.find(style => style.do_objectID === this.sharedObjectID);
         }
 
         if (!sharedStyle) {
-            sharedStyle = sketch.foreignTextStyles.find(
-                style => style.do_objectID === this.sharedObjectID
-            );
+            sharedStyle = sketch.foreignTextStyles.find(style => style.do_objectID === this.sharedObjectID);
         }
 
         this[_sharedstyle] = sharedStyle;

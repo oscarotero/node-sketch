@@ -34,15 +34,11 @@ class SymbolInstance extends Node {
         }
 
         //Search in the document
-        let master = sketch.symbols.find(
-            symbol => symbol.symbolID === this.symbolID
-        );
+        let master = sketch.symbols.find(symbol => symbol.symbolID === this.symbolID);
 
         //Search in the foreignSymbols
         if (!master) {
-            master = sketch.foreignSymbols.find(
-                symbol => symbol.symbolID === this.symbolID
-            );
+            master = sketch.foreignSymbols.find(symbol => symbol.symbolID === this.symbolID);
         }
 
         this[_symbol] = master;

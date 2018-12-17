@@ -49,9 +49,7 @@ class Sketch {
     }
 
     get foreignLayerStyles() {
-        return this.document.foreignLayerStyles.map(
-            style => style.localSharedStyle
-        );
+        return this.document.foreignLayerStyles.map(style => style.localSharedStyle);
     }
 
     get textStyles() {
@@ -59,9 +57,7 @@ class Sketch {
     }
 
     get foreignTextStyles() {
-        return this.document.foreignTextStyles.map(
-            style => style.localSharedStyle
-        );
+        return this.document.foreignTextStyles.map(style => style.localSharedStyle);
     }
 
     get colors() {
@@ -151,10 +147,7 @@ class Sketch {
         const space = pretty ? 2 : 0;
 
         this.document.pages = this.pages.map(page => {
-            this.repo.file(
-                `pages/${page.do_objectID}.json`,
-                JSON.stringify(page, null, space)
-            );
+            this.repo.file(`pages/${page.do_objectID}.json`, JSON.stringify(page, null, space));
 
             return {
                 _class: 'MSJSONFileReference',
@@ -163,10 +156,7 @@ class Sketch {
             };
         });
 
-        this.repo.file(
-            'document.json',
-            JSON.stringify(this.document, null, space)
-        );
+        this.repo.file('document.json', JSON.stringify(this.document, null, space));
         this.repo.file('meta.json', JSON.stringify(this.meta, null, space));
         this.repo.file('user.json', JSON.stringify(this.user, null, space));
     }
