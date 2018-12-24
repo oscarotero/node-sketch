@@ -28,7 +28,7 @@
     "url": "https://github.com/oscarotero/node-sketch/issues"
   },
   "scripts": {
-    "prettier": "prettier --single-quote '{src,tests,examples}/*.js' index.js --tab-width 4 --print-width=120 --write",
+    "prettier": "prettier --single-quote '{src,tests}/*.js' index.js demos/*/*.js --tab-width 4 --print-width=120 --write",
     "docs": "rm -rf docs && jsdoc src/*.js README.md index.js --template node_modules/docdash -d ./docs/",
     "publish-docs": "gh-pages -d docs",
     "test": "mocha tests/*.js",

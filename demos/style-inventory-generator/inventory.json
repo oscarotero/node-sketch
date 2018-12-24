@@ -1,0 +1,40 @@
+{
+  "Button/Primary": {
+    "Background": {
+      "color": "0,85,255,1",
+      "borderRadius": 8,
+      "width": 200,
+      "height": 40,
+      "shadow": {
+        "blur": 4,
+        "color": "0,0,0,0.5",
+        "x": 0,
+        "y": 2
+      }
+    },
+    "Text": {
+      "color": "255,255,255,1",
+      "alignment": "center",
+      "font": "Roboto-Medium",
+      "size": 16,
+      "lineHeight": 18,
+      "tracking": -0.2
+    }
+  },
+  "Button/Secondary": {
+    "Background": {
+      "color": "238,238,238,1",
+      "borderRadius": 8,
+      "width": 200,
+      "height": 40
+    },
+    "Text": {
+      "color": "0,85,255,1",
+      "alignment": "center",
+      "font": "Roboto-Medium",
+      "size": 16,
+      "lineHeight": 18,
+      "tracking": -0.2
+    }
+  }
+}
