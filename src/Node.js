@@ -305,11 +305,25 @@ function getCondition(type, condition) {
 
 function findNode(target, condition, result) {
     for (let [key, value] of Object.entries(target)) {
-        if (value instanceof Node && (!condition || condition(value))) {
-            if (result) {
-                result.push(value);
-            } else {
+        if (value instanceof Node) {
+            if (!condition || condition(value)) {
+                if (result) {
+                    result.push(value);
+                    continue;
+                }
+
                 return value;
+            }
+
+            if (result) {
+                findNode(value, condition, result);
+                continue;
+            }
+
+            const found = findNode(value, condition);
+
+            if (found) {
+                return found;
             }
         }
 
@@ -319,19 +333,21 @@ function findNode(target, condition, result) {
                     if (!condition || condition(child)) {
                         if (result) {
                             result.push(child);
-                        } else {
-                            return child;
+                            continue;
                         }
+
+                        return child;
                     }
 
                     if (result) {
                         findNode(child, condition, result);
-                    } else {
-                        const found = findNode(child, condition);
+                        continue;
+                    }
 
-                        if (found) {
-                            return found;
-                        }
+                    const found = findNode(child, condition);
+
+                    if (found) {
+                        return found;
                     }
                 }
             }
