@@ -98,7 +98,7 @@ const ns = require('../');
 
 ns.read('demo.sketch').then(sketch => sketch.saveDir('demo'));
 ```
-Here you can see [an example of extracted file](scheme)
+Here you can see [an example of extracted file](demos/scheme-explorer)
 
 ---
 
