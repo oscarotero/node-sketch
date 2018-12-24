@@ -3,7 +3,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>src/SymbolInstance.js - Documentation</title>
+    <title>src/Attributes.js - Documentation</title>
     
     
     <script src="scripts/prettify/prettify.js"></script>
@@ -31,7 +31,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">src/SymbolInstance.js</h1>
+    <h1 class="page-title">src/Attributes.js</h1>
     
 
     
@@ -41,60 +41,92 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>const _symbol = Symbol.for('symbolMaster');
+            <pre class="prettyprint source linenums"><code>const _attributes = Symbol.for('attributes');
 const Node = require('./Node');
+const bplist = require('bplist-parser');
 
 /**
- * Represents the instance of a symbol
- *
- * @property {Node} symbolMaster - The symbolMaster object used by the instance
- *
- * @example
- * //Get any symbol instance
- * const instance = sketch.pages[0].get('symbolInstance', 'button');
- *
- * console.log(`The instance named ${instance.name} belongs to the master symbol ${instance.symbolMaster.name}`);
- *
- * //Get the symbol master named 'new-button'
- * const master = sketch.getSymbolsPage().get('symbolMaster', 'new-button');
- *
- * //Apply the new master to the instance
- * instance.symbolMaster = master;
+ * Represents a dictionary of attributes
  *
  * @extends {Node}
+ *
+ * @property {object|undefined} attributes - Object containing the parsed attributes (they are stored as BASE64 encoded Binary Plists)
+ *
+ * @example
+ * //Get an MSAttributedString instance
+ * const node = sketch.pages[0].get('MSAttributedString');
+ *
+ * //Parse and return the attributes
+ * console.log(node.attributes)
  */
-class SymbolInstance extends Node {
-    get symbolMaster() {
-        if (this[_symbol]) {
-            return this[_symbol];
+class Attributes extends Node {
+    get attributes() {
+        if (this[_attributes]) {
+            return this[_attributes];
         }
 
-        //Search the symbols
-        const sketch = this.getSketch();
+        const attributes = parseArchive(this.archivedAttributedString._archive);
 
-        if (!sketch) {
-            return;
-        }
-
-        //Search in the document
-        let master = sketch.symbols.find(symbol => symbol.symbolID === this.symbolID);
-
-        //Search in the foreignSymbols
-        if (!master) {
-            master = sketch.foreignSymbols.find(symbol => symbol.symbolID === this.symbolID);
-        }
-
-        this[_symbol] = master;
-        return master;
-    }
-
-    set symbolMaster(master) {
-        this.symbolID = master.symbolID;
-        this[_symbol] = master;
+        this[_attributes] = attributes;
+        return attributes;
     }
 }
 
-module.exports = SymbolInstance;
+module.exports = Attributes;
+
+function parseArchive(stringArchive) {
+    const archive = bplist.parseBuffer(Buffer.from(stringArchive, 'base64'));
+    const result = {};
+    const objects = archive[0].$objects;
+    const root = archive[0].$top.root.UID;
+    const rootObject = objects[root];
+
+    for (var key in rootObject) {
+        if (rootObject[key].UID) {
+            result[key] = getReferenceById(rootObject[key].UID);
+        }
+    }
+
+    return result;
+
+    function getReferenceById(id) {
+        const object = objects[id];
+
+        if (typeof object === 'string' || typeof object === 'number' || typeof object === 'boolean') {
+            return object;
+        }
+
+        const reference = {};
+
+        if (typeof object === 'object') {
+            for (let index in object) {
+                if (object[index].UID) {
+                    reference[index] = getReferenceById(object[index].UID);
+                } else if (Array.isArray(object[index]) &amp;&amp; index !== 'NS.keys' &amp;&amp; index !== 'NS.objects') {
+                    reference[index] = [];
+                    object[index].forEach(ao => {
+                        if (ao.UID) {
+                            reference[index].push(getReferenceById(ao.UID));
+                        } else {
+                            reference[index].push(ao);
+                        }
+                    });
+                } else if (index !== 'NS.keys' &amp;&amp; index !== 'NS.objects') {
+                    reference[index] = object[index];
+                }
+            }
+        }
+
+        if (object['NS.keys']) {
+            object['NS.keys'].forEach((keyObj, index) => {
+                const key = getReferenceById(keyObj.UID);
+                reference[key] = getReferenceById(object['NS.objects'][index].UID);
+            });
+        }
+
+        return reference;
+    }
+}
 </code></pre>
         </article>
     </section>
