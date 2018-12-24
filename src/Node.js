@@ -99,9 +99,22 @@ class Node {
             node = node.toJson();
         }
 
-        //is a subclass
-        if (typeof node === 'object' && '_class' in node) {
-            this[key] = lib.create(this, node);
+        if (isPlainObject(node)) {
+            //is a subclass
+            if ('_class' in node) {
+                this[key] = lib.create(this, node);
+                return;
+            }
+
+            this[key] = {};
+
+            Object.keys(node).forEach(k => {
+                if (typeof node[k] === 'object' && '_class' in node[k]) {
+                    this[key][k] = lib.create(this, node[k]);
+                } else {
+                    this[key][k] = node[k];
+                }
+            });
             return;
         }
 
@@ -325,6 +338,8 @@ function findNode(target, condition, result) {
             if (found) {
                 return found;
             }
+
+            continue;
         }
 
         if (Array.isArray(value)) {
@@ -350,6 +365,21 @@ function findNode(target, condition, result) {
                         return found;
                     }
                 }
+            }
+
+            continue;
+        }
+
+        if (isPlainObject(value)) {
+            if (result) {
+                findNode(value, condition, result);
+                continue;
+            }
+
+            const found = findNode(value, condition);
+
+            if (found) {
+                return found;
             }
         }
     }
@@ -383,4 +413,14 @@ function findLayer(target, condition, result) {
     }
 
     return result;
+}
+
+//https://stackoverflow.com/a/38555871
+function isPlainObject(obj) {
+    return (
+        typeof obj === 'object' &&
+        obj !== null &&
+        obj.constructor === Object &&
+        Object.prototype.toString.call(obj) === '[object Object]'
+    );
 }
