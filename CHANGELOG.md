@@ -13,6 +13,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - The provided plugins are removed to keep this library simpler
 - Dropped `sketch.use()`
 
+### Fixed
+- `node.get()` and `node.getAll()` does not return some recursive results
+- Some classes were not instantiated recursively
+
 ## [0.10.0] - 2018-07-18
 ### Added
 - [#7] New node `Attributes` to parse and return the attributes of text styles (read-only by now)
