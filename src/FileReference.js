@@ -20,6 +20,7 @@ class FileReference extends Node {
      * Exports the file to other location
      *
      * @param  {string} dir - The directory path of the exported file.
+     * @param  {string} [name] - New name for the exported file.
      *
      * @example
      * //Export all images to a directory
@@ -29,7 +30,7 @@ class FileReference extends Node {
      *     })
      * })
      */
-    export(dir) {
+    export(dir, name) {
         return new Promise((fulfill, reject) => {
             const sketch = this.getParent('sketch');
             const file = sketch.repo
@@ -39,7 +40,7 @@ class FileReference extends Node {
                 .pop();
 
             if (file) {
-                const dest = path.join(dir, path.basename(file.name));
+                const dest = path.join(dir, name ? `${name}${path.extname(file.name)}` : file.name);
 
                 file.nodeStream()
                     .pipe(fs.createWriteStream(dest))
