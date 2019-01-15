@@ -1,6 +1,8 @@
 # 💎 node-sketch
 Javascript library to manipulate sketch files
 
+[![Build Status](https://travis-ci.org/oscarotero/node-sketch.svg?branch=master)](https://travis-ci.org/oscarotero/node-sketch)
+
 ## Install
 
 ```sh
