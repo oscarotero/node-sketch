@@ -109,7 +109,7 @@ class Node {
             this[key] = {};
 
             Object.keys(node).forEach(k => {
-                if (typeof node[k] === 'object' && '_class' in node[k]) {
+                if (isClassObject(node[k])) {
                     this[key][k] = lib.create(this, node[k]);
                 } else {
                     this[key][k] = node[k];
@@ -119,7 +119,7 @@ class Node {
         }
 
         //is an array of subclasses
-        if (Array.isArray(node) && typeof node[0] === 'object' && '_class' in node[0]) {
+        if (Array.isArray(node) && isClassObject(node[0])) {
             this[key] = node.map(child => lib.create(this, child));
             return;
         }
@@ -144,7 +144,7 @@ class Node {
         }
 
         //is a subclass
-        if (typeof node === 'object' && '_class' in node) {
+        if (isClassObject(node)) {
             node = lib.create(this, node);
         }
 
@@ -423,4 +423,8 @@ function isPlainObject(obj) {
         obj.constructor === Object &&
         Object.prototype.toString.call(obj) === '[object Object]'
     );
+}
+
+function isClassObject(obj) {
+    return isPlainObject(obj) && '_class' in obj;
 }
