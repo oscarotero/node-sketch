@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.12.0] - Unreleased
+### Added
+- `sketch.load()` to load a sketch from the sources [#12]
+- Added a second argument in `FileReference.export()` to change the name of the exported file [#11]
+
+### Fixed
+- Added travis for ci testing
+- Fixed null values evaluated as objects
+
 ## [0.11.0] - 2018-12-24
 ### Changed
 - `sketch.save()` and `sketch.saveDir()` returns a promise instead `this`.
@@ -66,7 +75,10 @@ Added support for libraries, introduced in sketch 47.
 - Removed the docs directory from the repo (you can build using `yarn docs` or `npm run docs`)
 
 [#7]: https://github.com/oscarotero/sketch/issues/7
+[#11]: https://github.com/oscarotero/sketch/issues/11
+[#12]: https://github.com/oscarotero/sketch/issues/12
 
+[0.12.0]: https://github.com/oscarotero/sketch/compare/v0.11.0...HEAD
 [0.11.0]: https://github.com/oscarotero/sketch/compare/v0.10.0...v0.11.0
 [0.10.0]: https://github.com/oscarotero/sketch/compare/v0.9.0...v0.10.0
 [0.9.0]: https://github.com/oscarotero/sketch/compare/v0.8.1...v0.9.0
