@@ -115,7 +115,7 @@ class Sketch {
             promises.push(
                 new Promise((fulfill, reject) => {
                     if (file.dir) {
-                        return;
+                        return fulfill();
                     }
 
                     const dest = path.join(dir, name);
