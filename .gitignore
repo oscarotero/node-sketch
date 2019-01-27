@@ -2,7 +2,4 @@ yarn.lock
 package-lock.json
 /node_modules/
 /tests/*/*
-result.sketch
-/examples/*.png
-/docs
-/local
+/tests/result.sketch
