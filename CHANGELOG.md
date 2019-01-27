@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.12.1] - 2019-01-27
+### Fixed
+- `sketch.saveDir` can display a partially resolved promise warning
+
 ## [0.12.0] - 2019-01-15
 ### Added
 - `sketch.load()` to load a sketch from the sources [#12]
@@ -78,7 +82,8 @@ Added support for libraries, introduced in sketch 47.
 [#11]: https://github.com/oscarotero/sketch/issues/11
 [#12]: https://github.com/oscarotero/sketch/issues/12
 
-[0.12.0]: https://github.com/oscarotero/sketch/compare/v0.11.0...HEAD
+[0.12.1]: https://github.com/oscarotero/sketch/compare/v0.12.0...v0.12.1
+[0.12.0]: https://github.com/oscarotero/sketch/compare/v0.11.0...v0.12.0
 [0.11.0]: https://github.com/oscarotero/sketch/compare/v0.10.0...v0.11.0
 [0.10.0]: https://github.com/oscarotero/sketch/compare/v0.9.0...v0.10.0
 [0.9.0]: https://github.com/oscarotero/sketch/compare/v0.8.1...v0.9.0
