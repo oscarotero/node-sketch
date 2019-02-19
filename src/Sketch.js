@@ -18,7 +18,9 @@ const lib = require('../');
  * @property {SharedStyle[]} textStyles - Array with all text styles of the document
  * @property {SharedStyle[]} foreignTextStyles - Array with all text styles used and loaded from external libraries
  * @property {Node[]} colors - Array with the document color palette
+ * @property {Node[]} colorAssets - Array with the document color palette with names
  * @property {Node[]} gradients - Array with the document gradients palette
+ * @property {Node[]} gradientAssets - Array with the document gradients palette with names
  */
 class Sketch {
     constructor(repo, document, meta, user, pages) {
