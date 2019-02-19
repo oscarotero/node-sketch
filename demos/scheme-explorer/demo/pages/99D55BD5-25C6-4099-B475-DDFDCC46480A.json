@@ -29,12 +29,17 @@
   "resizingType": 0,
   "rotation": 0,
   "shouldBreakMaskChain": false,
+  "clippingMaskMode": 0,
+  "hasClippingMask": false,
   "style": {
     "_class": "style",
     "endMarkerType": 0,
     "miterLimit": 10,
     "startMarkerType": 0,
     "windingRule": 1
+  },
+  "groupLayout": {
+    "_class": "MSImmutableFreeformGroupLayout"
   },
   "hasClickThrough": true,
   "layers": [
@@ -69,12 +74,17 @@
       "resizingType": 0,
       "rotation": 0,
       "shouldBreakMaskChain": true,
+      "clippingMaskMode": 0,
+      "hasClippingMask": false,
       "style": {
         "_class": "style",
         "endMarkerType": 0,
         "miterLimit": 10,
         "startMarkerType": 0,
         "windingRule": 1
+      },
+      "groupLayout": {
+        "_class": "MSImmutableFreeformGroupLayout"
       },
       "hasClickThrough": true,
       "layers": [
@@ -109,12 +119,14 @@
           "resizingType": 0,
           "rotation": 0,
           "shouldBreakMaskChain": false,
+          "clippingMaskMode": 0,
+          "hasClippingMask": false,
+          "sharedStyleID": "BD1ECFE5-9BDC-4B4B-A121-77D0F8867304",
           "style": {
             "_class": "style",
             "do_objectID": "2056CB4D-8915-4B23-B23D-AF4DEEFC28C6",
             "endMarkerType": 0,
             "miterLimit": 10,
-            "sharedObjectID": "BD1ECFE5-9BDC-4B4B-A121-77D0F8867304",
             "startMarkerType": 0,
             "textStyle": {
               "_class": "textStyle",
@@ -210,12 +222,17 @@
           "resizingType": 0,
           "rotation": 0,
           "shouldBreakMaskChain": false,
+          "clippingMaskMode": 0,
+          "hasClippingMask": false,
           "style": {
             "_class": "style",
             "endMarkerType": 0,
             "miterLimit": 10,
             "startMarkerType": 0,
             "windingRule": 1
+          },
+          "groupLayout": {
+            "_class": "MSImmutableFreeformGroupLayout"
           },
           "hasClickThrough": false,
           "layers": [
@@ -250,6 +267,8 @@
               "resizingType": 0,
               "rotation": 0,
               "shouldBreakMaskChain": false,
+              "clippingMaskMode": 0,
+              "hasClippingMask": false,
               "style": {
                 "_class": "style",
                 "endMarkerType": 0,
@@ -294,6 +313,8 @@
               "resizingType": 0,
               "rotation": 0,
               "shouldBreakMaskChain": false,
+              "clippingMaskMode": 0,
+              "hasClippingMask": false,
               "style": {
                 "_class": "style",
                 "endMarkerType": 0,
@@ -340,12 +361,14 @@
           "resizingType": 0,
           "rotation": 0,
           "shouldBreakMaskChain": false,
+          "clippingMaskMode": 0,
+          "hasClippingMask": false,
+          "sharedStyleID": "5834F427-D335-4B6A-8F08-9F00A96410A2",
           "style": {
             "_class": "style",
             "do_objectID": "F21F5653-4844-47C1-800C-7FB7B6A5AC0D",
             "endMarkerType": 0,
             "miterLimit": 10,
-            "sharedObjectID": "5834F427-D335-4B6A-8F08-9F00A96410A2",
             "startMarkerType": 0,
             "textStyle": {
               "_class": "textStyle",
@@ -417,7 +440,7 @@
           "textBehaviour": 0
         },
         {
-          "_class": "shapeGroup",
+          "_class": "rectangle",
           "do_objectID": "4AF3A9DF-1B25-4D40-98D8-F6B97D7E7484",
           "booleanOperation": -1,
           "exportOptions": {
@@ -447,6 +470,9 @@
           "resizingType": 0,
           "rotation": 0,
           "shouldBreakMaskChain": false,
+          "clippingMaskMode": 0,
+          "hasClippingMask": false,
+          "sharedStyleID": "3C411418-89D5-4F74-9E5E-5BE1D08DA073",
           "style": {
             "_class": "style",
             "do_objectID": "022DDD42-42E9-449A-BA28-67A912B05D30",
@@ -470,95 +496,56 @@
               }
             ],
             "miterLimit": 10,
-            "sharedObjectID": "3C411418-89D5-4F74-9E5E-5BE1D08DA073",
             "startMarkerType": 0,
             "windingRule": 1
           },
-          "hasClickThrough": false,
-          "layers": [
+          "edited": false,
+          "isClosed": true,
+          "pointRadiusBehaviour": 1,
+          "points": [
             {
-              "_class": "rectangle",
-              "do_objectID": "D66B6E07-6C41-40E3-93A1-253A216F76CC",
-              "booleanOperation": -1,
-              "exportOptions": {
-                "_class": "exportOptions",
-                "exportFormats": [],
-                "includedLayerIds": [],
-                "layerOptions": 0,
-                "shouldTrim": false
-              },
-              "frame": {
-                "_class": "rect",
-                "constrainProportions": false,
-                "height": 83,
-                "width": 101,
-                "x": 0,
-                "y": 0
-              },
-              "isFixedToViewport": false,
-              "isFlippedHorizontal": false,
-              "isFlippedVertical": false,
-              "isLocked": false,
-              "isVisible": true,
-              "layerListExpandedType": 0,
-              "name": "Path",
-              "nameIsFixed": false,
-              "resizingConstraint": 63,
-              "resizingType": 0,
-              "rotation": 0,
-              "shouldBreakMaskChain": false,
-              "edited": false,
-              "isClosed": true,
-              "pointRadiusBehaviour": 1,
-              "points": [
-                {
-                  "_class": "curvePoint",
-                  "cornerRadius": 0,
-                  "curveFrom": "{0, 0}",
-                  "curveMode": 1,
-                  "curveTo": "{0, 0}",
-                  "hasCurveFrom": false,
-                  "hasCurveTo": false,
-                  "point": "{0, 0}"
-                },
-                {
-                  "_class": "curvePoint",
-                  "cornerRadius": 0,
-                  "curveFrom": "{1, 0}",
-                  "curveMode": 1,
-                  "curveTo": "{1, 0}",
-                  "hasCurveFrom": false,
-                  "hasCurveTo": false,
-                  "point": "{1, 0}"
-                },
-                {
-                  "_class": "curvePoint",
-                  "cornerRadius": 0,
-                  "curveFrom": "{1, 1}",
-                  "curveMode": 1,
-                  "curveTo": "{1, 1}",
-                  "hasCurveFrom": false,
-                  "hasCurveTo": false,
-                  "point": "{1, 1}"
-                },
-                {
-                  "_class": "curvePoint",
-                  "cornerRadius": 0,
-                  "curveFrom": "{0, 1}",
-                  "curveMode": 1,
-                  "curveTo": "{0, 1}",
-                  "hasCurveFrom": false,
-                  "hasCurveTo": false,
-                  "point": "{0, 1}"
-                }
-              ],
-              "fixedRadius": 0,
-              "hasConvertedToNewRoundCorners": true
+              "_class": "curvePoint",
+              "cornerRadius": 0,
+              "curveFrom": "{0, 0}",
+              "curveMode": 1,
+              "curveTo": "{0, 0}",
+              "hasCurveFrom": false,
+              "hasCurveTo": false,
+              "point": "{0, 0}"
+            },
+            {
+              "_class": "curvePoint",
+              "cornerRadius": 0,
+              "curveFrom": "{1, 0}",
+              "curveMode": 1,
+              "curveTo": "{1, 0}",
+              "hasCurveFrom": false,
+              "hasCurveTo": false,
+              "point": "{1, 0}"
+            },
+            {
+              "_class": "curvePoint",
+              "cornerRadius": 0,
+              "curveFrom": "{1, 1}",
+              "curveMode": 1,
+              "curveTo": "{1, 1}",
+              "hasCurveFrom": false,
+              "hasCurveTo": false,
+              "point": "{1, 1}"
+            },
+            {
+              "_class": "curvePoint",
+              "cornerRadius": 0,
+              "curveFrom": "{0, 1}",
+              "curveMode": 1,
+              "curveTo": "{0, 1}",
+              "hasCurveFrom": false,
+              "hasCurveTo": false,
+              "point": "{0, 1}"
             }
           ],
-          "clippingMaskMode": 0,
-          "hasClippingMask": false,
-          "windingRule": 1
+          "fixedRadius": 0,
+          "hasConvertedToNewRoundCorners": true
         }
       ],
       "backgroundColor": {
@@ -578,11 +565,11 @@
       "includeInCloudUpload": true,
       "isFlowHome": false,
       "presetDictionary": {
-        "height": 667,
-        "offersLandscapeVariant": 1,
-        "name": "iPhone 8",
         "width": 375,
-        "allowResizedMatching": 1
+        "offersLandscapeVariant": 1,
+        "height": 667,
+        "allowResizedMatching": 1,
+        "name": "iPhone 8"
       },
       "resizesContent": false,
       "verticalRulerData": {

@@ -1,13 +1,14 @@
 {
   "document": {
-    "pageListHeight": 110
+    "pageListHeight": 110,
+    "pageListCollapsed": 0
   },
   "B6BB7C92-F812-4003-AF4B-673017BD9105": {
     "scrollOrigin": "{824, 404}",
     "zoomValue": 1
   },
   "99D55BD5-25C6-4099-B475-DDFDCC46480A": {
-    "scrollOrigin": "{30, -20}",
+    "scrollOrigin": "{-457, -156}",
     "zoomValue": 1
   }
 }

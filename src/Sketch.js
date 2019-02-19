@@ -64,8 +64,16 @@ class Sketch {
         return this.document.assets.colors;
     }
 
+    get colorAssets() {
+        return this.document.assets.colorAssets;
+    }
+
     get gradients() {
         return this.document.assets.gradients;
+    }
+
+    get gradientAssets() {
+        return this.document.assets.gradientAssets;
     }
 
     /**

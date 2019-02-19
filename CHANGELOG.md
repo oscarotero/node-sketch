@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.13.0] - Unreleased
+### Added
+- `sketch.colorAssets` that returns the palette of colors with names
+- `sketch.gradientAssets` that returns the palette of gradients with the names
+
+### Fixed
+- Update mocha to v6 [#13]
+
 ## [0.12.2] - 2019-01-27
 ### Fixed
 - Removed some files included on publish the package in npm
@@ -85,7 +93,9 @@ Added support for libraries, introduced in sketch 47.
 [#7]: https://github.com/oscarotero/sketch/issues/7
 [#11]: https://github.com/oscarotero/sketch/issues/11
 [#12]: https://github.com/oscarotero/sketch/issues/12
+[#13]: https://github.com/oscarotero/sketch/issues/13
 
+[0.13.0]: https://github.com/oscarotero/sketch/compare/v0.12.2...HEAD
 [0.12.2]: https://github.com/oscarotero/sketch/compare/v0.12.1...v0.12.2
 [0.12.1]: https://github.com/oscarotero/sketch/compare/v0.12.0...v0.12.1
 [0.12.0]: https://github.com/oscarotero/sketch/compare/v0.11.0...v0.12.0

@@ -54,9 +54,15 @@ describe('Read sketch files', function() {
             });
 
             describe('Must read the colors library', () => {
-                it('count document colors', () => assert.equal(file.colors.length, 2));
+                it('count document colors', () => assert.equal(file.colors.length, 3));
                 it('first color red', () => assert.equal(file.colors[0].red, 0.9146471088));
                 it('second color alpha', () => assert.equal(file.colors[1].alpha, 1));
+            });
+
+            describe('Must read the color assets library', () => {
+                it('count document colors', () => assert.equal(file.colorAssets.length, 3));
+                it('first color red', () => assert.equal(file.colorAssets[0].color.red, 0.9146471088));
+                it('first color is named "Red"', () => assert.equal(file.colorAssets[0].name, 'Red'));
             });
 
             describe('Must read the gradients library', () => {
