@@ -79,8 +79,7 @@ const Sketch = require('./src/Sketch');
     const classes = {
         style: require('./src/Style'),
         symbolInstance: require('./src/SymbolInstance'),
-        MSJSONFileReference: require('./src/FileReference'),
-        MSAttributedString: require('./src/Attributes')
+        MSJSONFileReference: require('./src/FileReference')
     };
 
     /**

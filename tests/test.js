@@ -94,6 +94,15 @@ describe('Read sketch files', function() {
                     assert.strictEqual(text.getParent(node => node._class === 'page'), file.pages[0]);
                 });
             });
+
+            describe('Must read a text style', () => {
+                const style = file.textStyles[0];
+
+                it('Style name is "style-1"', () => assert.strictEqual('style-1', style.name));
+                it('Font face is "Helvetica-Bold"', () => assert.strictEqual('Helvetica-Bold', style.get('fontDescriptor').attributes.name));
+                it('Font size is "16"', () => assert.strictEqual(16, style.get('fontDescriptor').attributes.size));
+                it('Alignment is 2 (center)', () => assert.strictEqual(2, style.get('paragraphStyle').alignment));
+            })
         });
     });
 });

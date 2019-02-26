@@ -5,13 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [0.13.0] - Unreleased
+## [0.13.0] - 2019-02-26
 ### Added
-- `sketch.colorAssets` that returns the palette of colors with names
-- `sketch.gradientAssets` that returns the palette of gradients with the names
+- New property `sketch.colorAssets` that returns the palette of colors with names
+- New property `sketch.gradientAssets` that returns the palette of gradients with the names
+- New function `sketch.exportPreviews()`
+- New function `sketch.exportTextPreviews()`
 
 ### Fixed
 - Update mocha to v6 [#13]
+
+### Removed
+- The node `Attributes` was removed because starting from sketch 50 the attributes are not parsed anymore
 
 ## [0.12.2] - 2019-01-27
 ### Fixed

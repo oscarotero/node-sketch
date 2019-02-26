@@ -192,6 +192,238 @@
           "textBehaviour": 0
         },
         {
+          "_class": "text",
+          "do_objectID": "2EAB831F-9AA1-479A-B687-059B87FC23F0",
+          "booleanOperation": 0,
+          "exportOptions": {
+            "_class": "exportOptions",
+            "do_objectID": "0D26731D-6027-4E7B-A924-87E0C3D932C0",
+            "exportFormats": [],
+            "includedLayerIds": [],
+            "layerOptions": 0,
+            "shouldTrim": false
+          },
+          "frame": {
+            "_class": "rect",
+            "do_objectID": "B699B230-8E1A-4CBD-91BB-D16CEF9F6C42",
+            "constrainProportions": false,
+            "height": 35,
+            "width": 275,
+            "x": 80,
+            "y": 591
+          },
+          "isFixedToViewport": false,
+          "isFlippedHorizontal": false,
+          "isFlippedVertical": false,
+          "isLocked": false,
+          "isVisible": true,
+          "layerListExpandedType": 0,
+          "name": "Plain text with vari",
+          "nameIsFixed": false,
+          "resizingConstraint": 47,
+          "resizingType": 0,
+          "rotation": 0,
+          "shouldBreakMaskChain": false,
+          "clippingMaskMode": 0,
+          "hasClippingMask": false,
+          "style": {
+            "_class": "style",
+            "do_objectID": "95357313-FC73-4EB0-BA93-1AB1ECE43953",
+            "endMarkerType": 0,
+            "miterLimit": 10,
+            "startMarkerType": 0,
+            "textStyle": {
+              "_class": "textStyle",
+              "do_objectID": "1E0FAB5A-A8DC-4622-B956-3176948357D4",
+              "encodedAttributes": {
+                "MSAttributedStringFontAttribute": {
+                  "_class": "fontDescriptor",
+                  "attributes": {
+                    "name": "Roboto-Bold",
+                    "size": 20
+                  }
+                },
+                "MSAttributedStringColorAttribute": {
+                  "_class": "color",
+                  "alpha": 1,
+                  "blue": 0.4,
+                  "green": 0.4,
+                  "red": 0.4
+                },
+                "textStyleVerticalAlignmentKey": 0,
+                "paragraphStyle": {
+                  "_class": "paragraphStyle"
+                }
+              },
+              "verticalAlignment": 0
+            },
+            "windingRule": 1
+          },
+          "attributedString": {
+            "_class": "attributedString",
+            "string": "Plain text with various styles",
+            "attributes": [
+              {
+                "_class": "stringAttribute",
+                "location": 0,
+                "length": 11,
+                "attributes": {
+                  "MSAttributedStringFontAttribute": {
+                    "_class": "fontDescriptor",
+                    "attributes": {
+                      "name": "Roboto-Bold",
+                      "size": 20
+                    }
+                  },
+                  "MSAttributedStringColorAttribute": {
+                    "_class": "color",
+                    "alpha": 1,
+                    "blue": 0.4,
+                    "green": 0.4,
+                    "red": 0.4
+                  },
+                  "textStyleVerticalAlignmentKey": 0,
+                  "paragraphStyle": {
+                    "_class": "paragraphStyle"
+                  }
+                }
+              },
+              {
+                "_class": "stringAttribute",
+                "location": 11,
+                "length": 4,
+                "attributes": {
+                  "MSAttributedStringFontAttribute": {
+                    "_class": "fontDescriptor",
+                    "attributes": {
+                      "name": "Roboto-BoldItalic",
+                      "size": 20
+                    }
+                  },
+                  "MSAttributedStringColorAttribute": {
+                    "_class": "color",
+                    "alpha": 1,
+                    "blue": 0.01371951219512191,
+                    "green": 0.01371951219512191,
+                    "red": 1
+                  },
+                  "textStyleVerticalAlignmentKey": 0,
+                  "paragraphStyle": {
+                    "_class": "paragraphStyle"
+                  }
+                }
+              },
+              {
+                "_class": "stringAttribute",
+                "location": 15,
+                "length": 1,
+                "attributes": {
+                  "MSAttributedStringFontAttribute": {
+                    "_class": "fontDescriptor",
+                    "attributes": {
+                      "name": "Roboto-Bold",
+                      "size": 20
+                    }
+                  },
+                  "MSAttributedStringColorAttribute": {
+                    "_class": "color",
+                    "alpha": 1,
+                    "blue": 0.4,
+                    "green": 0.4,
+                    "red": 0.4
+                  },
+                  "textStyleVerticalAlignmentKey": 0,
+                  "paragraphStyle": {
+                    "_class": "paragraphStyle"
+                  }
+                }
+              },
+              {
+                "_class": "stringAttribute",
+                "location": 16,
+                "length": 7,
+                "attributes": {
+                  "underlineStyle": 1,
+                  "paragraphStyle": {
+                    "_class": "paragraphStyle"
+                  },
+                  "strikethroughStyle": 0,
+                  "MSAttributedStringFontAttribute": {
+                    "_class": "fontDescriptor",
+                    "attributes": {
+                      "name": "TimesNewRomanPSMT",
+                      "size": 20
+                    }
+                  },
+                  "textStyleVerticalAlignmentKey": 0,
+                  "MSAttributedStringColorAttribute": {
+                    "_class": "color",
+                    "alpha": 1,
+                    "blue": 0.8549019607843137,
+                    "green": 0.5294117647058825,
+                    "red": 0.3568627450980392
+                  }
+                }
+              },
+              {
+                "_class": "stringAttribute",
+                "location": 23,
+                "length": 1,
+                "attributes": {
+                  "MSAttributedStringFontAttribute": {
+                    "_class": "fontDescriptor",
+                    "attributes": {
+                      "name": "Roboto-Bold",
+                      "size": 20
+                    }
+                  },
+                  "MSAttributedStringColorAttribute": {
+                    "_class": "color",
+                    "alpha": 1,
+                    "blue": 0.4,
+                    "green": 0.4,
+                    "red": 0.4
+                  },
+                  "textStyleVerticalAlignmentKey": 0,
+                  "paragraphStyle": {
+                    "_class": "paragraphStyle"
+                  }
+                }
+              },
+              {
+                "_class": "stringAttribute",
+                "location": 24,
+                "length": 6,
+                "attributes": {
+                  "MSAttributedStringFontAttribute": {
+                    "_class": "fontDescriptor",
+                    "attributes": {
+                      "name": "Roboto-Regular",
+                      "size": 30
+                    }
+                  },
+                  "MSAttributedStringColorAttribute": {
+                    "_class": "color",
+                    "alpha": 1,
+                    "blue": 0.4,
+                    "green": 0.4,
+                    "red": 0.4
+                  },
+                  "textStyleVerticalAlignmentKey": 0,
+                  "paragraphStyle": {
+                    "_class": "paragraphStyle"
+                  }
+                }
+              }
+            ]
+          },
+          "automaticallyDrawOnUnderlyingPath": false,
+          "dontSynchroniseWithSymbol": false,
+          "glyphBounds": "{{1, 5}, {272, 30}}",
+          "lineSpacingBehaviour": 2,
+          "textBehaviour": 0
+        },
+        {
           "_class": "group",
           "do_objectID": "6E3656F0-6EF1-48FF-B030-E85B6E883BDD",
           "booleanOperation": 0,
@@ -546,6 +778,123 @@
           ],
           "fixedRadius": 0,
           "hasConvertedToNewRoundCorners": true
+        },
+        {
+          "_class": "rectangle",
+          "do_objectID": "E67B8597-10B5-435D-B600-5A3D4A09464E",
+          "booleanOperation": -1,
+          "exportOptions": {
+            "_class": "exportOptions",
+            "do_objectID": "FDFD8F5B-2D0C-4223-83FB-D2559D67D35C",
+            "exportFormats": [],
+            "includedLayerIds": [],
+            "layerOptions": 0,
+            "shouldTrim": false
+          },
+          "frame": {
+            "_class": "rect",
+            "do_objectID": "1532432B-2A46-431D-A26D-FDAA08F1E6EB",
+            "constrainProportions": false,
+            "height": 83,
+            "width": 101,
+            "x": 216,
+            "y": 481
+          },
+          "isFixedToViewport": false,
+          "isFlippedHorizontal": false,
+          "isFlippedVertical": false,
+          "isLocked": false,
+          "isVisible": true,
+          "layerListExpandedType": 1,
+          "name": "Rectangle",
+          "nameIsFixed": false,
+          "resizingConstraint": 63,
+          "resizingType": 0,
+          "rotation": 0,
+          "shouldBreakMaskChain": false,
+          "userInfo": {
+            "datasupplier.key": "Tiles"
+          },
+          "clippingMaskMode": 0,
+          "hasClippingMask": false,
+          "style": {
+            "_class": "style",
+            "do_objectID": "676A146F-BA18-4B02-BE7C-42A5EB2989E5",
+            "endMarkerType": 0,
+            "fills": [
+              {
+                "_class": "fill",
+                "isEnabled": true,
+                "color": {
+                  "_class": "color",
+                  "alpha": 1,
+                  "blue": 0.8549019607843137,
+                  "green": 0.5294117647058825,
+                  "red": 0.3568627450980392
+                },
+                "fillType": 4,
+                "image": {
+                  "_class": "MSJSONFileReference",
+                  "_ref_class": "MSImageData",
+                  "_ref": "images/b2f8049ebb18b69755d8df9f87a083b47eb4134f.png"
+                },
+                "noiseIndex": 0,
+                "noiseIntensity": 0,
+                "patternFillType": 1,
+                "patternTileScale": 1
+              }
+            ],
+            "miterLimit": 10,
+            "startMarkerType": 0,
+            "windingRule": 1
+          },
+          "edited": false,
+          "isClosed": true,
+          "pointRadiusBehaviour": 1,
+          "points": [
+            {
+              "_class": "curvePoint",
+              "cornerRadius": 0,
+              "curveFrom": "{0, 0}",
+              "curveMode": 1,
+              "curveTo": "{0, 0}",
+              "hasCurveFrom": false,
+              "hasCurveTo": false,
+              "point": "{0, 0}"
+            },
+            {
+              "_class": "curvePoint",
+              "cornerRadius": 0,
+              "curveFrom": "{1, 0}",
+              "curveMode": 1,
+              "curveTo": "{1, 0}",
+              "hasCurveFrom": false,
+              "hasCurveTo": false,
+              "point": "{1, 0}"
+            },
+            {
+              "_class": "curvePoint",
+              "cornerRadius": 0,
+              "curveFrom": "{1, 1}",
+              "curveMode": 1,
+              "curveTo": "{1, 1}",
+              "hasCurveFrom": false,
+              "hasCurveTo": false,
+              "point": "{1, 1}"
+            },
+            {
+              "_class": "curvePoint",
+              "cornerRadius": 0,
+              "curveFrom": "{0, 1}",
+              "curveMode": 1,
+              "curveTo": "{0, 1}",
+              "hasCurveFrom": false,
+              "hasCurveTo": false,
+              "point": "{0, 1}"
+            }
+          ],
+          "fixedRadius": 0,
+          "hasConvertedToNewRoundCorners": true
         }
       ],
       "backgroundColor": {
@@ -567,9 +916,9 @@
       "presetDictionary": {
         "width": 375,
         "offersLandscapeVariant": 1,
+        "name": "iPhone 8",
         "height": 667,
-        "allowResizedMatching": 1,
-        "name": "iPhone 8"
+        "allowResizedMatching": 1
       },
       "resizesContent": false,
       "verticalRulerData": {

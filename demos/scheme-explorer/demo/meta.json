@@ -1,5 +1,5 @@
 {
-  "commit": "ccfe80c503964ae71043add2e10196b9e2249f67",
+  "commit": "f4e56c65d61efa65dd63fd44515a6e4b855bdd9e",
   "pagesAndArtboards": {
     "B6BB7C92-F812-4003-AF4B-673017BD9105": {
       "name": "Symbols",
@@ -20,6 +20,9 @@
   },
   "version": 116,
   "fonts": [
+    "Roboto-BoldItalic",
+    "TimesNewRomanPSMT",
+    "Roboto-Bold",
     "Roboto-Regular"
   ],
   "compatibilityVersion": 99,
@@ -27,17 +30,17 @@
   "autosaved": 0,
   "variant": "NONAPPSTORE",
   "created": {
-    "commit": "ccfe80c503964ae71043add2e10196b9e2249f67",
-    "appVersion": "53.1",
-    "build": 72631,
+    "commit": "f4e56c65d61efa65dd63fd44515a6e4b855bdd9e",
+    "appVersion": "53.2",
+    "build": 72643,
     "app": "com.bohemiancoding.sketch3",
     "compatibilityVersion": 99,
     "version": 116,
     "variant": "NONAPPSTORE"
   },
   "saveHistory": [
-    "NONAPPSTORE.72631"
+    "NONAPPSTORE.72643"
   ],
-  "appVersion": "53.1",
-  "build": 72631
+  "appVersion": "53.2",
+  "build": 72643
 }

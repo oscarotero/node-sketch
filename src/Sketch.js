@@ -79,6 +79,34 @@ class Sketch {
     }
 
     /**
+     * Exports the file previews to other location
+     *
+     * @param  {string} dir - The directory path of the exported file.
+     *
+     * @example
+     * //Export all document previews to a directory
+     * sketch.exportPreviews('/path/to/export');
+     */
+    exportPreviews(dir) {
+        const previews = this.repo.folder('previews');
+        return exportFolder(previews, dir);
+    }
+
+    /**
+     * Exports the file previews to other location
+     *
+     * @param  {string} dir - The directory path of the exported file.
+     *
+     * @example
+     * //Export all text previews to a directory
+     * sketch.exportTextPreviews('/path/to/export');
+     */
+    exportTextPreviews(dir) {
+        const previews = this.repo.folder('text-previews');
+        return exportFolder(previews, dir);
+    }
+
+    /**
      * Save the document as a sketch file
      * @example
      * ns.read('input.sketch').then((sketch) => {
@@ -119,35 +147,7 @@ class Sketch {
      */
     saveDir(dir) {
         this._saveJson(true);
-        const promises = [];
-
-        this.repo.forEach((name, file) => {
-            promises.push(
-                new Promise((fulfill, reject) => {
-                    if (file.dir) {
-                        return fulfill();
-                    }
-
-                    const dest = path.join(dir, name);
-                    const destDir = path.dirname(dest);
-
-                    if (!fs.existsSync(destDir)) {
-                        fs.mkdirSync(destDir);
-                    }
-
-                    file.nodeStream()
-                        .pipe(fs.createWriteStream(dest))
-                        .on('finish', () => {
-                            fulfill(dest);
-                        })
-                        .on('error', err => {
-                            reject(err);
-                        });
-                })
-            );
-        });
-
-        return Promise.all(promises);
+        return exportFolder(this.repo, dir);
     }
 
     /**
@@ -173,3 +173,35 @@ class Sketch {
 }
 
 module.exports = Sketch;
+
+function exportFolder(repo, dir) {
+    const promises = [];
+
+    repo.forEach((name, file) => {
+        promises.push(
+            new Promise((fulfill, reject) => {
+                if (file.dir) {
+                    return fulfill();
+                }
+
+                const dest = path.join(dir, name);
+                const destDir = path.dirname(dest);
+
+                if (!fs.existsSync(destDir)) {
+                    fs.mkdirSync(destDir);
+                }
+
+                file.nodeStream()
+                    .pipe(fs.createWriteStream(dest))
+                    .on('finish', () => {
+                        fulfill(dest);
+                    })
+                    .on('error', err => {
+                        reject(err);
+                    });
+            })
+        );
+    });
+
+    return Promise.all(promises);
+}
