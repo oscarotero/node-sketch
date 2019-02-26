@@ -12,11 +12,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - New function `sketch.exportPreviews()`
 - New function `sketch.exportTextPreviews()`
 
-### Fixed
-- Update mocha to v6 [#13]
-
 ### Removed
 - The node `Attributes` was removed because starting from sketch 50 the attributes are not parsed anymore
+
+### Fixed
+- Update mocha to v6 [#13]
 
 ## [0.12.2] - 2019-01-27
 ### Fixed
@@ -100,7 +100,7 @@ Added support for libraries, introduced in sketch 47.
 [#12]: https://github.com/oscarotero/sketch/issues/12
 [#13]: https://github.com/oscarotero/sketch/issues/13
 
-[0.13.0]: https://github.com/oscarotero/sketch/compare/v0.12.2...HEAD
+[0.13.0]: https://github.com/oscarotero/sketch/compare/v0.12.2...v0.13.0
 [0.12.2]: https://github.com/oscarotero/sketch/compare/v0.12.1...v0.12.2
 [0.12.1]: https://github.com/oscarotero/sketch/compare/v0.12.0...v0.12.1
 [0.12.0]: https://github.com/oscarotero/sketch/compare/v0.11.0...v0.12.0
