@@ -102,6 +102,23 @@ ns.read('demo.sketch').then(sketch => sketch.saveDir('demo'));
 ```
 Here you can see [an example of extracted file](demos/scheme-explorer)
 
+### CLI
+
+Starting from v0.14.0, the command `node-sketch` was included to use the library from CLI. You only need a file named `node-sketch.js` exporting the function to manipulate a sketch file. For example:
+
+```js
+module.exports = sketch => {
+    //Convert the text style names to uppercase
+    sketch.textStyles.forEach(textStyle => {
+        textStyle.name = textStyle.name.toUpperCase();
+    })
+}
+```
+To execute this script with the sketch file `my-styles.sketch`, run `node-sketch my-styles.sketch`.
+By default, the file is readed, but not saved. If you want to override the file with the modifications, run `node-sketch my-styles.sketch --save`.
+
+And to execute a script file with a different name, use the `--script` argument: `node-sketch my-styles.sketch --script=my-script.js --save`.
+
 ---
 
 [See the API detailed](https://oscarotero.github.io/node-sketch/)

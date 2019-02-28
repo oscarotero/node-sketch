@@ -6,7 +6,11 @@
   "author": "Oscar Otero",
   "license": "MIT",
   "dependencies": {
-    "jszip": "^3.1.3"
+    "jszip": "^3.1.3",
+    "yargs-parser": "^13.0.0"
+  },
+  "bin": {
+    "node-sketch": "bin.js"
   },
   "devDependencies": {
     "docdash": "^1.0.2",
