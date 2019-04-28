@@ -29,19 +29,20 @@ class Style extends Node {
         }
 
         const sketch = this.getParent('sketch');
+        const id = this.getParent().sharedStyleID;
 
-        let sharedStyle = sketch.layerStyles.find(style => style.do_objectID === this.sharedObjectID);
+        let sharedStyle = sketch.layerStyles.find(style => style.do_objectID === id);
 
         if (!sharedStyle) {
-            sharedStyle = sketch.textStyles.find(style => style.do_objectID === this.sharedObjectID);
+            sharedStyle = sketch.textStyles.find(style => style.do_objectID === id);
         }
 
         if (!sharedStyle) {
-            sharedStyle = sketch.foreignLayerStyles.find(style => style.do_objectID === this.sharedObjectID);
+            sharedStyle = sketch.foreignLayerStyles.find(style => style.do_objectID === id);
         }
 
         if (!sharedStyle) {
-            sharedStyle = sketch.foreignTextStyles.find(style => style.do_objectID === this.sharedObjectID);
+            sharedStyle = sketch.foreignTextStyles.find(style => style.do_objectID === id);
         }
 
         this[_sharedstyle] = sharedStyle;
@@ -52,7 +53,7 @@ class Style extends Node {
         this[_sharedstyle] = sharedStyle;
 
         if (sharedStyle) {
-            this.sharedObjectID = sharedStyle.do_objectID;
+            this.getParent().sharedStyleID = sharedStyle.do_objectID;
         }
     }
 
@@ -64,7 +65,15 @@ class Style extends Node {
      * @return {Style} The new style applied
      */
     applySharedStyle(sharedStyle) {
-        return this.replaceWith(sharedStyle.value.clone());
+        const parent = this.getParent();
+
+        parent.sharedStyleID = sharedStyle.do_objectID;
+        parent.set('style', sharedStyle.value);
+
+        if (parent._class === 'text') {
+            const attributes = parent.attributedString.attributes;
+            attributes[0].attributes = sharedStyle.value.textStyle.clone().encodedAttributes;
+        }
     }
 }
 
