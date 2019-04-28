@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 - Shared styles were not applied correctly [#16]
+- Updated dependencies
 
 ## [0.13.0] - 2019-02-26
 ### Added
