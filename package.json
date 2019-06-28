@@ -1,6 +1,6 @@
 {
   "name": "node-sketch",
-  "version": "0.14.0",
+  "version": "0.14.1",
   "description": "Javascript library to manipulate sketch files",
   "main": "index.js",
   "author": "Oscar Otero",
@@ -22,6 +22,7 @@
   },
   "files": [
     "index.js",
+    "bin.js",
     "src/*.js"
   ],
   "repository": {

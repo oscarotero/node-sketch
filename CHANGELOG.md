@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.14.1] - 2019-06-28
+### Fixed
+- `bin.js` was not included in the package. [#17]
+
 ## [0.14.0] - 2019-04-28
 ### Added
 - Cli
@@ -108,8 +112,10 @@ Added support for libraries, introduced in sketch 47.
 [#12]: https://github.com/oscarotero/sketch/issues/12
 [#13]: https://github.com/oscarotero/sketch/issues/13
 [#16]: https://github.com/oscarotero/sketch/issues/16
+[#17]: https://github.com/oscarotero/sketch/issues/17
 
-[0.14.0]: https://github.com/oscarotero/sketch/compare/v0.13.0...HEAD
+[0.14.1]: https://github.com/oscarotero/sketch/compare/v0.14.0...v0.14.1
+[0.14.0]: https://github.com/oscarotero/sketch/compare/v0.13.0...v0.14.0
 [0.13.0]: https://github.com/oscarotero/sketch/compare/v0.12.2...v0.13.0
 [0.12.2]: https://github.com/oscarotero/sketch/compare/v0.12.1...v0.12.2
 [0.12.1]: https://github.com/oscarotero/sketch/compare/v0.12.0...v0.12.1
