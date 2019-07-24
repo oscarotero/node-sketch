@@ -21,7 +21,9 @@ async function run() {
     const buttonSymbol = sketch.symbolsPage.get('symbolMaster', 'button');
 
     //Search all instances of a symbol named 'old-button' and replace it with 'button'
-    sketch
+    const firstPage = sketch.pages[0];
+    
+    firstPage
         .getAll('symbolInstance', instance => instance.symbolMaster.name === 'old-button')
         .forEach(instance => instance.symbolMaster = buttonSymbol);
 
