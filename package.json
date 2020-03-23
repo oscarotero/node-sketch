@@ -18,7 +18,7 @@
     "jsdoc": "^3.4.3",
     "jsondiffpatch": "^0.4.1",
     "mocha": "^7.0.1",
-    "prettier": "^1.17.0"
+    "prettier": "^2.0.1"
   },
   "files": [
     "index.js",
