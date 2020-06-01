@@ -14,7 +14,7 @@
   },
   "devDependencies": {
     "docdash": "^1.1.0",
-    "gh-pages": "^2.0.1",
+    "gh-pages": "^3.0.0",
     "jsdoc": "^3.4.3",
     "jsondiffpatch": "^0.4.1",
     "mocha": "^7.0.1",
