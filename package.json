@@ -7,7 +7,7 @@
   "license": "MIT",
   "dependencies": {
     "jszip": "^3.2.1",
-    "yargs-parser": "^19.0.4"
+    "yargs-parser": "^20.0.0"
   },
   "bin": {
     "node-sketch": "bin.js"
